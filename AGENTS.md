@@ -1,5 +1,8 @@
 # AGENTS.md — AI Agent Instructions for Lawn Masters V5 Website
 
+# Context Preservation Rules
+> **Rule:** Update HANDOFF.md at the end of every session before pushing.
+
 > Read this file before making any changes to this project.
 > This project is a production lawn care business website for a real company.
 
