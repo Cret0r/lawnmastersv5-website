@@ -34,7 +34,12 @@ export async function submitContactMessage(formData: FormData) {
   })
 
   if (error) {
-    console.error("Contact form error:", error)
+    console.error("Contact form error:", {
+      message: error.message,
+      code: error.code,
+      details: error.details,
+      hint: error.hint,
+    })
     return { error: "Something went wrong. Please try again." }
   }
 
