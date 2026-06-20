@@ -1,5 +1,5 @@
 # Lawn Masters V5 Website — AI Handoff Document
-> Last updated: June 19, 2026 (session 1)
+> Last updated: June 20, 2026 (session 2)
 > Rule: Update this document at the end of every session before pushing.
 
 ---
@@ -137,9 +137,10 @@ public/
   gallery/                11 before/after image pairs (22 files)
 
 scripts/
-  001_create_submissions.sql  Creates quote_submissions table + RLS
-  002_create_admin_user.sql   Creates Supabase Auth user (NOT used by login system)
-  003_fix_admin_rls.sql       Adds authenticated user read/update/delete policies
+  001_create_submissions.sql  Creates quote_submissions table + RLS ✅ run
+  002_create_admin_user.sql   Creates Supabase Auth user (NOT used by login system — skip)
+  003_fix_admin_rls.sql       Adds authenticated user read/update/delete policies ✅ run
+  004_create_contact_messages.sql  Creates contact_messages table + RLS ✅ run
   development/quick-start.sh
   development/dev-verify.sh
   testing/verify-build.sh
@@ -165,11 +166,11 @@ CLAUDE.md                 Points to AGENTS.md
 | `/about` | app/about/page.tsx | Server | ✅ Working | Story, values, service area |
 | `/services` | app/services/page.tsx | Server | ✅ Working | 7 services with feature lists |
 | `/gallery` | app/gallery/page.tsx | Server | ✅ Working | 12 before/after sliders — **stats bug: shows 15+ years** |
-| `/contact` | app/contact/page.tsx | Client | ⚠️ Needs DB | Form works visually; needs Supabase setup to save |
-| `/quote` | app/quote/page.tsx | Client | ⚠️ Needs DB | Form works visually; needs Supabase setup to save |
+| `/contact` | app/contact/page.tsx | Client | ✅ Working | Form saves to contact_messages table |
+| `/quote` | app/quote/page.tsx | Client | ✅ Working | Form saves to quote_submissions table |
 | `/service-policies` | app/service-policies/page.tsx | Server | ✅ Working | 6 policy sections |
 | `/spring-rush` | app/spring-rush/page.tsx | Server | ✅ Working | Summer Special campaign page, URL still `/spring-rush` |
-| `/admin` | app/admin/page.tsx | Server | ⚠️ Needs DB | Protected; needs Supabase tables to show submissions |
+| `/admin` | app/admin/page.tsx | Server | ✅ Working | Protected; shows quote + message submissions |
 | `/admin/login` | app/admin/login/page.tsx | Server | ✅ Working | Dark themed login, text field (not email), CSS module |
 
 ---
@@ -191,23 +192,26 @@ CLAUDE.md                 Points to AGENTS.md
 - Created ARCHITECTURE.md — full technical reference
 - Created AGENTS.md — AI agent rules
 - Created CLAUDE.md — points to AGENTS.md
+- Created HANDOFF.md — this file
 - Created 6 shell scripts in /scripts subfolders
+- Installed claude-mem
 - Pushed all code to GitHub (lawnmastersv5-website, master branch)
-
-### HIGH PRIORITY 🔴
-- **Run SQL scripts in Supabase SQL Editor** — run 001 then 003 (skip 002). This creates the tables so forms work.
-- **Create contact_messages table in Supabase** — no SQL script exists for it yet. The contact form tries to insert into this table but it doesn't exist. Need to write and run the SQL.
-- **Set all 5 env vars in Vercel** — NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, ADMIN_EMAIL, ADMIN_PASSWORD
-- **Change ADMIN_EMAIL + ADMIN_PASSWORD** from insecure defaults (admin@test.com / test123456) to real credentials in Vercel
-- **Verify forms work on live site** after Supabase setup + env vars
+- **[Session 2]** Created Supabase project (lawnmastersv5-website)
+- **[Session 2]** Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY in Vercel
+- **[Session 2]** Set ADMIN_EMAIL and ADMIN_PASSWORD to real credentials in Vercel
+- **[Session 2]** Ran SQL scripts 001, 003, 004 in Supabase SQL Editor
+- **[Session 2]** quote_submissions and contact_messages tables created with RLS
+- **[Session 2]** Admin login working on live site with custom credentials
+- **[Session 2]** Quote and contact forms working end-to-end on live site
+- **[Session 2]** Created scripts/004_create_contact_messages.sql
+- **[Session 2]** Added detailed Supabase error logging to app/contact/actions.ts
 
 ### MEDIUM PRIORITY 🟡
 - Fix gallery page stats: "15+ Years of Experience" → "5+ Years" (app/gallery/page.tsx stats section)
 - Add real customer reviews to lib/reviews-data.ts (currently 3 placeholder entries)
 - Update Google Review link in lib/reviews-data.ts to actual business Google My Business URL
 - Consider enabling image optimization: remove `unoptimized: true` from next.config.mjs after compressing image files
-- Test admin dashboard on live site — verify quote submissions and contact messages appear correctly
-- Write SQL script for contact_messages table: `scripts/004_create_contact_messages.sql`
+- Add admin link to mobile nav drawer (currently admin button only shows on desktop `md:` breakpoint)
 
 ---
 
@@ -216,9 +220,6 @@ CLAUDE.md                 Points to AGENTS.md
 | Bug | File | Severity | Fix |
 |---|---|---|---|
 | Gallery shows "15+ Years" — homepage shows "5+ Years" | app/gallery/page.tsx (stats section near bottom) | Medium | Change to "5+" to match homepage |
-| Quote + contact forms return "Something went wrong" on live site | app/quote/actions.ts, app/contact/actions.ts | High | Run SQL scripts + set Supabase env vars in Vercel |
-| No SQL script for contact_messages table | scripts/ | High | Write 004_create_contact_messages.sql and run in Supabase |
-| Admin login placeholder still says "admin@test.com" in the input field hint | app/admin/login/page.tsx | Low | Remove placeholder or update to a non-revealing hint |
 | TypeScript errors silently ignored at build | next.config.mjs | Low | `ignoreBuildErrors: true` — don't rely on this |
 
 ---
@@ -339,17 +340,17 @@ created_at    timestamptz DEFAULT now()
 
 ### Table: `contact_messages`
 ```sql
--- ⚠️ NO SQL SCRIPT EXISTS FOR THIS TABLE YET — needs to be created
 id         uuid PRIMARY KEY DEFAULT gen_random_uuid()
 name       text NOT NULL
 email      text NOT NULL
 phone      text
 subject    text
 message    text NOT NULL
-read       boolean DEFAULT false
-created_at timestamptz DEFAULT now()
+read       boolean NOT NULL DEFAULT false
+created_at timestamptz NOT NULL DEFAULT now()
 ```
-**Note:** Referenced by app/contact/actions.ts and app/admin/page.tsx. Contact form will fail until this table is created in Supabase.
+**RLS policies:** anon can INSERT; service role has full access; authenticated can SELECT, UPDATE, DELETE
+**Script:** scripts/004_create_contact_messages.sql ✅ created and run in Supabase
 
 ### Which Supabase client to use
 | Use case | Client | Key used |
@@ -390,10 +391,8 @@ Local dev: create `.env.local` in project root
 
 6. **Two CSS files exist** — `app/globals.css` (active, imported in app/layout.tsx) and `styles/globals.css` (legacy duplicate, not imported anywhere). The one in `app/` is the real one.
 
-7. **contact_messages table missing** — The biggest current blocker besides env vars. The contact form at /contact will fail with "Something went wrong" until this table is created in Supabase. No SQL script exists for it yet — write `scripts/004_create_contact_messages.sql`.
+7. **SQL script order matters** — Run 001 first (creates table), then 003 (adds extra policies), then 004 (contact_messages). Script 002 creates a Supabase Auth user the site doesn't use — skip it. All three have been run on the live Supabase project.
 
-8. **SQL script order matters** — Run 001 first (creates table), then 003 (adds extra policies). Script 002 creates a Supabase Auth user that the site doesn't actually use — skip it.
+8. **Admin nav button is desktop-only** — `hidden md:inline-flex` — does not appear in mobile menu. If needed on mobile, add a link inside the mobile drawer in components/navigation.tsx.
 
-9. **Admin nav button is desktop-only** — `hidden md:inline-flex` — does not appear in mobile menu. If needed on mobile, add a link inside the mobile drawer in components/navigation.tsx.
-
-10. **Session expires after 24 hours** — Admin is logged out automatically. This is intentional.
+9. **Session expires after 24 hours** — Admin is logged out automatically. This is intentional.
