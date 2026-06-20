@@ -205,6 +205,13 @@ CLAUDE.md                 Points to AGENTS.md
 - **[Session 2]** Quote and contact forms working end-to-end on live site
 - **[Session 2]** Created scripts/004_create_contact_messages.sql
 - **[Session 2]** Added detailed Supabase error logging to app/contact/actions.ts
+- **[Session 2]** Created SUMMER_CAMPAIGN_2026.md — initial campaign planning doc
+
+### IN PROGRESS 🔵
+- **Summer 2026 campaign** — SUMMER_CAMPAIGN_2026.md exists but is being revised
+  - Strategy shift: lead with high-ticket services (landscaping installs + pressure washing) to generate cash, then convert those customers to recurring mowing
+  - Owner decision: campaign covers BOTH high-ticket AND recurring mowing (dual strategy)
+  - Next step: rebuild SUMMER_CAMPAIGN_2026.md with dual-strategy structure, then build the summer landing page
 
 ### MEDIUM PRIORITY 🟡
 - Fix gallery page stats: "15+ Years of Experience" → "5+ Years" (app/gallery/page.tsx stats section)
