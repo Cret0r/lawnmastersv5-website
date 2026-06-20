@@ -1,11 +1,7 @@
 import { redirect } from "next/navigation"
 import { isAdminAuthenticated, verifyAdminCredentials, createAdminSession } from "@/lib/admin-auth"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent } from "@/components/ui/card"
-import { Leaf, Lock, AlertCircle } from "lucide-react"
 import Link from "next/link"
+import styles from "./login.module.css"
 
 export default async function AdminLoginPage({
   searchParams,
@@ -35,80 +31,68 @@ export default async function AdminLoginPage({
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <div className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <Link href="/" className="inline-flex items-center gap-2 mb-6">
-              <Leaf className="w-8 h-8 text-primary" />
-              <span className="text-2xl font-bold font-serif text-foreground">
-                Lawn Masters V5
-              </span>
-            </Link>
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Lock className="w-5 h-5 text-primary" />
-              <h1 className="text-xl font-semibold text-foreground">Admin Portal</h1>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Sign in to manage quote submissions
-            </p>
-          </div>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#171717",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "1rem",
+      }}
+    >
+      <form action={loginAction} className={styles.form}>
+        <p className={styles.heading}>🌿 Admin Portal</p>
 
-          <Card className="bg-card border-border shadow-lg">
-            <CardContent className="p-6 sm:p-8">
-              <form action={loginAction} className="flex flex-col gap-5">
-                {error && (
-                  <div className="bg-destructive/10 border border-destructive/20 rounded-lg px-4 py-3 flex items-start gap-3">
-                    <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
-                    <p className="text-sm text-destructive">{error}</p>
-                  </div>
-                )}
+        {error && (
+          <div className={styles.errorBox}>{error}</div>
+        )}
 
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="email" className="text-foreground text-sm font-medium">
-                    Email Address
-                  </Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="admin@test.com"
-                    required
-                    className="bg-background border-border"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="password" className="text-foreground text-sm font-medium">
-                    Password
-                  </Label>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    required
-                    className="bg-background border-border"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground mt-1"
-                >
-                  Sign In
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          <p className="text-center text-xs text-muted-foreground mt-6">
-            <Link href="/" className="hover:text-primary transition-colors">
-              Back to website
-            </Link>
-          </p>
+        {/* Email field */}
+        <div className={styles.field}>
+          <svg className={styles.inputIcon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+          </svg>
+          <input
+            type="email"
+            name="email"
+            className={styles.inputField}
+            placeholder="Email Address"
+            required
+            autoComplete="email"
+          />
         </div>
-      </div>
+
+        {/* Password field */}
+        <div className={styles.field}>
+          <svg className={styles.inputIcon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+          </svg>
+          <input
+            type="password"
+            name="password"
+            className={styles.inputField}
+            placeholder="Password"
+            required
+            autoComplete="current-password"
+          />
+        </div>
+
+        {/* Sign In + Cancel */}
+        <div className={styles.btn}>
+          <Link href="/" className={styles.button1}>
+            Cancel
+          </Link>
+          <button type="submit" className={styles.button2}>
+            Sign In
+          </button>
+        </div>
+
+        {/* Back to website */}
+        <Link href="/" className={styles.button3}>
+          ← Back to Website
+        </Link>
+      </form>
     </div>
   )
 }
