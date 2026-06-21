@@ -1,5 +1,5 @@
 # 🌿 Lawn Masters V5 — Summer 2026 Campaign Plan
-> Status: PLANNING — No changes made until owner approves
+> Status: IN PROGRESS — Some decisions locked in, remainder pending owner approval
 > Strategy: Lead with high-ticket landscaping & pressure washing → convert to recurring mowing
 
 ---
@@ -11,7 +11,7 @@
 - **Option B: "Curb Appeal Season"** — aspirational, targets homeowners who care about how their property looks
 - **Option C: "Clean Yard. Every Week."** — dual meaning: one-time cleaning services + weekly mowing routine
 
-**Owner decision:** [ ]
+**Owner decision:** ✅ Option A — "Summer Refresh"
 
 ---
 
@@ -23,12 +23,14 @@
 - **C:** "Start Fresh. Stay Green." / One-time cleanups and recurring lawn care serving Newton County, GA
 - **D:** "Summer's the Best Time to Fall in Love With Your Yard Again" / High-ticket cleanups → recurring weekly care starting at $90/mo
 
-**Owner decision:** [ ]
+**Owner decision:** ✅ Option A — "Your Property Deserves More Than a Mow"
 
 ---
 
 ## 3. 💰 High-Ticket Service Offers
 *These are the revenue drivers. Close these first, convert to mowing after.*
+
+> ⚠️ **Pricing note (applies to all services below):** All prices listed are STARTING points only. Final price is always quoted on-site based on property size, condition, driveway length, number of beds, access, and other factors. Never quote a final price before seeing the property.
 
 ### 🚿 Pressure Washing Packages
 
@@ -40,7 +42,7 @@
 | Roof Soft Wash | Soft wash treatment, algae/moss removal | $300–$450 |
 | Fence Wash | Wood or vinyl fence, per linear foot | $1.50–$2.50/ft |
 
-**💡 Which to lead with:** Driveway + house exterior combo ($350–$450 range). It's the most visible, easiest to photograph for Instagram, and almost every homeowner in the Newton County area has algae/mildew staining by June. Start the conversation there.
+**✅ Lead service (owner decision):** Driveway Only — starting at $197–$250. Lowest barrier to entry, fastest close, easiest before/after photo. Gets the crew on the property and starts the relationship. Upsell house exterior on-site once trust is established.
 
 ---
 
@@ -56,19 +58,19 @@
 | Gutter Cleaning | Flush gutters + downspouts, bag debris | $125–$200 |
 | Full Property Cleanup | All of the above, priced per property | Custom quote |
 
-**💡 Which to lead with:** Full Bed Refresh or Mulch Install. It's fast, dramatic before/after photos, and homeowners who invest in landscaping are the most likely to want regular mowing to protect that investment.
+**✅ Second lead service (owner decision):** Full Bed Refresh — starting at $300–$500. Dramatic before/after photos, and homeowners who invest in their landscaping are the most likely to convert to recurring mowing to protect that investment.
 
 ---
 
 ### 🏠 Exterior House Cleaning (Add-On)
 
-| Service | Suggested Price |
+| Service | Price |
 |---|---|
-| Window exterior cleaning (per story) | $75–$125 |
-| Patio/deck scrub | $150–$250 |
-| Trash can deodorize & wash | $25–$40/can |
+| Window exterior cleaning (per story) | Quoted on-site per property |
+| Patio/deck scrub | Quoted on-site per property |
+| Trash can deodorize & wash | Quoted on-site per property |
 
-**Owner decision on pricing:** [ ] Approve as-is [ ] Adjust
+**Owner decision:** ✅ Keep as available option — all pricing quoted on-site per property
 
 ---
 
@@ -143,7 +145,7 @@ Variations:
 12. **Bilingual CTA** — *"Se Habla Español — Text us in Spanish anytime"*
 13. **Final CTA** — SMS pre-fill + phone number
 
-**Owner decision on URL:** [ ] `/summer` (new) [ ] Keep `/spring-rush`, update content only
+**Owner decision on URL:** ✅ `/summer` — new page
 
 ---
 
@@ -246,7 +248,7 @@ Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano?
 
 ## 9. 📅 6-Week Timeline
 
-- **Week 1 — Foundation:** Finalize campaign name + offer, update website `/spring-rush` → summer content, print door hangers, text existing 12 clients about pressure washing + referral offer
+- **Week 1 — Foundation:** Finalize campaign name + offer, update website `/spring-rush` → `/summer` page, print door hangers, text any local contacts or past Florida customers who may have Georgia connections
 - **Week 2 — Launch Push:** First 150 door hangers in Covington (Hwy 278 area) + Conyers, post PW before/after reel, follow up on any quotes from Week 1
 - **Week 3 — Content + Conversions:** Post "combo" content, second pass on Week 2 neighborhoods, add Oxford to hanger route, upsell mowing on every completed job
 - **Week 4 — Expand:** Hit Porterdale + Social Circle, post bilingual content, follow up Day 10 texts to Week 2–3 customers, check recurring client count vs target
@@ -257,13 +259,16 @@ Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano?
 
 ## 10. ⚠️ Owner Decisions Needed Before Building Anything
 
-- [ ] Campaign name (A: Summer Refresh / B: Curb Appeal Season / C: Clean Yard. Every Week.)
-- [ ] Hero headline (A / B / C / D)
-- [ ] Pressure washing pricing (approve or adjust the suggested ranges)
-- [ ] Landscaping cleanup pricing (approve or adjust)
+- ✅ Campaign name → **Option A: "Summer Refresh"**
+- ✅ Hero headline → **Option A: "Your Property Deserves More Than a Mow"**
+- ✅ Lead service → **Pressure Washing — Driveway Only, starting at $197–$250**
+- ✅ Second service → **Full Bed Refresh, starting at $300–$500**
+- ✅ Exterior house cleaning → **Keep as option, all pricing quoted on-site per property**
+- ✅ Landing page URL → **`/summer` (new page)**
+- [ ] Pressure washing pricing ranges (confirm or adjust $197–$250 driveway starting point)
+- [ ] Landscaping pricing ranges (confirm or adjust $300–$500 Full Bed Refresh starting point)
 - [ ] On-site upsell script (approve or revise)
 - [ ] Follow-up text scripts (approve or revise)
-- [ ] Landing page URL (`/summer` new page or update `/spring-rush` content)
 - [ ] Door hanger headline (A / B / C)
 - [ ] Which neighborhoods to hit first
 - [ ] Instagram content calendar start date
