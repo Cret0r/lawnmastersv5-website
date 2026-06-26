@@ -205,7 +205,7 @@ export default function ProjectsPage() {
             </div>
             <div>
               <div className="text-4xl sm:text-5xl font-bold text-primary mb-2 font-serif">
-                15+
+                5+
               </div>
               <div className="text-muted-foreground text-sm">Years of Experience</div>
             </div>
