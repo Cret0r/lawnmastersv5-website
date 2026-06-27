@@ -1,29 +1,30 @@
 "use server"
 
+import { headers } from "next/headers"
+import { z } from "zod"
 import { createAdminClient } from "@/lib/supabase/admin"
+import { isRateLimited } from "@/lib/rate-limit"
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const PHONE_REGEX = /^[\d\s()+-]{7,20}$/
-
-// Simple in-memory rate limiting (per server instance)
-const submissions = new Map<string, number[]>()
-const RATE_LIMIT = 3 // max submissions
-const RATE_WINDOW = 60 * 60 * 1000 // 1 hour in ms
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now()
-  const attempts = submissions.get(ip) || []
-  const recent = attempts.filter((t) => now - t < RATE_WINDOW)
-  submissions.set(ip, recent)
-  return recent.length >= RATE_LIMIT
-}
+const quoteSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
+  address: z.string().min(1, "Address is required"),
+  services: z.array(z.string()).min(1, "Please select at least one service"),
+})
 
 function sanitize(input: string): string {
   return input.replace(/<[^>]*>/g, "").trim()
 }
 
 export async function submitQuote(formData: FormData) {
-  const supabase = createAdminClient()
+  const headersList = await headers()
+  const ip = headersList.get("x-forwarded-for") ?? headersList.get("x-real-ip") ?? "unknown"
+
+  if (isRateLimited(ip)) {
+    return { error: "Too many requests. Please wait 15 minutes before trying again." }
+  }
 
   const firstName = sanitize((formData.get("firstName") as string) || "")
   const lastName = sanitize((formData.get("lastName") as string) || "")
@@ -36,30 +37,12 @@ export async function submitQuote(formData: FormData) {
   const timeline = sanitize((formData.get("timeline") as string) || "")
   const details = sanitize((formData.get("details") as string) || "")
 
-  // Validate required fields
-  if (!firstName || !lastName || !email || !phone || !address) {
-    return { error: "Please fill in all required fields." }
+  const validation = quoteSchema.safeParse({ firstName, lastName, email, phone, address, services })
+  if (!validation.success) {
+    return { error: validation.error.errors[0].message }
   }
 
-  // Validate email format
-  if (!EMAIL_REGEX.test(email)) {
-    return { error: "Please enter a valid email address." }
-  }
-
-  // Validate phone format
-  if (!PHONE_REGEX.test(phone)) {
-    return { error: "Please enter a valid phone number." }
-  }
-
-  // Rate limiting by email
-  if (isRateLimited(email)) {
-    return { error: "Too many submissions. Please try again later." }
-  }
-
-  // Record the attempt
-  const attempts = submissions.get(email) || []
-  attempts.push(Date.now())
-  submissions.set(email, attempts)
+  const supabase = createAdminClient()
 
   const { error } = await supabase.from("quote_submissions").insert({
     first_name: firstName,

@@ -1,26 +1,37 @@
 "use server"
 
+import { headers } from "next/headers"
+import { z } from "zod"
 import { createAdminClient } from "@/lib/supabase/admin"
+import { isRateLimited } from "@/lib/rate-limit"
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const contactSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Please enter a valid email address"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+})
 
 function sanitize(input: string): string {
   return input.replace(/<[^>]*>/g, "").trim()
 }
 
 export async function submitContactMessage(formData: FormData) {
+  const headersList = await headers()
+  const ip = headersList.get("x-forwarded-for") ?? headersList.get("x-real-ip") ?? "unknown"
+
+  if (isRateLimited(ip)) {
+    return { error: "Too many requests. Please wait 15 minutes before trying again." }
+  }
+
   const name = sanitize((formData.get("name") as string) || "")
   const email = sanitize((formData.get("email") as string) || "")
   const phone = sanitize((formData.get("phone") as string) || "")
   const subject = sanitize((formData.get("subject") as string) || "")
   const message = sanitize((formData.get("message") as string) || "")
 
-  if (!name || !email || !message) {
-    return { error: "Please fill in all required fields." }
-  }
-
-  if (!EMAIL_REGEX.test(email)) {
-    return { error: "Please enter a valid email address." }
+  const validation = contactSchema.safeParse({ name, email, message })
+  if (!validation.success) {
+    return { error: validation.error.errors[0].message }
   }
 
   const supabase = createAdminClient()
