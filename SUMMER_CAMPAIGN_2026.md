@@ -1,5 +1,5 @@
 # 🌿 Lawn Masters V5 — Summer 2026 Campaign Plan
-> Status: IN PROGRESS — Some decisions locked in, remainder pending owner approval
+> Status: IN PROGRESS — Hormozi analysis complete. Most decisions locked. Remaining blockers: real photos + real reviews.
 > Strategy: Lead with high-ticket landscaping & pressure washing → convert to recurring mowing
 
 ---
@@ -22,6 +22,7 @@
 - **B:** "We'll Make It Look Brand New" / From pressure washing to landscaping cleanups — then keep it that way all summer
 - **C:** "Start Fresh. Stay Green." / One-time cleanups and recurring lawn care serving Newton County, GA
 - **D:** "Summer's the Best Time to Fall in Love With Your Yard Again" / High-ticket cleanups → recurring weekly care starting at $90/mo
+- **E:** "Your Property Deserves More Than a Mow — Se Habla Español" / Full-service landscaping, pressure washing & lawn care in Newton County, GA
 
 **Owner decision:** ✅ Option A — "Your Property Deserves More Than a Mow"
 
@@ -74,7 +75,22 @@
 
 ---
 
+### 🛡️ High-Ticket Satisfaction Guarantee
+
+**Guarantee copy:**
+"Not satisfied with the result? We come back and redo the problem area at no charge. No questions asked. Your property looks right or we make it right."
+
+**Where to use it:**
+- /summer landing page — full-width section alongside the mowing guarantee
+- Door hangers — back panel below the pricing table
+- On-site pitch — say it before quoting every high-ticket job
+- Instagram captions — mention it in before/after posts
+
+---
+
 ## 4. 🔄 Conversion Funnel
+> 💡 HORMOZI INSIGHT: The free first mowing cut is the single most powerful conversion lever. A $45–$55 free cut converts a $197 one-time PW customer into a $1,440/year recurring client. It must be named and positioned as a bonus.
+
 *How to turn a $300 pressure wash into a $1,440/year mowing client.*
 
 ### The Flow
@@ -96,8 +112,21 @@ High-ticket job completed (PW, cleanup, mulch)
 Variations:
 - *"A lot of our cleanup customers add weekly mowing so they don't have to worry about it. First cut is on us if you sign up today."*
 - *"We can be back next week for your first cut — lock in the price now before the summer route fills up."*
+- *"We guarantee the work — if anything doesn't look right, we come back and fix it at no charge. And if you want to keep the yard looking this good all summer, your first mowing cut is free when you sign up today. We call it the Summer Starter Cut."*
 
 **💡 Key principle:** Don't pitch it as a separate sale. Frame it as protecting the investment they just made.
+
+---
+
+### 🎁 The Summer Starter Cut (Official Bonus Name)
+- Official name: "The Summer Starter Cut"
+- Value: $45–$55 (one full mowing visit)
+- How to offer it: "Sign up for weekly or biweekly mowing today and your first cut is on us — the Summer Starter Cut, free."
+- Where to feature it:
+  - /summer landing page — named bonus card, NOT buried in body text
+  - Door hangers — back panel headline: "Book any service today → get your first mow FREE (The Summer Starter Cut)"
+  - On-site pitch: "We call it the Summer Starter Cut — yours free when you lock in a mowing plan today"
+  - Instagram — dedicated post as a conversion hook
 
 ---
 
@@ -131,19 +160,20 @@ Variations:
 ## 5. 🌐 Landing Page Sections (`/summer`)
 *Sell the transformation first. Mowing is the smart follow-through.*
 
-1. **Hero** — Headline + subhead + 2 CTAs: "Get a Quote" (SMS) / "Call Now"
-2. **Services Grid** — High-ticket services first (PW, cleanups, mulch, trimming), then mowing plans
-3. **"Start Fresh" Section** — Pain point: *"Your yard took a beating this spring. Here's how we fix it."* — 3 cards: overgrown beds / dirty driveway / neglected lawn
-4. **Pressure Washing Packages** — Visual pricing cards with photos
-5. **Landscaping Cleanup Packages** — Visual pricing cards with photos
-6. **The Conversion Bridge** — *"Love how it looks? Keep it that way."* — mowing plan cards (Biweekly / Weekly)
-7. **Before/After Photos** — Real Covington/Conyers jobs (PW + landscaping preferred)
-8. **How It Works** — 3 steps: Text us → Free quote → We handle the rest
-9. **Guarantee** — *"Missed cut without notice = your next cut is free"*
-10. **Reviews** — Customer name + neighborhood
-11. **Service Area Grid** — Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe
-12. **Bilingual CTA** — *"Se Habla Español — Text us in Spanish anytime"*
-13. **Final CTA** — SMS pre-fill + phone number
+1. **Hero** — "Your Property Deserves More Than a Mow" + "Se Habla Español" prominently in hero (NOT footer) + 2 CTAs
+2. **Trust bar** — "Licensed & Insured · Father & Son Team · Se Habla Español · Newton County, GA"
+3. **Transformation System** — 3-step visual: Step 1: Refresh (PW + landscaping) → Step 2: Maintain (mowing) → Step 3: Peace of Mind (guarantees + no contracts)
+4. **Scarcity banner** — "We're building our Newton County summer route now. Once your area fills, wait times increase."
+5. **Pressure Washing Packages** — with satisfaction guarantee callout
+6. **Landscaping Cleanup Packages** — with satisfaction guarantee callout
+7. **HIGH-TICKET GUARANTEE SECTION** — full width: "Not satisfied? We redo it. No questions asked."
+8. **The Conversion Bridge** — *"Love how it looks? Keep it that way."* — The Summer Starter Cut bonus featured with its name and value
+9. **Before/After Photos** — real Newton County jobs only
+10. **How It Works** — Text us → Free quote → We handle the rest
+11. **Reviews** — real reviews with first name + neighborhood
+12. **Service Area Grid** — Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe
+13. **Bilingual CTA** — "Se Habla Español — Text or call us in Spanish anytime" — full section not a footnote
+14. **Final CTA** — SMS pre-fill + phone + route scarcity reminder
 
 **Owner decision on URL:** ✅ `/summer` — new page
 
@@ -151,10 +181,17 @@ Variations:
 
 ## 6. 🚪 Door Hanger Strategy
 
-### Front — High-Ticket Hook
-- **Headline Option A:** *"Pressure Washing Starting at $197 — Covington & Surrounding Areas"*
-- **Headline Option B:** *"Is Your Driveway Embarrassing You? We Can Fix That Today."*
-- **Headline Option C:** *"Before Summer Ends — Get Your Property Looking Its Best"*
+### Front — Neighborhood-Specific Hook
+
+| Neighborhood | Front Headline | Lead Service |
+|---|---|---|
+| Covington near Hwy 278 | "Is your driveway embarrassing you?" | Pressure washing |
+| Oxford near Oxford College | "Your beds are fighting you. We'll fix that." | Landscaping cleanup |
+| Conyers off Hwy 138 | "Full property refresh + weekly mowing. One call." | Full property PW + mowing bundle |
+| Porterdale | "Get your yard cleaned up for $150*. No contracts." | Basic cleanup → mowing upsell |
+| Social Circle | "We're the only crew in this area that speaks Spanish." | Bilingual angle |
+| Monroe | "Your gutters and driveway — done in one visit." | PW + gutter cleaning combo |
+
 - Best before/after pressure washing or landscaping photo
 - CTA: *Text "CLEAN" to (407) 600-0301 for a free quote*
 - Small line: *Se Habla Español*
@@ -163,6 +200,9 @@ Variations:
 - *"Already got a clean yard? Keep it that way."*
 - Mowing plan cards: Biweekly $90/mo / Weekly $120/mo
 - Missed-cut guarantee callout
+- **The Summer Starter Cut** — First mow FREE when you book any service
+- "Not satisfied? We redo it. No questions asked."
+- "Building Newton County routes now — spots are limited"
 - Instagram: @lawnmasters_v5
 - Website: lawnmastersv5.com
 - QR code to `/summer`
@@ -205,6 +245,15 @@ Photo or short clip of the crew finishing a job in the summer heat. Caption: *"F
 **Post 5 — Bilingual Reach**
 Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano? Presupuesto gratis."* English below. Reaches an underserved audience in Newton County.
 
+**Post 6 — The Summer Starter Cut reveal**
+"Book any pressure washing or landscaping job this summer → your first mowing cut is FREE. We're calling it the Summer Starter Cut. Text SUMMER to (407) 600-0301 to claim yours." Reel or graphic. This is a conversion post.
+
+**Post 7 — Scarcity/route density post**
+"We're building our Newton County summer route right now. Once your neighborhood fills — it fills. We can't add more stops without compromising quality. If you're in Covington, Conyers, or Oxford — now is the time." No hard sell. Just honest.
+
+**Post 8 — Guarantee post**
+"We guarantee every job. Not happy? We come back and fix it at no charge. No drama. No questions. That's the Lawn Masters V5 promise." Works as a static graphic with the guarantee text large.
+
 ---
 
 ### 🎬 Reel Concepts
@@ -225,6 +274,11 @@ Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano?
 
 **Owner decision on content calendar:** [ ]
 
+**Bilingual strategy updates:**
+- Move "Se Habla Español" to Instagram bio immediately — it is a competitive moat, not a footnote
+- Run one Spanish-first reel per week minimum: film in Spanish, caption in Spanish first, English translation below
+- Tag #NewtonCountyGA #CovingtonGA in every post
+
 ---
 
 ## 8. 📊 Weekly Targets (Dual Strategy)
@@ -244,13 +298,15 @@ Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano?
 - 23 mowing clients @ avg $105/mo = ~$2,415/mo recurring by week 6
 - Combined month 2 target: **$3,000–$4,000/mo**
 
+> 💡 HORMOZI REVENUE MATH: One Summer Starter Cut ($45 cost) converting to weekly mowing = $1,440/year LTV. The bonus costs less than 3% of first-year revenue. Offer it aggressively.
+
 ---
 
 ## 9. 📅 6-Week Timeline
 
-- **Week 1 — Foundation:** Finalize campaign name + offer, update website `/spring-rush` → `/summer` page, print door hangers, text any local contacts or past Florida customers who may have Georgia connections
-- **Week 2 — Launch Push:** First 150 door hangers in Covington (Hwy 278 area) + Conyers, post PW before/after reel, follow up on any quotes from Week 1
-- **Week 3 — Content + Conversions:** Post "combo" content, second pass on Week 2 neighborhoods, add Oxford to hanger route, upsell mowing on every completed job
+- **Week 1 — Foundation:** Finalize campaign name + offer, update website `/spring-rush` → `/summer` page, print door hangers, text any local contacts or past Florida customers who may have Georgia connections. Add satisfaction guarantee to all service descriptions on the website. Move "Se Habla Español" to Instagram bio. Position "The Summer Starter Cut" bonus on landing page and door hangers.
+- **Week 2 — Launch Push:** First 150 door hangers in Covington (Hwy 278 area) + Conyers, post PW before/after reel, follow up on any quotes from Week 1. Use neighborhood-specific door hanger headlines per the table in Section 6. Mention the Summer Starter Cut in every on-site pitch after completing a job.
+- **Week 3 — Content + Conversions:** Post "combo" content, second pass on Week 2 neighborhoods, add Oxford to hanger route, upsell mowing on every completed job. Post the guarantee post on Instagram (Post 8). Post the Summer Starter Cut reveal post (Post 6).
 - **Week 4 — Expand:** Hit Porterdale + Social Circle, post bilingual content, follow up Day 10 texts to Week 2–3 customers, check recurring client count vs target
 - **Week 5 — Referral Push:** Text all new clients referral offer ($20 off next service per friend), post crew credibility content, close open quotes, lighter hanger week
 - **Week 6 — Review:** Count high-ticket jobs completed + recurring clients signed, identify top-converting neighborhoods, decide whether to extend campaign or shift to fall cleanup messaging
@@ -265,13 +321,15 @@ Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano?
 - ✅ Second service → **Full Bed Refresh, starting at $300–$500**
 - ✅ Exterior house cleaning → **Keep as option, all pricing quoted on-site per property**
 - ✅ Landing page URL → **`/summer` (new page)**
-- [ ] Pressure washing pricing ranges (confirm or adjust $197–$250 driveway starting point)
-- [ ] Landscaping pricing ranges (confirm or adjust $300–$500 Full Bed Refresh starting point)
-- [ ] On-site upsell script (approve or revise)
-- [ ] Follow-up text scripts (approve or revise)
-- [ ] Door hanger headline (A / B / C)
-- [ ] Which neighborhoods to hit first
+- ✅ High-ticket satisfaction guarantee added
+- ✅ The Summer Starter Cut — official bonus name approved
+- ✅ "Se Habla Español" moved to hero + Instagram bio
+- ✅ Neighborhood-specific door hanger hooks approved
+- ✅ Honest scarcity messaging about route density approved
+- [ ] First neighborhoods to hit (confirm priority order)
 - [ ] Instagram content calendar start date
+- [ ] Real before/after photos (need actual Newton County job photos)
+- [ ] Real customer reviews (need 5+ with first name + neighborhood)
 
 ---
 
