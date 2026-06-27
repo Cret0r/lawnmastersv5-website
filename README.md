@@ -1,3 +1,7 @@
+[![Production](https://img.shields.io/badge/Production-LIVE-success?style=flat-square&logo=vercel)](https://lawnmastersv5.com)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
+
 # Lawn Masters V5 — Website
 
 Production marketing website for **Lawn Masters V5 INC**, a lawn care and landscaping company serving Covington, GA and surrounding Newton County. The site generates customer leads via a quote request form and a contact form. All submissions are stored in Supabase and reviewed in a protected admin dashboard.
@@ -174,6 +178,15 @@ The admin portal is protected by a custom cookie-based session (not Supabase Aut
 
 ---
 
+## Branch Workflow
+
+- `master` — production branch, auto-deploys to lawnmastersv5.com on every push
+- Feature branches — use for new pages or major changes (e.g. `summer-campaign`)
+- Never build directly on master for new features
+- Test locally at localhost:3000 before merging to master
+
+---
+
 ## Brand & Content Notes
 
 **Business:** Lawn Masters V5 INC  
@@ -201,3 +214,26 @@ The admin portal is protected by a custom cookie-based session (not Supabase Aut
 ---
 
 For full technical reference, see `ARCHITECTURE.md`. For AI agent rules and content update procedures, see `AGENTS.md`.
+
+---
+
+## Changelog
+
+**Session 1 — June 2026**
+- Migrated site from V0 to Vercel free hosting
+- Full Georgia rebrand (Florida → Covington, GA)
+- Supabase setup — quote_submissions + contact_messages tables
+- Admin portal built with custom cookie auth
+- ARCHITECTURE.md, AGENTS.md, HANDOFF.md, claude-mem installed
+
+---
+
+## Roadmap
+
+- [ ] Build /summer campaign landing page (summer-campaign branch)
+- [ ] Replace hero background with real Georgia lawn photo
+- [ ] Replace before/after photos with real Newton County job photos
+- [ ] Add 5+ real customer reviews
+- [ ] Enable image optimization once images are compressed
+- [ ] Cypress testing + tech stack additions
+- [ ] Add Admin button to mobile nav
