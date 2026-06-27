@@ -2,7 +2,7 @@
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
 
-# Lawn Masters V5 — Website
+# 🌿 Lawn Masters V5 — Website
 
 Production marketing website for **Lawn Masters V5 INC**, a lawn care and landscaping company serving Covington, GA and surrounding Newton County. The site generates customer leads via a quote request form and a contact form. All submissions are stored in Supabase and reviewed in a protected admin dashboard.
 
@@ -12,24 +12,24 @@ Production marketing website for **Lawn Masters V5 INC**, a lawn care and landsc
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 16 — App Router |
-| Language | TypeScript 5 |
-| Styling | Tailwind CSS v4 + shadcn/ui (Radix UI) |
-| Database | Supabase (PostgreSQL + Row Level Security) |
-| Auth | Custom cookie session (not Supabase Auth) |
-| Hosting | Vercel |
-| Analytics | Vercel Analytics |
-| Fonts | Inter (sans), DM Serif Display (serif) via `next/font` |
-| Icons | lucide-react |
-| Forms | Native HTML + React Server Actions + `useTransition` |
+| 🧱 Framework | Next.js 16 — App Router |
+| 💬 Language | TypeScript 5 |
+| 🎨 Styling | Tailwind CSS v4 + shadcn/ui (Radix UI) |
+| 🗄️ Database | Supabase (PostgreSQL + Row Level Security) |
+| 🔐 Auth | Custom cookie session (not Supabase Auth) |
+| ☁️ Hosting | Vercel |
+| 📊 Analytics | Vercel Analytics |
+| 🔤 Fonts | Inter (sans), DM Serif Display (serif) via `next/font` |
+| 🎯 Icons | lucide-react |
+| 📝 Forms | Native HTML + React Server Actions + `useTransition` |
 
 ---
 
-## Running Locally
+## 💻 Running Locally
 
 ```bash
 npm install
@@ -46,7 +46,7 @@ npm run lint      # eslint
 
 ---
 
-## Environment Variables
+## 🔐 Environment Variables
 
 Create `.env.local` with these values. All five are required for full functionality.
 
@@ -60,29 +60,29 @@ ADMIN_PASSWORD=your-strong-password
 
 | Variable | Notes |
 |---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public key — safe to expose to browser |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-only — bypasses RLS. Never expose to browser. |
-| `ADMIN_EMAIL` | Admin dashboard login. Defaults to `admin@test.com` if unset — **always override in production** |
-| `ADMIN_PASSWORD` | Admin dashboard password. Defaults to `test123456` if unset — **always override in production** |
+| 🔗 `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| 🔑 `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public key — safe to expose to browser |
+| 🛡️ `SUPABASE_SERVICE_ROLE_KEY` | Server-only — bypasses RLS. Never expose to browser. |
+| 📧 `ADMIN_EMAIL` | Admin dashboard login. Defaults to `admin@test.com` if unset — **always override in production** |
+| 🔒 `ADMIN_PASSWORD` | Admin dashboard password. Defaults to `test123456` if unset — **always override in production** |
 
 For production, set all variables in **Vercel → Project Settings → Environment Variables**.
 
 ---
 
-## Database Setup
+## 🗄️ Database Setup
 
 The site uses two Supabase tables. Run these SQL scripts in the Supabase SQL Editor in order:
 
 | Script | Purpose | Status |
 |---|---|---|
-| `scripts/001_create_submissions.sql` | Creates `quote_submissions` table + RLS policies | Run this first |
-| `scripts/003_fix_admin_rls.sql` | Adds authenticated read/update/delete policies | Run after 001 |
-| `scripts/004_create_contact_messages.sql` | Creates `contact_messages` table + RLS policies | Run after 003 |
+| 1️⃣ `scripts/001_create_submissions.sql` | Creates `quote_submissions` table + RLS policies | Run this first |
+| 2️⃣ `scripts/003_fix_admin_rls.sql` | Adds authenticated read/update/delete policies | Run after 001 |
+| 3️⃣ `scripts/004_create_contact_messages.sql` | Creates `contact_messages` table + RLS policies | Run after 003 |
 
 > **Skip** `scripts/002_create_admin_user.sql` — it creates a Supabase Auth user the site does not use.
 
-### Tables
+### 📋 Tables
 
 **`quote_submissions`** — populated by the `/quote` form  
 Fields: `id`, `first_name`, `last_name`, `email`, `phone`, `address`, `property_type`, `property_size`, `services` (text[]), `timeline`, `details`, `status` (new/contacted/quoted/closed), `created_at`
@@ -92,7 +92,7 @@ Fields: `id`, `name`, `email`, `phone`, `subject`, `message`, `read` (boolean), 
 
 ---
 
-## Folder Structure
+## 📁 Folder Structure
 
 ```
 app/                    Next.js pages (App Router)
@@ -128,24 +128,24 @@ middleware.ts           Edge middleware — protects all /admin/* routes
 
 ---
 
-## Key Pages
+## 🌐 Key Pages
 
 | Route | Type | Purpose |
 |---|---|---|
-| `/` | Server | Homepage — Summer campaign hero, pricing, reviews, services |
-| `/about` | Server | Company story, values, service area |
-| `/services` | Server | Full service catalog (7 services) |
-| `/gallery` | Server | 12 before/after transformation sliders |
-| `/contact` | Client | Contact form → `contact_messages` table |
-| `/quote` | Client | Free estimate form → `quote_submissions` table |
-| `/service-policies` | Server | Pricing policy, weather policy, guarantee terms |
-| `/spring-rush` | Server | Standalone campaign landing page (URL is still `/spring-rush`, content says "Summer Special") |
-| `/admin` | Server | Protected dashboard — view and manage quote requests + messages |
-| `/admin/login` | Server | Admin login (dark-themed, cookie-based auth) |
+| 🏠 `/` | Server | Homepage — Summer campaign hero, pricing, reviews, services |
+| 👤 `/about` | Server | Company story, values, service area |
+| 🌿 `/services` | Server | Full service catalog (7 services) |
+| 🖼️ `/gallery` | Server | 12 before/after transformation sliders |
+| 📬 `/contact` | Client | Contact form → `contact_messages` table |
+| 💰 `/quote` | Client | Free estimate form → `quote_submissions` table |
+| 📋 `/service-policies` | Server | Pricing policy, weather policy, guarantee terms |
+| ☀️ `/spring-rush` | Server | Standalone campaign landing page (URL is still `/spring-rush`, content says "Summer Special") |
+| 🔒 `/admin` | Server | Protected dashboard — view and manage quote requests + messages |
+| 🔑 `/admin/login` | Server | Admin login (dark-themed, cookie-based auth) |
 
 ---
 
-## Admin Portal
+## 🔒 Admin Portal
 
 **URL:** `/admin/login`  
 **Credentials:** Set via `ADMIN_EMAIL` and `ADMIN_PASSWORD` environment variables.
@@ -164,7 +164,7 @@ The admin portal is protected by a custom cookie-based session (not Supabase Aut
 
 ---
 
-## Deployment
+## 🚀 Deployment
 
 1. Push to `master` — Vercel auto-deploys
 2. Set all 5 environment variables in Vercel project settings
@@ -178,7 +178,7 @@ The admin portal is protected by a custom cookie-based session (not Supabase Aut
 
 ---
 
-## Branch Workflow
+## 🌿 Branch Workflow
 
 - `master` — production branch, auto-deploys to lawnmastersv5.com on every push
 - Feature branches — use for new pages or major changes (e.g. `summer-campaign`)
@@ -187,7 +187,7 @@ The admin portal is protected by a custom cookie-based session (not Supabase Aut
 
 ---
 
-## Brand & Content Notes
+## 🎨 Brand & Content Notes
 
 **Business:** Lawn Masters V5 INC  
 **Phone:** (407) 600-0301  
@@ -196,20 +196,20 @@ The admin portal is protected by a custom cookie-based session (not Supabase Aut
 **Service area:** Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe, GA (Newton County)  
 **Languages:** English + Spanish (Se Habla Español)
 
-### Content update rules
+### ✏️ Content update rules
 
 - **Campaign copy** (announcement bar text, hero headlines, pricing, SMS pre-fill, guarantee, referral, service area) — edit `lib/spring-rush-content.ts` first. This is the single source of truth consumed by the homepage and `/spring-rush` landing page.
 - **Customer reviews** — edit `lib/reviews-data.ts`.
 - **Phone number** — appears in ~9 files. Search for `14076000301` before editing. See `ARCHITECTURE.md § 4` for the full list.
 - **Logo files** — do not modify `public/logo-color.png` or `public/logo-contrast.png`.
 
-### Known issues
+### ⚠️ Known issues
 
 | Issue | File | Fix |
 |---|---|---|
-| Gallery shows "15+ Years" — homepage shows "5+ Years" | `app/gallery/page.tsx` (stats section) | Change to "5+" |
-| Campaign route still named `/spring-rush` | `app/spring-rush/` | Do not rename without checking ad campaign links |
-| Admin button is desktop-only | `components/navigation.tsx` | Add to mobile drawer if needed |
+| 🐛 Gallery shows "15+ Years" — homepage shows "5+ Years" | `app/gallery/page.tsx` (stats section) | Change to "5+" |
+| 🐛 Campaign route still named `/spring-rush` | `app/spring-rush/` | Do not rename without checking ad campaign links |
+| 🐛 Admin button is desktop-only | `components/navigation.tsx` | Add to mobile drawer if needed |
 
 ---
 
@@ -217,7 +217,7 @@ For full technical reference, see `ARCHITECTURE.md`. For AI agent rules and cont
 
 ---
 
-## Changelog
+## 📝 Changelog
 
 **Session 1 — June 2026**
 - Migrated site from V0 to Vercel free hosting
@@ -228,7 +228,7 @@ For full technical reference, see `ARCHITECTURE.md`. For AI agent rules and cont
 
 ---
 
-## Roadmap
+## 🗺️ Roadmap
 
 - [ ] Build /summer campaign landing page (summer-campaign branch)
 - [ ] Replace hero background with real Georgia lawn photo
