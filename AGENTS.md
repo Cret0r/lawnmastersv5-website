@@ -63,7 +63,12 @@ lib/
   spring-rush-content.ts   MASTER CONTENT FILE — all campaign copy
   reviews-data.ts           Customer reviews
   admin-auth.ts             Admin session helpers
+  rate-limit.ts             IP rate limiter — used by both form actions (do not remove)
   supabase/                 Supabase client factories
+
+cypress/
+  e2e/                     End-to-end tests — must all pass before merging to master
+  support/e2e.ts           Exception handler for hydration + Supabase errors
 ```
 
 ---
@@ -144,6 +149,8 @@ bg-primary-foreground text-primary hover:bg-primary-foreground/90
 
 - **Use Server Actions** for form submissions — not API routes. See `app/contact/actions.ts` for the pattern.
 
+- **Run `npm run cypress:run` before merging to master** — all 26 tests must pass. Tests cover admin auth, contact form, homepage, navigation, and quote form.
+
 - **Check ARCHITECTURE.md § 4** (Content & Copy) before adding a new instance of the phone number, city name, or campaign phrase so you know all locations to keep in sync.
 
 ---
@@ -203,12 +210,10 @@ All must be set in Vercel project settings for production. For local dev, create
 
 ## Known Issues to Be Aware Of
 
-1. **Gallery page shows "15+ Years" but homepage shows "5+ Years"** — the correct number is 5+. The gallery stats section needs updating.
+1. **`next.config.mjs` ignores TypeScript errors at build** — `ignoreBuildErrors: true`. Fix TS errors anyway; this is a safety net, not a license to ignore them.
 
-2. **`next.config.mjs` ignores TypeScript errors at build** — `ignoreBuildErrors: true`. Fix TS errors anyway; this is a safety net, not a license to ignore them.
+2. **Route `/spring-rush` still named after old campaign** — all content says "Summer Special" but the URL and file stay `spring-rush`. Don't rename the route without checking for any ad campaign links pointing to it.
 
-3. **Route `/spring-rush` still named after old campaign** — all content says "Summer Special" but the URL and file stay `spring-rush`. Don't rename the route without checking for any ad campaign links pointing to it.
+3. **Image optimization is disabled** — `images: { unoptimized: true }` in `next.config.mjs`. All images serve at full original file size.
 
-4. **Image optimization is disabled** — `images: { unoptimized: true }` in `next.config.mjs`. All images serve at full original file size.
-
-5. **Admin auth uses a static cookie token** — not Supabase Auth. Simple but means only one admin account. Token is `lm5-admin-authenticated-2026`. This is checked in both `middleware.ts` and `lib/admin-auth.ts` — if you ever update the token, change it in both files.
+4. **Admin auth uses a static cookie token** — not Supabase Auth. Simple but means only one admin account. Token is `lm5-admin-authenticated-2026`. This is checked in both `middleware.ts` and `lib/admin-auth.ts` — if you ever update the token, change it in both files.

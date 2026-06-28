@@ -26,6 +26,10 @@ Production marketing website for **Lawn Masters V5 INC**, a lawn care and landsc
 | 🔤 Fonts | Inter (sans), DM Serif Display (serif) via `next/font` |
 | 🎯 Icons | lucide-react |
 | 📝 Forms | Native HTML + React Server Actions + `useTransition` |
+| ✅ E2E Testing | Cypress | 26/26 tests — `npm run cypress:run` |
+| 🔍 Form Validation | Zod | Schema validation in both form Server Actions |
+| ⚡ Performance | Vercel Speed Insights | Auto-injected in `app/layout.tsx` |
+| 🛡️ Rate Limiting | Custom in-memory | 3 requests / IP / 15 min on form submissions |
 
 ---
 
@@ -207,7 +211,6 @@ The admin portal is protected by a custom cookie-based session (not Supabase Aut
 
 | Issue | File | Fix |
 |---|---|---|
-| 🐛 Gallery shows "15+ Years" — homepage shows "5+ Years" | `app/gallery/page.tsx` (stats section) | Change to "5+" |
 | 🐛 Campaign route still named `/spring-rush` | `app/spring-rush/` | Do not rename without checking ad campaign links |
 | 🐛 Admin button is desktop-only | `components/navigation.tsx` | Add to mobile drawer if needed |
 
@@ -226,6 +229,16 @@ For full technical reference, see `ARCHITECTURE.md`. For AI agent rules and cont
 - Admin portal built with custom cookie auth
 - ARCHITECTURE.md, AGENTS.md, HANDOFF.md, claude-mem installed
 
+**Session 2 — June 27–28, 2026**
+- SUMMER_CAMPAIGN_2026.md rebuilt with full Hormozi framework analysis + dual-strategy
+- output/HORMOZI_SUMMER_OFFER.md created — 10 Hormozi skills applied to the campaign
+- Cypress E2E test suite added — 26/26 tests passing
+- Zod schema validation added to both form Server Actions
+- In-memory IP rate limiting (lib/rate-limit.ts) — 3 req/IP/15 min
+- Vercel Speed Insights added to app/layout.tsx
+- README.md created with full developer onboarding docs
+- Gallery "15+ years" stat fixed to "5+"
+
 ---
 
 ## 🗺️ Roadmap
@@ -235,5 +248,5 @@ For full technical reference, see `ARCHITECTURE.md`. For AI agent rules and cont
 - [ ] Replace before/after photos with real Newton County job photos
 - [ ] Add 5+ real customer reviews
 - [ ] Enable image optimization once images are compressed
-- [ ] Cypress testing + tech stack additions
+- [x] Cypress testing + tech stack additions — 26/26 passing ✅
 - [ ] Add Admin button to mobile nav

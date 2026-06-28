@@ -5,6 +5,29 @@
 
 ---
 
+## 0. TECH STACK
+
+| Layer | Technology | Notes |
+|---|---|---|
+| Framework | Next.js 16 (App Router) | React 19, Server + Client Components |
+| Language | TypeScript 5 | Build errors suppressed — `ignoreBuildErrors: true` |
+| Styling | Tailwind CSS v4 | CSS custom properties, no tailwind.config.ts needed |
+| Component Library | shadcn/ui (Radix UI) | Full library installed, most unused |
+| Database | Supabase | PostgreSQL + Row Level Security |
+| Auth | Custom cookie session | NOT Supabase Auth — hardcoded token + env var credentials |
+| Hosting | Vercel | Auto-deploys from GitHub `master` |
+| Analytics | Vercel Analytics | `<Analytics />` in app/layout.tsx |
+| Performance | Vercel Speed Insights | `<SpeedInsights />` in app/layout.tsx |
+| Fonts | Inter (sans), DM Serif Display (serif) | Google Fonts via next/font |
+| Icons | lucide-react | Used throughout site |
+| Forms | Server Actions + useTransition | No API routes — see app/contact/actions.ts |
+| Form Validation | Zod | `quoteSchema` + `contactSchema` in both form Server Actions |
+| Rate Limiting | Custom in-memory (lib/rate-limit.ts) | 3 requests per IP per 15 min on both form actions |
+| E2E Testing | Cypress | 26/26 tests — `npm run cypress:run` |
+| CSS Modules | Used for admin components | login.module.css, admin-nav-button.module.css |
+
+---
+
 ## 1. PROJECT STRUCTURE
 
 ```
@@ -77,6 +100,7 @@ landscaping-business-website/
 │   ├── reviews-data.ts           # Customer reviews array + Google review link
 │   ├── admin-auth.ts             # Cookie-based admin auth helpers (verify, create, destroy session)
 │   ├── utils.ts                  # Tailwind cn() merge utility
+│   ├── rate-limit.ts             # In-memory IP rate limiter (3 req/IP/15 min window)
 │   └── supabase/
 │       ├── client.ts             # Browser Supabase client (anon key)
 │       ├── server.ts             # Server Supabase client (anon key, cookie-aware)
@@ -120,6 +144,16 @@ landscaping-business-website/
 │
 ├── styles/
 │   └── globals.css               # Duplicate/mirror of app/globals.css (legacy, app/ version takes precedence)
+│
+├── cypress/
+│   ├── e2e/                          # End-to-end tests (26 tests total, all passing)
+│   │   ├── admin.cy.ts               # Admin portal auth (5 tests)
+│   │   ├── contact.cy.ts             # Contact form (5 tests)
+│   │   ├── homepage.cy.ts            # Homepage load + content (4 tests)
+│   │   ├── navigation.cy.ts          # Nav links (5 tests)
+│   │   └── quote.cy.ts               # Quote form (7 tests)
+│   └── support/
+│       └── e2e.ts                    # Uncaught exception handler (hydration + Supabase errors)
 │
 ├── scripts/
 │   ├── 001_create_submissions.sql  # Creates quote_submissions table + RLS policies
@@ -353,9 +387,7 @@ All `[data-slot="button"]` elements have a letter-spacing hover effect + green b
 
 3. **Admin auth is a static token** — Not Supabase Auth. The cookie value is hardcoded as `lm5-admin-authenticated-2026`. Middleware checks this token. Default credentials (`admin@test.com` / `test123456`) will be used if env vars are not set in production.
 
-4. **Gallery page shows "15+ Years of Experience"** — Homepage shows "5+ Years." These are inconsistent. The correct figure is 5+ years (per About page).
-
-5. **Route still named `/spring-rush`** — The campaign was renamed to "Summer Special" but the URL route is still `/spring-rush`. Not a bug but may confuse future editors. The `lib/spring-rush-content.ts` file is similarly named.
+4. **Route still named `/spring-rush`** — The campaign was renamed to "Summer Special" but the URL route is still `/spring-rush`. Not a bug but may confuse future editors. The `lib/spring-rush-content.ts` file is similarly named.
 
 6. **`leaflet` / `react-leaflet` installed** — Used in `app/admin/route-planner-tab.tsx` for the admin route planner. The package requires `"use client"` and dynamic imports to avoid SSR issues with `window`.
 

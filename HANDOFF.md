@@ -1,5 +1,5 @@
 # Lawn Masters V5 Website — AI Handoff Document
-> Last updated: June 20, 2026 (session 2)
+> Last updated: June 27, 2026 (session 3)
 > Rule: Update this document at the end of every session before pushing.
 
 ---
@@ -31,6 +31,10 @@ Production marketing website for **Lawn Masters V5 INC**, a lawn care and landsc
 | Icons | lucide-react | Standard throughout site |
 | Forms | Server Actions + useTransition | No API routes — see app/contact/actions.ts |
 | Custom CSS | CSS Modules | Used for admin login + admin nav button |
+| Form Validation | Zod | quoteSchema + contactSchema in both form Server Actions |
+| Rate Limiting | In-memory (lib/rate-limit.ts) | 3 requests/IP/15 min on both form actions |
+| E2E Testing | Cypress | 26/26 tests passing — `npm run cypress:run` |
+| Performance | Vercel Speed Insights | `<SpeedInsights />` in app/layout.tsx |
 
 ---
 
@@ -121,6 +125,7 @@ lib/
   reviews-data.ts         Customer reviews array + Google review link
   admin-auth.ts           Cookie session: verify, create, destroy, check
   utils.ts                cn() Tailwind merge utility
+  rate-limit.ts           In-memory IP rate limiter (3 req/IP/15 min) — used by both form actions
   supabase/
     client.ts             Browser client (anon key)
     server.ts             Server client (anon key, cookie-aware)
@@ -148,6 +153,11 @@ scripts/
   maintenance/code-quality.sh
   automation/documentation-generator.sh
 
+cypress/
+  e2e/                    End-to-end tests (admin, contact, homepage, navigation, quote)
+  support/e2e.ts          Exception handler for hydration + Supabase errors
+cypress.config.ts         Cypress config (baseUrl: localhost:3000)
+
 middleware.ts             Edge middleware — protects /admin/* routes
 next.config.mjs           TypeScript error bypass, images unoptimized
 ARCHITECTURE.md           Full technical reference
@@ -165,7 +175,7 @@ CLAUDE.md                 Points to AGENTS.md
 | `/` | app/page.tsx | Server | ✅ Working | Summer Special hero + full marketing page |
 | `/about` | app/about/page.tsx | Server | ✅ Working | Story, values, service area |
 | `/services` | app/services/page.tsx | Server | ✅ Working | 7 services with feature lists |
-| `/gallery` | app/gallery/page.tsx | Server | ✅ Working | 12 before/after sliders — **stats bug: shows 15+ years** |
+| `/gallery` | app/gallery/page.tsx | Server | ✅ Working | 12 before/after sliders |
 | `/contact` | app/contact/page.tsx | Client | ✅ Working | Form saves to contact_messages table |
 | `/quote` | app/quote/page.tsx | Client | ✅ Working | Form saves to quote_submissions table |
 | `/service-policies` | app/service-policies/page.tsx | Server | ✅ Working | 6 policy sections |
@@ -206,15 +216,24 @@ CLAUDE.md                 Points to AGENTS.md
 - **[Session 2]** Created scripts/004_create_contact_messages.sql
 - **[Session 2]** Added detailed Supabase error logging to app/contact/actions.ts
 - **[Session 2]** Created SUMMER_CAMPAIGN_2026.md — initial campaign planning doc
+- **[Session 3]** SUMMER_CAMPAIGN_2026.md fully updated with Hormozi framework analysis
+- **[Session 3]** output/HORMOZI_SUMMER_OFFER.md created — 10 Hormozi skills run against the campaign
+- **[Session 3]** Cypress E2E test suite — 26/26 tests passing (admin, contact, homepage, navigation, quote)
+- **[Session 3]** Zod schema validation added to app/quote/actions.ts and app/contact/actions.ts
+- **[Session 3]** Vercel Speed Insights added to app/layout.tsx
+- **[Session 3]** In-memory IP rate limiting (lib/rate-limit.ts) — 3 req/IP/15 min on both form actions
+- **[Session 3]** README.md created with badges, changelog, roadmap, branch workflow docs
+- **[Session 3]** Gallery "15+ years" bug fixed to "5+" (app/gallery/page.tsx)
+- **[Session 3]** lawnmastersv5.com domain removed from old V0 Vercel project
+- **[Session 3]** hormozi-skills cloned and installed into Claude Code
 
 ### IN PROGRESS 🔵
-- **Summer 2026 campaign** — SUMMER_CAMPAIGN_2026.md exists but is being revised
-  - Strategy shift: lead with high-ticket services (landscaping installs + pressure washing) to generate cash, then convert those customers to recurring mowing
-  - Owner decision: campaign covers BOTH high-ticket AND recurring mowing (dual strategy)
-  - Next step: rebuild SUMMER_CAMPAIGN_2026.md with dual-strategy structure, then build the summer landing page
+- **Summer 2026 campaign** — SUMMER_CAMPAIGN_2026.md fully updated with Hormozi analysis
+  - Dual strategy: lead with high-ticket services (pressure washing, landscaping installs) → convert to recurring mowing
+  - Hormozi insights applied: satisfaction guarantee, Summer Starter Cut bonus, scarcity messaging, neighborhood-specific door hangers, bilingual Instagram strategy
+  - Next step: build the summer landing page at /spring-rush using the 14-section structure in SUMMER_CAMPAIGN_2026.md
 
 ### MEDIUM PRIORITY 🟡
-- Fix gallery page stats: "15+ Years of Experience" → "5+ Years" (app/gallery/page.tsx stats section)
 - Add real customer reviews to lib/reviews-data.ts (currently 3 placeholder entries)
 - Update Google Review link in lib/reviews-data.ts to actual business Google My Business URL
 - Consider enabling image optimization: remove `unoptimized: true` from next.config.mjs after compressing image files
@@ -226,7 +245,6 @@ CLAUDE.md                 Points to AGENTS.md
 
 | Bug | File | Severity | Fix |
 |---|---|---|---|
-| Gallery shows "15+ Years" — homepage shows "5+ Years" | app/gallery/page.tsx (stats section near bottom) | Medium | Change to "5+" to match homepage |
 | TypeScript errors silently ignored at build | next.config.mjs | Low | `ignoreBuildErrors: true` — don't rely on this |
 
 ---
