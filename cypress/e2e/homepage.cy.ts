@@ -9,7 +9,7 @@ describe("Homepage", () => {
   })
 
   it("displays hero text", () => {
-    cy.contains("Your Property Deserves More Than a Mow").should("be.visible")
+    cy.contains("Secure Your Spot").should("be.visible")
   })
 
   it("has a Call Now button", () => {

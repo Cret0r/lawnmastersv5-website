@@ -42,7 +42,12 @@ export async function submitQuote(formData: FormData) {
     return { error: validation.error.errors[0].message }
   }
 
-  const supabase = createAdminClient()
+  let supabase
+  try {
+    supabase = createAdminClient()
+  } catch {
+    return { error: "Something went wrong. Please try again." }
+  }
 
   const { error } = await supabase.from("quote_submissions").insert({
     first_name: firstName,

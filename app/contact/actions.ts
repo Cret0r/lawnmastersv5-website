@@ -34,7 +34,12 @@ export async function submitContactMessage(formData: FormData) {
     return { error: validation.error.errors[0].message }
   }
 
-  const supabase = createAdminClient()
+  let supabase
+  try {
+    supabase = createAdminClient()
+  } catch {
+    return { error: "Something went wrong. Please try again." }
+  }
 
   const { error } = await supabase.from("contact_messages").insert({
     name,
