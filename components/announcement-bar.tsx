@@ -24,18 +24,20 @@ export function AnnouncementBar() {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[60] bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 py-2.5 flex items-center justify-center gap-3 text-sm">
-        <span className="hidden sm:inline font-medium">{text}</span>
-        <span className="sm:hidden font-medium">Summer Special — Now Booking</span>
-        <Link
-          href={href}
-          className="inline-flex items-center rounded-full bg-primary-foreground text-primary px-4 py-1 text-xs font-bold hover:bg-primary-foreground/90 transition-colors"
-        >
-          {cta}
-        </Link>
+      <div className="container mx-auto px-4 py-2.5 flex items-center gap-3 text-sm">
+        <div className="flex-1 flex items-center justify-center gap-3">
+          <span className="hidden sm:inline font-medium">{text}</span>
+          <span className="sm:hidden font-medium">Summer Special — Now Booking</span>
+          <Link
+            href={href}
+            className="inline-flex items-center rounded-full bg-primary-foreground text-primary px-4 py-1 text-xs font-bold hover:bg-primary-foreground/90 transition-colors"
+          >
+            {cta}
+          </Link>
+        </div>
         <button
           onClick={handleDismiss}
-          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-primary-foreground/20 transition-colors"
+          className="flex-shrink-0 p-1 rounded-full hover:bg-primary-foreground/20 transition-colors"
           aria-label="Dismiss announcement"
         >
           <X className="w-4 h-4" />
