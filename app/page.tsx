@@ -89,7 +89,7 @@ export default function Home() {
       <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 bg-foreground">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/hero-lawn-care-new.jpg"
+            src="/hero-bg.jpg"
             alt="Professional manicured lawn in Covington, Georgia"
             fill
             className="object-cover opacity-30"
