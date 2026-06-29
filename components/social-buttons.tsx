@@ -29,7 +29,7 @@ export function SocialButtons() {
 
         {/* Facebook - Top Right */}
         <a
-          href="https://www.facebook.com/profile.php?id=61586389722504"
+          href="https://www.facebook.com/profile.php?id=61590265813532"
           target="_blank"
           rel="noopener noreferrer"
           className="group w-[70px] h-[70px] bg-white rounded-[5px_70px_5px_5px] shadow-md transition-all duration-200 ease-in-out hover:scale-110 hover:bg-[#1877F2] flex items-center justify-center"
