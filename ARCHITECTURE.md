@@ -165,6 +165,7 @@ landscaping-business-website/
 │   ├── maintenance/              # Code quality scripts
 │   └── automation/               # Documentation reminders
 │
+├── cypress.config.ts              # Cypress config: baseUrl http://localhost:3000 (dev server must be running)
 ├── middleware.ts                  # Edge middleware: protects /admin/* routes via cookie session
 ├── next.config.mjs               # Next.js config: TypeScript error bypass, unoptimized images
 ├── tsconfig.json                 # TypeScript config with path alias @/ → root

@@ -62,10 +62,13 @@ Production marketing website for **Lawn Masters V5 INC**, a lawn care and landsc
 ```
 Client Component form
   → Server Action (app/*/actions.ts)
-    → createAdminClient() [uses SUPABASE_SERVICE_ROLE_KEY]
-      → Supabase insert into quote_submissions or contact_messages
-        → Admin sees it at /admin dashboard
+    → IP rate limit check (lib/rate-limit.ts — 3 req/IP/15 min)
+    → Zod schema validation (quoteSchema / contactSchema)
+    → try { createAdminClient() } catch → return { error: "Something went wrong..." }
+    → Supabase insert into quote_submissions or contact_messages
+      → Admin sees it at /admin dashboard
 ```
+> The `createAdminClient()` call is wrapped in try/catch because it throws `supabaseUrl is required` when `.env.local` is not configured. Without the catch, the Server Action throws instead of returning, and the form silently hangs in a pending state with no user feedback.
 
 ### CSS Modules
 Used for components that need styles outside Tailwind's scope:
@@ -421,3 +424,7 @@ Local dev: create `.env.local` in project root
 8. **Admin nav button is desktop-only** — `hidden md:inline-flex` — does not appear in mobile menu. If needed on mobile, add a link inside the mobile drawer in components/navigation.tsx.
 
 9. **Session expires after 24 hours** — Admin is logged out automatically. This is intentional.
+
+10. **`npm install` requires `--legacy-peer-deps`** — `vaul@0.9.9` (shadcn Drawer) has a peer dep on React `^0.14–^18` but the project uses React 19. Every `npm install <package>` without `--legacy-peer-deps` throws `ERESOLVE` and aborts. Always use the flag.
+
+11. **Cypress requires the dev server running first** — `npm run cypress:run` connects to `localhost:3000`. It does not start the dev server automatically. Run `npm run dev` in a separate terminal before running tests, or all 26 tests will fail with connection refused.

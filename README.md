@@ -36,8 +36,10 @@ Production marketing website for **Lawn Masters V5 INC**, a lawn care and landsc
 ## 💻 Running Locally
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
+
+> **Note:** `--legacy-peer-deps` is required. `vaul@0.9.9` (used by shadcn's Drawer component) declares a peer dependency on React `^0.14–^18`, but this project runs React 19. Without the flag, `npm install` throws `ERESOLVE`. Use it for every package install.
 
 Create `.env.local` in the project root (see Environment Variables below), then:
 
@@ -47,6 +49,16 @@ npm run build     # production build
 npm run start     # production preview
 npm run lint      # eslint
 ```
+
+**Running E2E tests:**
+
+```bash
+npm run dev          # start dev server first (separate terminal)
+npm run cypress:run  # run all 26 tests headless
+npm run cypress:open # open Cypress UI
+```
+
+> Cypress connects to `localhost:3000`. The dev server must be running before starting tests — Cypress does not start it automatically.
 
 ---
 
