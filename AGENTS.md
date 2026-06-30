@@ -216,4 +216,4 @@ All must be set in Vercel project settings for production. For local dev, create
 
 3. **Image optimization is disabled** — `images: { unoptimized: true }` in `next.config.mjs`. All images serve at full original file size.
 
-4. **Admin auth uses a static cookie token** — not Supabase Auth. Simple but means only one admin account. Token is `lm5-admin-authenticated-2026`. This is checked in both `middleware.ts` and `lib/admin-auth.ts` — if you ever update the token, change it in both files.
+4. **Admin auth uses a static cookie token** — not Supabase Auth. Simple but means only one admin account. Token is stored in the `SESSION_TOKEN` env var (set in Vercel). This is checked in both `middleware.ts` and `lib/admin-auth.ts` — if you ever rotate the token, update it in Vercel env vars (both environments) and redeploy.

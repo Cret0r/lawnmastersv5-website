@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@test.com"
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "test123456"
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? ""
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? ""
 const SESSION_COOKIE = "admin_session"
 const SESSION_TOKEN = process.env.SESSION_TOKEN ?? ""
 
