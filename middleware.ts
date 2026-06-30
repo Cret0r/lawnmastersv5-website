@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-const SESSION_TOKEN = "lm5-admin-authenticated-2026"
+const SESSION_TOKEN = process.env.SESSION_TOKEN ?? ""
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl

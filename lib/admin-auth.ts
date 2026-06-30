@@ -3,7 +3,7 @@ import { cookies } from "next/headers"
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@test.com"
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "test123456"
 const SESSION_COOKIE = "admin_session"
-const SESSION_TOKEN = "lm5-admin-authenticated-2026"
+const SESSION_TOKEN = process.env.SESSION_TOKEN ?? ""
 
 export async function verifyAdminCredentials(email: string, password: string) {
   return email === ADMIN_EMAIL && password === ADMIN_PASSWORD
