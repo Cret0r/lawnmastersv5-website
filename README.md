@@ -71,6 +71,7 @@ Create `.env.local` with these values. All five are required for full functional
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+SESSION_TOKEN=your-random-secure-token
 ADMIN_EMAIL=your-admin-email@example.com
 ADMIN_PASSWORD=your-strong-password
 ```
@@ -185,7 +186,7 @@ The admin portal is protected by a custom cookie-based session (not Supabase Aut
 ## 🚀 Deployment
 
 1. Push to `master` — Vercel auto-deploys
-2. Set all 5 environment variables in Vercel project settings
+2. Set all 6 environment variables in Vercel project settings
 3. Run Supabase SQL scripts 001 → 003 → 004 in the Supabase SQL Editor
 4. Verify forms work end-to-end at `/contact` and `/quote`
 5. Verify admin login works at `/admin/login`
@@ -226,7 +227,6 @@ The admin portal is protected by a custom cookie-based session (not Supabase Aut
 | Issue | File | Fix |
 |---|---|---|
 | 🐛 Campaign route still named `/spring-rush` | `app/spring-rush/` | Do not rename without checking ad campaign links |
-| 🐛 Admin button is desktop-only | `components/navigation.tsx` | Add to mobile drawer if needed |
 
 ---
 
@@ -277,4 +277,4 @@ For full technical reference, see `ARCHITECTURE.md`. For AI agent rules and cont
 - [x] Cypress testing + tech stack additions — 26/26 passing ✅
 - [x] Security audit completed — all critical/high findings resolved ✅
 - [x] ESLint configured — npm run lint exits 0 with 0 errors ✅
-- [ ] Add Admin button to mobile nav
+- [x] Add Admin button to mobile nav ✅

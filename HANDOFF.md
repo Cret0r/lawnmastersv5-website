@@ -254,7 +254,6 @@ CLAUDE.md                 Points to AGENTS.md
 - Add real customer reviews to lib/reviews-data.ts (currently 3 placeholder entries)
 - Update Google Review link in lib/reviews-data.ts to actual business Google My Business URL
 - Consider enabling image optimization: remove `unoptimized: true` from next.config.mjs after compressing image files
-- Add admin link to mobile nav drawer (currently admin button only shows on desktop `md:` breakpoint)
 
 ---
 
