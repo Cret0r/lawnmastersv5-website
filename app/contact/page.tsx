@@ -297,7 +297,7 @@ export default function ContactPage() {
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground mt-6 text-center">
-                  Don't see your area? Give us a call at{" "}
+                  Don&apos;t see your area? Give us a call at{" "}
                   <a href="tel:+14076000301" className="text-primary hover:underline">(407) 600-0301</a>
                   {" "}-- we may still be able to help!
                 </p>

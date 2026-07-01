@@ -34,7 +34,7 @@ export default function ServicePolicies() {
                 Our pricing is based on typical residential lawn sizes. If your property is significantly larger, has challenging terrain, or requires extra work due to overgrowth or poor conditions, we may adjust the price after an initial assessment.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                For one-time cuts or first visits, we'll provide a quote after seeing the lawn. Visit frequency may adjust based on growth rate and weather conditions.
+                For one-time cuts or first visits, we&apos;ll provide a quote after seeing the lawn. Visit frequency may adjust based on growth rate and weather conditions.
               </p>
             </section>
 
@@ -53,10 +53,10 @@ export default function ServicePolicies() {
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-4">Weather Delays</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                We may reschedule services if weather makes it unsafe to work (heavy rain, lightning, extreme heat, etc.). We'll contact you to find a new date that works.
+                We may reschedule services if weather makes it unsafe to work (heavy rain, lightning, extreme heat, etc.). We&apos;ll contact you to find a new date that works.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Rescheduled visits don't count as missed services, so our guarantee doesn't apply. Your account remains active and we'll get you on the schedule as soon as conditions improve.
+                Rescheduled visits don&apos;t count as missed services, so our guarantee doesn&apos;t apply. Your account remains active and we&apos;ll get you on the schedule as soon as conditions improve.
               </p>
             </section>
 
@@ -64,7 +64,7 @@ export default function ServicePolicies() {
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-4">Overgrowth or First-Cut Conditions</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                If grass is significantly overgrown or hasn't been mowed in a long time, we may charge extra for the first cut or need to make multiple passes to bring it back to normal.
+                If grass is significantly overgrown or hasn&apos;t been mowed in a long time, we may charge extra for the first cut or need to make multiple passes to bring it back to normal.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 After the initial reset, regular pricing applies on our weekly or biweekly schedule.
@@ -92,7 +92,7 @@ export default function ServicePolicies() {
                 <strong>If we miss a scheduled service without notice, your next cut is 100% free.*</strong> This guarantee ensures you can count on us.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                If you cancel or reschedule, we'll adjust your schedule accordingly. Weather delays, unsafe conditions, or access issues may result in us rescheduling — these don't trigger the guarantee.
+                If you cancel or reschedule, we&apos;ll adjust your schedule accordingly. Weather delays, unsafe conditions, or access issues may result in us rescheduling — these don&apos;t trigger the guarantee.
               </p>
               <p className="text-muted-foreground leading-relaxed text-sm italic">
                 *Applies to verified missed services without prior notice from us. Rescheduled or customer-canceled visits do not qualify.
@@ -106,7 +106,7 @@ export default function ServicePolicies() {
                 You can pause, cancel, or modify your plan anytime with 48 hours notice. No long-term contracts.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                If you need to reschedule a service, let us know as soon as possible. We'll work with you to find a time that fits your schedule.
+                If you need to reschedule a service, let us know as soon as possible. We&apos;ll work with you to find a time that fits your schedule.
               </p>
             </section>
           </div>

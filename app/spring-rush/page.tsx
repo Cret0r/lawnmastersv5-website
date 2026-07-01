@@ -239,7 +239,7 @@ export default function SpringRushPage() {
             Ready to lock in your spot?
           </h2>
           <p className="text-primary-foreground/70 mb-8 max-w-lg mx-auto">
-            Spots fill up fast this summer. Call or text now to get on the schedule before we're booked out.
+            Spots fill up fast this summer. Call or text now to get on the schedule before we&apos;re booked out.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button

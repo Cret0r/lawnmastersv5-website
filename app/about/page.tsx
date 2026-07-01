@@ -85,7 +85,7 @@ export default function AboutPage() {
                     From routine mowing and edging to driveway pressure washing and exterior cleaning, every job is completed with the same focus on detail, reliability, and customer satisfaction.
                   </p>
                   <p>
-                    We believe your lawn should be something you're proud of every time you pull into your driveway.
+                    We believe your lawn should be something you&apos;re proud of every time you pull into your driveway.
                   </p>
                 </div>
               </CardContent>
@@ -138,7 +138,7 @@ export default function AboutPage() {
                 <CardContent className="p-6">
                   <h3 className="text-lg font-semibold text-foreground mb-3">Straightforward Pricing</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Transparent pricing with no surprises. You'll always know what to expect before we begin.
+                    Transparent pricing with no surprises. You&apos;ll always know what to expect before we begin.
                   </p>
                 </CardContent>
               </Card>
