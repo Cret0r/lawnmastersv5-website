@@ -14,7 +14,7 @@
 | Styling | Tailwind CSS v4 | CSS custom properties, no tailwind.config.ts needed |
 | Component Library | shadcn/ui (Radix UI) | Full library installed, most unused |
 | Database | Supabase | PostgreSQL + Row Level Security |
-| Auth | Custom cookie session | NOT Supabase Auth — hardcoded token + env var credentials |
+| Auth | Custom cookie session | NOT Supabase Auth — SESSION_TOKEN env var, fail-closed credentials |
 | Hosting | Vercel | Auto-deploys from GitHub `master` |
 | Analytics | Vercel Analytics | `<Analytics />` in app/layout.tsx |
 | Performance | Vercel Speed Insights | `<SpeedInsights />` in app/layout.tsx |
@@ -24,6 +24,7 @@
 | Form Validation | Zod | `quoteSchema` + `contactSchema` in both form Server Actions |
 | Rate Limiting | Custom in-memory (lib/rate-limit.ts) | 3 requests per IP per 15 min on both form actions |
 | E2E Testing | Cypress | 26/26 tests — `npm run cypress:run` |
+| Linting | ESLint 9 (flat config) | eslint.config.mjs — extends eslint-config-next/core-web-vitals |
 | CSS Modules | Used for admin components | login.module.css, admin-nav-button.module.css |
 
 ---
@@ -118,7 +119,7 @@ landscaping-business-website/
 │   ├── android-chrome-192x192.png
 │   ├── android-chrome-512x512.png
 │   ├── apple-icon.png
-│   ├── hero-lawn-care-new.jpg    # Homepage hero background (Spring Rush section)
+│   ├── hero-bg.jpg               # Homepage hero background (Georgia home photo)
 │   ├── hero-landscaping-lush-garden.jpg # Secondary hero (About, Spring Rush page)
 │   ├── backyard-transformation-complete.jpg # Featured portfolio image (Gallery hero, Quote hero)
 │   ├── lawn-care-mowing-stripes.jpg  # Contact hero background
@@ -167,7 +168,8 @@ landscaping-business-website/
 │
 ├── cypress.config.ts              # Cypress config: baseUrl http://localhost:3000 (dev server must be running)
 ├── middleware.ts                  # Edge middleware: protects /admin/* routes via cookie session
-├── next.config.mjs               # Next.js config: TypeScript error bypass, unoptimized images
+├── next.config.mjs               # Next.js config: TypeScript error bypass, unoptimized images, HTTP security headers
+├── eslint.config.mjs              # ESLint 9 flat config — extends eslint-config-next/core-web-vitals
 ├── tsconfig.json                 # TypeScript config with path alias @/ → root
 ├── tailwind.config.ts            # (Tailwind v4 — config is in CSS, this may be minimal)
 ├── postcss.config.mjs            # PostCSS with Tailwind CSS plugin
@@ -253,7 +255,7 @@ This project uses the **Next.js App Router** with a deliberate split:
 
 ### `/admin` — Admin Dashboard (Protected)
 - **File:** `app/admin/page.tsx` (Server Component)
-- **Access:** Requires `admin_session` cookie with token `lm5-admin-authenticated-2026`
+- **Access:** Requires `admin_session` cookie matching `SESSION_TOKEN` env var
 - **Content:** Two tabs — Quote Requests (from `quote_submissions` table) and Messages (from `contact_messages` table)
 - **Status workflow for quotes:** new → contacted → quoted → completed
 - **Features:** Unread message count badge, new quote count badge, sign-out
@@ -386,7 +388,7 @@ All `[data-slot="button"]` elements have a letter-spacing hover effect + green b
 
 2. **All images are unoptimized** — `images: { unoptimized: true }` means no automatic WebP/resize. Images serve at full original size. Consider removing this flag after optimizing image files.
 
-3. **Admin auth is a static token** — Not Supabase Auth. The cookie value is hardcoded as `lm5-admin-authenticated-2026`. Middleware checks this token. Default credentials (`admin@test.com` / `test123456`) will be used if env vars are not set in production.
+3. **Admin auth uses env var token** — Not Supabase Auth. The session token is `process.env.SESSION_TOKEN ?? ""` (fail-closed). All three auth env vars (`SESSION_TOKEN`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`) use null coalescing — if any are unset, login is impossible rather than falling back to test credentials.
 
 4. **Route still named `/spring-rush`** — The campaign was renamed to "Summer Special" but the URL route is still `/spring-rush`. Not a bug but may confuse future editors. The `lib/spring-rush-content.ts` file is similarly named.
 
@@ -476,8 +478,9 @@ Required in `.env.local` for development; set in Vercel dashboard for production
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | `lib/supabase/server.ts`, `lib/supabase/client.ts`, `lib/supabase/admin.ts` | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | `lib/supabase/server.ts`, `lib/supabase/client.ts` | Public anon key (safe to expose) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Yes (admin only) | `lib/supabase/admin.ts` | Service role key — bypasses RLS. Never expose to browser. |
-| `ADMIN_EMAIL` | Yes (production) | `lib/admin-auth.ts` | Admin dashboard login email. Defaults to `admin@test.com` if unset — **change this in production** |
-| `ADMIN_PASSWORD` | Yes (production) | `lib/admin-auth.ts` | Admin dashboard login password. Defaults to `test123456` if unset — **change this in production** |
+| `SESSION_TOKEN` | Yes | `middleware.ts`, `lib/admin-auth.ts` | Admin session cookie value. Fail-closed — if unset, no authentication is possible |
+| `ADMIN_EMAIL` | Yes | `lib/admin-auth.ts` | Admin dashboard login email. Fail-closed — if unset, login is impossible |
+| `ADMIN_PASSWORD` | Yes | `lib/admin-auth.ts` | Admin dashboard login password. Fail-closed — if unset, login is impossible |
 | `NODE_ENV` | Auto-set | `lib/admin-auth.ts` | Controls cookie `secure` flag (true in production) |
 
 **Create `.env.local` in project root:**
@@ -523,6 +526,6 @@ npm run lint      # eslint .
 ```
 
 ### Key Config Notes
-- **`next.config.mjs`** — TypeScript errors are suppressed at build time (`ignoreBuildErrors: true`). Image optimization is disabled (`unoptimized: true`). Remote images from `hebbkx1anhila5yf.public.blob.vercel-storage.com` (v0.dev) are allowed.
-- **`middleware.ts`** — Runs at the edge on every `/admin/*` request. Protects all admin routes. Login page is excluded. Token: `lm5-admin-authenticated-2026`.
+- **`next.config.mjs`** — TypeScript errors are suppressed at build time (`ignoreBuildErrors: true`). Image optimization is disabled (`unoptimized: true`). Remote images from `hebbkx1anhila5yf.public.blob.vercel-storage.com` (v0.dev) are allowed. HTTP security headers applied on all routes via `headers()` export: `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Strict-Transport-Security: max-age=31536000; includeSubDomains`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
+- **`middleware.ts`** — Runs at the edge on every `/admin/*` request. Protects all admin routes. Login page is excluded. Token read from `process.env.SESSION_TOKEN` — rotate in Vercel env vars and redeploy.
 - **Admin session** — Cookie-based, expires in 24 hours, httpOnly + secure in production.

@@ -30,6 +30,7 @@ Production marketing website for **Lawn Masters V5 INC**, a lawn care and landsc
 | 🔍 Form Validation | Zod | Schema validation in both form Server Actions |
 | ⚡ Performance | Vercel Speed Insights | Auto-injected in `app/layout.tsx` |
 | 🛡️ Rate Limiting | Custom in-memory | 3 requests / IP / 15 min on form submissions |
+| 🔎 Linting | ESLint 9 (flat config) | `npm run lint` exits 0 with 0 errors |
 
 ---
 
@@ -79,8 +80,9 @@ ADMIN_PASSWORD=your-strong-password
 | 🔗 `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
 | 🔑 `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public key — safe to expose to browser |
 | 🛡️ `SUPABASE_SERVICE_ROLE_KEY` | Server-only — bypasses RLS. Never expose to browser. |
-| 📧 `ADMIN_EMAIL` | Admin dashboard login. Defaults to `admin@test.com` if unset — **always override in production** |
-| 🔒 `ADMIN_PASSWORD` | Admin dashboard password. Defaults to `test123456` if unset — **always override in production** |
+| 🔑 `SESSION_TOKEN` | Admin session cookie value. Fail-closed — if unset, no one can authenticate |
+| 📧 `ADMIN_EMAIL` | Admin dashboard login. Fail-closed — if unset, login is impossible |
+| 🔒 `ADMIN_PASSWORD` | Admin dashboard password. Fail-closed — if unset, login is impossible |
 
 For production, set all variables in **Vercel → Project Settings → Environment Variables**.
 
@@ -168,8 +170,8 @@ middleware.ts           Edge middleware — protects all /admin/* routes
 
 The admin portal is protected by a custom cookie-based session (not Supabase Auth). Middleware runs on every `/admin/*` request and checks for a valid session cookie.
 
-- Session cookie: `admin_session` — token `lm5-admin-authenticated-2026`, expires 24 hours, httpOnly
-- The session token is checked in **two places**: `middleware.ts` and `lib/admin-auth.ts`. If you ever change the token string, update both files.
+- Session cookie: `admin_session` — token from `SESSION_TOKEN` env var, expires 24 hours, httpOnly, secure in production
+- The session token is read from `process.env.SESSION_TOKEN` in both `middleware.ts` and `lib/admin-auth.ts`. To rotate it, update the env var in Vercel and redeploy — no code change needed.
 - The login form uses `type="text"` (not `type="email"`) — it accepts any string as the username input.
 
 **Admin features:**
@@ -251,14 +253,28 @@ For full technical reference, see `ARCHITECTURE.md`. For AI agent rules and cont
 - README.md created with full developer onboarding docs
 - Gallery "15+ years" stat fixed to "5+"
 
+**Session 3 — June 30, 2026**
+- Georgia hero background replaced (GEOGIA IMAGE HERO.PNG → public/hero-bg.jpg)
+- Announcement bar X button fixed on mobile
+- Facebook link updated in components/social-buttons.tsx
+- SESSION_TOKEN moved from hardcoded to env var (middleware.ts + lib/admin-auth.ts)
+- ADMIN_EMAIL / ADMIN_PASSWORD fallback credentials fixed to fail-closed
+- Security headers added to next.config.mjs (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, HSTS, Permissions-Policy)
+- ESLint 9 installed and configured — eslint.config.mjs, npm run lint exits 0 with 0 errors
+- 13 react/no-unescaped-entities errors fixed across about, contact, service-policies, spring-rush
+- Full security audit completed — all critical and high findings resolved
+- 26/26 Cypress tests verified passing throughout
+
 ---
 
 ## 🗺️ Roadmap
 
 - [ ] Build /summer campaign landing page (summer-campaign branch)
-- [ ] Replace hero background with real Georgia lawn photo
+- [x] Replace hero background with real Georgia lawn photo ✅
 - [ ] Replace before/after photos with real Newton County job photos
 - [ ] Add 5+ real customer reviews
 - [ ] Enable image optimization once images are compressed
 - [x] Cypress testing + tech stack additions — 26/26 passing ✅
+- [x] Security audit completed — all critical/high findings resolved ✅
+- [x] ESLint configured — npm run lint exits 0 with 0 errors ✅
 - [ ] Add Admin button to mobile nav

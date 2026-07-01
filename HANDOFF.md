@@ -1,5 +1,5 @@
 # Lawn Masters V5 Website — AI Handoff Document
-> Last updated: June 27, 2026 (session 3)
+> Last updated: June 30, 2026 (session 4)
 > Rule: Update this document at the end of every session before pushing.
 
 ---
@@ -24,7 +24,7 @@ Production marketing website for **Lawn Masters V5 INC**, a lawn care and landsc
 | Styling | Tailwind CSS v4 | CSS custom properties, no tailwind.config.ts needed |
 | Component lib | shadcn/ui (Radix UI) | Full library installed, most unused |
 | Database | Supabase | PostgreSQL + RLS policies |
-| Auth | Custom cookie session | NOT Supabase Auth — env var credentials only |
+| Auth | Custom cookie session | NOT Supabase Auth — SESSION_TOKEN env var, all credentials fail-closed |
 | Hosting | Vercel | Auto-deploy from GitHub master |
 | Analytics | Vercel Analytics | Injected in app/layout.tsx |
 | Fonts | Inter (sans), DM Serif Display (serif) | Google Fonts via next/font |
@@ -35,6 +35,7 @@ Production marketing website for **Lawn Masters V5 INC**, a lawn care and landsc
 | Rate Limiting | In-memory (lib/rate-limit.ts) | 3 requests/IP/15 min on both form actions |
 | E2E Testing | Cypress | 26/26 tests passing — `npm run cypress:run` |
 | Performance | Vercel Speed Insights | `<SpeedInsights />` in app/layout.tsx |
+| Linting | ESLint 9 (flat config) | eslint.config.mjs — `npm run lint` exits 0, 0 errors |
 
 ---
 
@@ -52,10 +53,10 @@ Production marketing website for **Lawn Masters V5 INC**, a lawn care and landsc
 
 ### Admin Authentication
 - Custom cookie-based session — NOT Supabase Auth
-- Credentials set via `ADMIN_EMAIL` and `ADMIN_PASSWORD` env vars
-- Defaults (insecure): `admin@test.com` / `test123456` — **must override in Vercel**
-- Cookie: `admin_session = "lm5-admin-authenticated-2026"`, expires 24hrs, httpOnly
-- Token checked in TWO places: `middleware.ts` AND `lib/admin-auth.ts` — update both if changing
+- Credentials set via `ADMIN_EMAIL` and `ADMIN_PASSWORD` env vars — **fail-closed** (empty string if unset, login impossible)
+- Session token set via `SESSION_TOKEN` env var — fail-closed (empty string if unset, no cookie matches)
+- Cookie: `admin_session = <SESSION_TOKEN>`, expires 24hrs, httpOnly, secure in production, sameSite: lax
+- Token checked in TWO places: `middleware.ts` AND `lib/admin-auth.ts` — rotate by updating `SESSION_TOKEN` in Vercel env vars and redeploying
 - Login page uses `type="text"` (not email) — accepts any string as username
 
 ### Forms → Database Flow
@@ -138,7 +139,7 @@ lib/
 public/
   logo-color.png          Color logo — scrolled nav (DO NOT MODIFY)
   logo-contrast.png       White logo — dark nav + footer (DO NOT MODIFY)
-  hero-lawn-care-new.jpg  Homepage Spring Rush hero bg
+  hero-bg.jpg             Homepage hero background (Georgia home photo)
   hero-landscaping-lush-garden.jpg  Secondary hero
   backyard-transformation-complete.jpg  Featured portfolio
   [+ 10 other hero/section images]
@@ -162,7 +163,8 @@ cypress/
 cypress.config.ts         Cypress config (baseUrl: localhost:3000)
 
 middleware.ts             Edge middleware — protects /admin/* routes
-next.config.mjs           TypeScript error bypass, images unoptimized
+next.config.mjs           TypeScript error bypass, images unoptimized, HTTP security headers
+eslint.config.mjs         ESLint 9 flat config — extends eslint-config-next/core-web-vitals
 ARCHITECTURE.md           Full technical reference
 AGENTS.md                 AI agent rules and instructions
 HANDOFF.md                This file
@@ -229,6 +231,18 @@ CLAUDE.md                 Points to AGENTS.md
 - **[Session 3]** Gallery "15+ years" bug fixed to "5+" (app/gallery/page.tsx)
 - **[Session 3]** lawnmastersv5.com domain removed from old V0 Vercel project
 - **[Session 3]** hormozi-skills cloned and installed into Claude Code
+- **[Session 4]** Georgia hero image replaced — GEOGIA IMAGE HERO.PNG → public/hero-bg.jpg, app/page.tsx updated
+- **[Session 4]** Announcement bar X button fixed — visible on all screen sizes including mobile
+- **[Session 4]** Facebook link updated in components/social-buttons.tsx (new page ID: 61590265813532)
+- **[Session 4]** Norton antivirus HTTPS scanning disabled — required for Claude Code SSL to work (see gotcha #12)
+- **[Session 4]** SESSION_TOKEN moved from hardcoded string to env var in middleware.ts + lib/admin-auth.ts
+- **[Session 4]** ADMIN_EMAIL and ADMIN_PASSWORD fallback credentials fixed to fail-closed (empty string, not test credentials)
+- **[Session 4]** Security headers added to next.config.mjs: X-Frame-Options, X-Content-Type-Options, Referrer-Policy, HSTS, Permissions-Policy
+- **[Session 4]** ESLint installed (eslint@9 + eslint-config-next) — eslint.config.mjs created, npm run lint exits 0 with 0 errors
+- **[Session 4]** 13 react/no-unescaped-entities errors fixed across about, contact, service-policies, spring-rush pages
+- **[Session 4]** Full security audit completed — no hardcoded secrets, no insecure cookies, all critical/high findings resolved
+- **[Session 4]** 26/26 Cypress tests verified passing after all session 4 changes
+- **[Session 4]** pnpm lockfile regenerated (unrs-resolver added to pnpm-workspace.yaml allowBuilds)
 
 ### IN PROGRESS 🔵
 - **Summer 2026 campaign** — SUMMER_CAMPAIGN_2026.md fully updated with Hormozi analysis
@@ -321,7 +335,7 @@ Sections alternate in this order: `bg-background` → `bg-secondary` → `bg-pri
 | Phone | (407) 600-0301 |
 | Email | lawnmastersv5@gmail.com |
 | Instagram | @lawnmasters_v5 |
-| Facebook | facebook.com/profile.php?id=61586389722504 |
+| Facebook | facebook.com/profile.php?id=61590265813532 |
 | Google Reviews | Link in lib/reviews-data.ts → googleReviewLink |
 | Language | English + Spanish (Se Habla Español) |
 | Experience | 5+ years |
@@ -396,8 +410,9 @@ created_at timestamptz NOT NULL DEFAULT now()
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | All Supabase clients | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Browser + server client | Public key, safe to expose |
 | `SUPABASE_SERVICE_ROLE_KEY` | Yes | Admin client only | **Server-only — never expose to browser** |
-| `ADMIN_EMAIL` | Yes | lib/admin-auth.ts | Login email. Defaults to `admin@test.com` if unset |
-| `ADMIN_PASSWORD` | Yes | lib/admin-auth.ts | Login password. Defaults to `test123456` if unset |
+| `SESSION_TOKEN` | Yes | middleware.ts, lib/admin-auth.ts | Admin session cookie value. Fail-closed — if unset, no one can authenticate |
+| `ADMIN_EMAIL` | Yes | lib/admin-auth.ts | Login email. Fail-closed — if unset, login is impossible |
+| `ADMIN_PASSWORD` | Yes | lib/admin-auth.ts | Login password. Fail-closed — if unset, login is impossible |
 | `NODE_ENV` | Auto | lib/admin-auth.ts | Sets cookie `secure` flag in production |
 
 Set in: **Vercel → Project Settings → Environment Variables**
@@ -411,9 +426,9 @@ Local dev: create `.env.local` in project root
 
 2. **Image optimization is disabled** — `images: { unoptimized: true }`. All images serve at original file size. Remove this after optimizing/compressing image files.
 
-3. **Admin token is in two places** — If you ever change the session token (`lm5-admin-authenticated-2026`), update it in BOTH `middleware.ts` AND `lib/admin-auth.ts` or you'll break authentication.
+3. **Admin session token lives in `SESSION_TOKEN` env var** — To rotate it, generate a new token, update `SESSION_TOKEN` in Vercel env vars (both Production and Preview environments), and redeploy. No code change needed. The token is read in two files (`middleware.ts` and `lib/admin-auth.ts`) but both read from `process.env.SESSION_TOKEN` — changing the env var is sufficient.
 
-4. **Default admin credentials are insecure** — If `ADMIN_EMAIL` and `ADMIN_PASSWORD` are not set in Vercel, anyone can log in with `admin@test.com` / `test123456`. Set these env vars immediately on production.
+4. **Admin credentials are fail-closed** — `ADMIN_EMAIL` and `ADMIN_PASSWORD` now use `?? ""` (null coalescing), not `||` fallback. If either env var is unset in Vercel, the empty string means no login is possible. This is intentional — it prevents test credentials from becoming active if env vars are accidentally cleared.
 
 5. **Campaign file is named spring-rush** — `lib/spring-rush-content.ts` and route `/spring-rush` are named after the old campaign (Spring Rush). Content now says "Summer Special". Don't rename the route without checking for ad links pointing to it.
 
@@ -428,3 +443,7 @@ Local dev: create `.env.local` in project root
 10. **`npm install` requires `--legacy-peer-deps`** — `vaul@0.9.9` (shadcn Drawer) has a peer dep on React `^0.14–^18` but the project uses React 19. Every `npm install <package>` without `--legacy-peer-deps` throws `ERESOLVE` and aborts. Always use the flag.
 
 11. **Cypress requires the dev server running first** — `npm run cypress:run` connects to `localhost:3000`. It does not start the dev server automatically. Run `npm run dev` in a separate terminal before running tests, or all 26 tests will fail with connection refused.
+
+12. **Norton HTTPS scanning must stay OFF** — Norton antivirus includes an HTTPS scanning feature that intercepts and re-signs SSL certificates. This causes a certificate verification error (`CERTIFICATE_VERIFY_FAILED`) when Claude Code tries to connect to Anthropic's API. Disable it in: Norton → Settings → Firewall → Intrusion and Browser Protection → Safe Web → HTTPS Scanning → Disable. If Claude Code stops working with an SSL error, this is the first thing to check.
+
+13. **ESLint uses flat config (`eslint.config.mjs`) — not `.eslintrc`** — ESLint 9 uses the new flat config format. The config file is `eslint.config.mjs` at the project root. Do not create `.eslintrc.json`, `.eslintrc.js`, or `.eslintrc.yml` — they will conflict and ESLint will throw an error. The config extends `eslint-config-next/core-web-vitals` and disables two overly strict rules (`react-hooks/set-state-in-effect`, `react-hooks/purity`) that flagged valid shadcn/ui patterns.
