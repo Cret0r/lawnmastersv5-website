@@ -1,5 +1,5 @@
 # Lawn Masters V5 Website — AI Handoff Document
-> Last updated: June 30, 2026 (session 4)
+> Last updated: July 2, 2026 (session 5)
 > Rule: Update this document at the end of every session before pushing.
 
 ---
@@ -243,6 +243,8 @@ CLAUDE.md                 Points to AGENTS.md
 - **[Session 4]** Full security audit completed — no hardcoded secrets, no insecure cookies, all critical/high findings resolved
 - **[Session 4]** 26/26 Cypress tests verified passing after all session 4 changes
 - **[Session 4]** pnpm lockfile regenerated (unrs-resolver added to pnpm-workspace.yaml allowBuilds)
+- **[Session 5]** SCRIPTS.md created documenting every script in /scripts — committed and pushed
+- **[Session 5]** claude-mem worker incident diagnosed and resolved — see gotcha #14 for full details
 
 ### IN PROGRESS 🔵
 - **Summer 2026 campaign** — SUMMER_CAMPAIGN_2026.md fully updated with Hormozi analysis
@@ -446,3 +448,9 @@ Local dev: create `.env.local` in project root
 12. **Norton HTTPS scanning must stay OFF** — Norton antivirus includes an HTTPS scanning feature that intercepts and re-signs SSL certificates. This causes a certificate verification error (`CERTIFICATE_VERIFY_FAILED`) when Claude Code tries to connect to Anthropic's API. Disable it in: Norton → Settings → Firewall → Intrusion and Browser Protection → Safe Web → HTTPS Scanning → Disable. If Claude Code stops working with an SSL error, this is the first thing to check.
 
 13. **ESLint uses flat config (`eslint.config.mjs`) — not `.eslintrc`** — ESLint 9 uses the new flat config format. The config file is `eslint.config.mjs` at the project root. Do not create `.eslintrc.json`, `.eslintrc.js`, or `.eslintrc.yml` — they will conflict and ESLint will throw an error. The config extends `eslint-config-next/core-web-vitals` and disables two overly strict rules (`react-hooks/set-state-in-effect`, `react-hooks/purity`) that flagged valid shadcn/ui patterns.
+
+14. **claude-mem worker outages — two separate causes found in Session 5** — the claude-mem plugin (memory system for Claude Code, unrelated to the site itself) went down twice in one session:
+    - **Bun runtime missing:** claude-mem's worker requires the Bun JS runtime (`bun:sqlite`). It was not installed — installed via `winget install Oven-sh.Bun` (or `irm bun.sh/install.ps1 | iex`). Without Bun, the worker can never start and every hook fails with "worker unreachable."
+    - **Norton SSL MITM (separate from gotcha #12):** Gotcha #12 covers Norton blocking Claude Code's own API connection. This was a **second, independent** instance of the same root cause — Norton's HTTPS scanning was also intercepting the claude-mem worker's own outbound API calls, causing it to boot, cache its startup files, then die every ~2 minutes without ever processing a hook. Fixed the same way: disable Norton HTTPS Scanning (Settings → Firewall → Intrusion and Browser Protection → Safe Web → HTTPS Scanning).
+    - **Plugin auto-update crash-loop:** Separately, the plugin auto-updated 13.9.1 → 13.9.2 mid-session and the new worker failed to come back up (successor spawn didn't take). Fixed with a plain manual restart (`bun worker-service.cjs start`) — 13.9.2 runs fine once started; no version rollback or reinstall was needed.
+    - **Known non-fatal issue left unresolved:** every observation logs `SDK chroma sync failed — continuing without vector search`, caused by a packaging bug in claude-mem itself (`worker-service.cjs` requires `../sqlite/SessionStore.js`, which isn't included in the shipped package — present in 13.9.1 and 13.9.2 alike). Not fixable locally; core memory capture/retrieval is unaffected, only vector search sync. Report upstream at thedotmack/claude-mem if it persists.
