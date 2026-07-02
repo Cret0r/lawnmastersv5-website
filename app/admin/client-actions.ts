@@ -1,6 +1,7 @@
 "use server"
 
 import { createAdminClient } from "@/lib/supabase/admin"
+import { isAdminAuthenticated } from "@/lib/admin-auth"
 import { revalidatePath } from "next/cache"
 
 export interface Client {
@@ -26,6 +27,9 @@ export interface Client {
 }
 
 export async function getClients() {
+  if (!(await isAdminAuthenticated())) {
+    return []
+  }
   const supabase = createAdminClient()
   const { data, error } = await supabase
     .from("clients")
@@ -41,6 +45,9 @@ export async function getClients() {
 }
 
 export async function getClientsDueToday() {
+  if (!(await isAdminAuthenticated())) {
+    return []
+  }
   const supabase = createAdminClient()
   const today = new Date().toISOString().split("T")[0]
   
@@ -60,6 +67,9 @@ export async function getClientsDueToday() {
 }
 
 export async function getClientsOverdue() {
+  if (!(await isAdminAuthenticated())) {
+    return []
+  }
   const supabase = createAdminClient()
   const today = new Date().toISOString().split("T")[0]
   
@@ -79,6 +89,9 @@ export async function getClientsOverdue() {
 }
 
 export async function getDashboardStats() {
+  if (!(await isAdminAuthenticated())) {
+    return { totalClients: 0, dueToday: 0, overdue: 0 }
+  }
   const supabase = createAdminClient()
   const today = new Date().toISOString().split("T")[0]
   
@@ -96,8 +109,11 @@ export async function getDashboardStats() {
 }
 
 export async function addClient(formData: FormData) {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
   const supabase = createAdminClient()
-  
+
   const name = formData.get("name") as string
   const phone = formData.get("phone") as string
   const email = formData.get("email") as string
@@ -140,8 +156,11 @@ export async function addClient(formData: FormData) {
 }
 
 export async function updateClient(id: string, formData: FormData) {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
   const supabase = createAdminClient()
-  
+
   const name = formData.get("name") as string
   const phone = formData.get("phone") as string
   const email = formData.get("email") as string
@@ -182,8 +201,11 @@ export async function updateClient(id: string, formData: FormData) {
 }
 
 export async function markServiceComplete(id: string) {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
   const supabase = createAdminClient()
-  
+
   // Get client's frequency
   const { data: client } = await supabase
     .from("clients")
@@ -218,6 +240,9 @@ export async function markServiceComplete(id: string) {
 }
 
 export async function deleteClient(id: string) {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
   const supabase = createAdminClient()
 
   const { error } = await supabase

@@ -1,10 +1,13 @@
 "use server"
 
 import { createAdminClient } from "@/lib/supabase/admin"
-import { destroyAdminSession } from "@/lib/admin-auth"
+import { destroyAdminSession, isAdminAuthenticated } from "@/lib/admin-auth"
 import { revalidatePath } from "next/cache"
 
 export async function updateSubmissionStatus(id: string, status: string) {
+  if (!(await isAdminAuthenticated())) {
+    return { error: "Unauthorized" }
+  }
   const supabase = createAdminClient()
 
   const { error } = await supabase
@@ -21,6 +24,9 @@ export async function updateSubmissionStatus(id: string, status: string) {
 }
 
 export async function deleteSubmission(id: string) {
+  if (!(await isAdminAuthenticated())) {
+    return { error: "Unauthorized" }
+  }
   const supabase = createAdminClient()
 
   const { error } = await supabase
@@ -37,6 +43,9 @@ export async function deleteSubmission(id: string) {
 }
 
 export async function updateMessageRead(id: string, read: boolean) {
+  if (!(await isAdminAuthenticated())) {
+    return { error: "Unauthorized" }
+  }
   const supabase = createAdminClient()
 
   const { error } = await supabase
@@ -53,6 +62,9 @@ export async function updateMessageRead(id: string, read: boolean) {
 }
 
 export async function deleteMessage(id: string) {
+  if (!(await isAdminAuthenticated())) {
+    return { error: "Unauthorized" }
+  }
   const supabase = createAdminClient()
 
   const { error } = await supabase
