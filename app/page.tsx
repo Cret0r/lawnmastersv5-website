@@ -88,13 +88,17 @@ export default function Home() {
       {/* ════════════════ SPRING RUSH HERO ════════════════ */}
       <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 bg-foreground">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/hero-bg.jpg"
-            alt="Professional manicured lawn in Covington, Georgia"
-            fill
-            className="object-cover opacity-30"
-            priority
-          />
+          <picture>
+            <source media="(max-width: 640px)" srcSet="/hero/hero-bg-mobile.jpg" />
+            <source media="(max-width: 1024px)" srcSet="/hero/hero-bg-tablet.jpg" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero/hero-bg-desktop.jpg"
+              alt="Professional manicured lawn in Covington, Georgia"
+              className="h-full w-full object-cover opacity-30"
+              fetchPriority="high"
+            />
+          </picture>
         </div>
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-16">

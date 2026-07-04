@@ -19,7 +19,6 @@ import {
   SprayCan,
   Flower2,
 } from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
 
 export const metadata: Metadata = {
@@ -52,13 +51,17 @@ export default function SummerPage() {
       {/* ════════════ 1. HERO ════════════ */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-foreground">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/hero-landscaping-lush-garden.jpg"
-            alt="Freshly landscaped Georgia property"
-            fill
-            className="object-cover opacity-25"
-            priority
-          />
+          <picture>
+            <source media="(max-width: 640px)" srcSet="/hero/hero-garden-mobile.jpg" />
+            <source media="(max-width: 1024px)" srcSet="/hero/hero-garden-tablet.jpg" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero/hero-garden-desktop.jpg"
+              alt="Freshly landscaped Georgia property"
+              className="h-full w-full object-cover opacity-25"
+              fetchPriority="high"
+            />
+          </picture>
         </div>
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-20">
