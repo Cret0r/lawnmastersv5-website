@@ -12,6 +12,17 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        // Old campaign URL — kept alive for any ad/QR links printed before the
+        // Summer Refresh 2026 campaign. Do not remove while those may circulate.
+        source: "/spring-rush",
+        destination: "/summer",
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {
