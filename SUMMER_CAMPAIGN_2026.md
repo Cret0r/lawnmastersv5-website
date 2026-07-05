@@ -161,7 +161,7 @@ Variations:
 *Sell the transformation first. Mowing is the smart follow-through.*
 
 1. **Hero** — "Your Property Deserves More Than a Mow" + "Se Habla Español" prominently in hero (NOT footer) + 2 CTAs
-2. **Trust bar** — "Licensed & Insured · Father & Son Team · Se Habla Español · Newton County, GA"
+2. **Trust bar** — "Father & Son Team · Se Habla Español · Newton County, GA"
 3. **Transformation System** — 3-step visual: Step 1: Refresh (PW + landscaping) → Step 2: Maintain (mowing) → Step 3: Peace of Mind (guarantees + no contracts)
 4. **Scarcity banner** — "We're building our Newton County summer route now. Once your area fills, wait times increase."
 5. **Pressure Washing Packages** — with satisfaction guarantee callout

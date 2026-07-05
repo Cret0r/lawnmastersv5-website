@@ -25,7 +25,6 @@ export const summerRefresh = {
   },
 
   trustBar: [
-    "Licensed & Insured",
     "Father & Son Team",
     "Se Habla Español",
     "Newton County, GA",
