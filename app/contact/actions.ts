@@ -4,6 +4,7 @@ import { headers } from "next/headers"
 import { z } from "zod"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { isRateLimited } from "@/lib/rate-limit"
+import { sendLeadNotification } from "@/lib/notify"
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -58,6 +59,17 @@ export async function submitContactMessage(formData: FormData) {
     })
     return { error: "Something went wrong. Please try again." }
   }
+
+  await sendLeadNotification(`New contact message — ${name}`, [
+    `Name: ${name}`,
+    phone && `Phone: ${phone}`,
+    `Email: ${email}`,
+    subject && `Subject: ${subject}`,
+    "",
+    message,
+    "",
+    "Reply fast — speed to lead wins the job. Full details at lawnmastersv5.com/admin",
+  ])
 
   return { success: true }
 }

@@ -4,6 +4,7 @@ import { headers } from "next/headers"
 import { z } from "zod"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { isRateLimited } from "@/lib/rate-limit"
+import { sendLeadNotification } from "@/lib/notify"
 
 const quoteSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -67,6 +68,20 @@ export async function submitQuote(formData: FormData) {
     console.error("Supabase insert error:", error)
     return { error: "Something went wrong. Please try again." }
   }
+
+  await sendLeadNotification(`New quote request — ${firstName} ${lastName}`, [
+    `Name: ${firstName} ${lastName}`,
+    `Phone: ${phone}`,
+    `Email: ${email}`,
+    `Address: ${address}`,
+    `Services: ${services.join(", ")}`,
+    propertyType && `Property type: ${propertyType}`,
+    propertySize && `Property size: ${propertySize}`,
+    timeline && `Timeline: ${timeline}`,
+    details && `Details: ${details}`,
+    "",
+    "Reply fast — speed to lead wins the job. Full details at lawnmastersv5.com/admin",
+  ])
 
   return { success: true }
 }
