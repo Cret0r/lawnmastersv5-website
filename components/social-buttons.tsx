@@ -1,18 +1,16 @@
 "use client"
 
 import { MessageCircle, Phone } from "lucide-react"
+import { BUSINESS, smsHref, whatsappHref } from "@/lib/business-info"
 
 export function SocialButtons() {
-  const whatsappNumber = "+14076000301"
-  const whatsappMessage = encodeURIComponent("Hi, I'm interested in your lawn care services!")
-  const textMessage = encodeURIComponent("Hi, I'm interested in your lawn care services. My address is ____.")
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row gap-2">
         {/* WhatsApp - Top Left */}
         <a
-          href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
+          href={whatsappHref("Hi, I'm interested in your lawn care services!")}
           target="_blank"
           rel="noopener noreferrer"
           className="group w-[70px] h-[70px] bg-white rounded-[70px_5px_5px_5px] shadow-md transition-all duration-200 ease-in-out hover:scale-110 hover:bg-[#25D366] flex items-center justify-center"
@@ -29,7 +27,7 @@ export function SocialButtons() {
 
         {/* Facebook - Top Right */}
         <a
-          href="https://www.facebook.com/profile.php?id=61590265813532"
+          href={BUSINESS.facebookUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="group w-[70px] h-[70px] bg-white rounded-[5px_70px_5px_5px] shadow-md transition-all duration-200 ease-in-out hover:scale-110 hover:bg-[#1877F2] flex items-center justify-center"
@@ -48,7 +46,7 @@ export function SocialButtons() {
       <div className="flex flex-row gap-2">
         {/* Instagram - Bottom Left */}
         <a
-          href="https://www.instagram.com/lawnmasters_v5/?hl=en"
+          href={BUSINESS.instagramUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="group w-[70px] h-[70px] bg-white rounded-[5px_5px_5px_70px] shadow-md transition-all duration-200 ease-in-out hover:scale-110 hover:bg-[#E4405F] flex items-center justify-center"
@@ -65,7 +63,7 @@ export function SocialButtons() {
 
         {/* Text Message - Bottom Right */}
         <a
-          href={`sms:+14076000301?body=${textMessage}`}
+          href={smsHref("Hi, I'm interested in your lawn care services. My address is ____.")}
           className="group w-[70px] h-[70px] bg-white rounded-[5px_5px_70px_5px] shadow-md transition-all duration-200 ease-in-out hover:scale-110 hover:bg-primary flex items-center justify-center"
           aria-label="Text us now"
         >

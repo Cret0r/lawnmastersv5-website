@@ -1,7 +1,10 @@
 // ═══════════════════════════════════════════════════
 // SPRING RUSH LAWN PLAN — Central content config
 // Update copy here; components will pull from this file.
+// Phone/cities come from lib/business-info.ts — edit them THERE.
 // ═══════════════════════════════════════════════════
+
+import { BUSINESS, CITIES_LINE, smsHref } from "./business-info"
 
 export const springRush = {
   // — Announcement Bar
@@ -17,10 +20,10 @@ export const springRush = {
     subheadline:
       "Recurring lawn service starting at $120/month*. Se Habla Español.",
     noContract: "No contracts. Cancel anytime.",
-    ctaCall: { label: "Call Now", href: "tel:+14076000301" },
+    ctaCall: { label: "Call Now", href: BUSINESS.telHref },
     ctaText: {
       label: "Text Now",
-      href: "sms:+14076000301?body=Hi%2C%20I%20want%20to%20lock%20in%20the%20Summer%20Special%20weekly%20plan.%20My%20address%20is%20____.",
+      href: smsHref("Hi, I want to lock in the Summer Special weekly plan. My address is ____."),
     },
     secondaryLink: {
       label: "Get a Fast Estimate",
@@ -120,7 +123,7 @@ export const springRush = {
 
   // — Service area (homepage compact version)
   serviceArea: {
-    text: "Now booking weekly lawn service in Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe, GA, and surrounding neighborhoods.",
+    text: `Now booking weekly lawn service in ${CITIES_LINE}, GA, and surrounding neighborhoods.`,
     cta: { label: "See If We Service Your Area", href: "/contact" },
   },
 

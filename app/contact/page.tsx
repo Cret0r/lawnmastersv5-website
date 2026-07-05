@@ -9,15 +9,9 @@ import { Mail, Clock, Phone, Send, CheckCircle2, Loader2, MapPin } from "lucide-
 import Image from "next/image"
 import Link from "next/link"
 import { submitContactMessage } from "./actions"
+import { BUSINESS } from "@/lib/business-info"
 
-const serviceAreas = [
-  "Covington",
-  "Conyers",
-  "Oxford",
-  "Porterdale",
-  "Social Circle",
-  "Monroe",
-]
+const serviceAreas = BUSINESS.cities
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -82,10 +76,10 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold text-foreground mb-1">Phone</h3>
                       <a
-                        href="tel:+14076000301"
+                        href={BUSINESS.telHref}
                         className="text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
-                        (407) 600-0301
+                        {BUSINESS.phoneDisplay}
                       </a>
                       <p className="text-xs text-muted-foreground mt-1">Call or text anytime</p>
                     </div>
@@ -102,10 +96,10 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold text-foreground mb-1">Email</h3>
                       <a
-                        href="mailto:lawnmastersv5@gmail.com"
+                        href={BUSINESS.mailtoHref}
                         className="text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
-                        lawnmastersv5@gmail.com
+                        {BUSINESS.email}
                       </a>
                     </div>
                   </div>
@@ -218,7 +212,7 @@ export default function ContactPage() {
                               id="phone"
                               name="phone"
                               className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                              placeholder="(407) 600-0301"
+                              placeholder={BUSINESS.phoneDisplay}
                             />
                           </div>
                         </div>
@@ -298,7 +292,7 @@ export default function ContactPage() {
                 </div>
                 <p className="text-sm text-muted-foreground mt-6 text-center">
                   Don&apos;t see your area? Give us a call at{" "}
-                  <a href="tel:+14076000301" className="text-primary hover:underline">(407) 600-0301</a>
+                  <a href={BUSINESS.telHref} className="text-primary hover:underline">{BUSINESS.phoneDisplay}</a>
                   {" "}-- we may still be able to help!
                 </p>
               </CardContent>

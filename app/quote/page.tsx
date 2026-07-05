@@ -9,6 +9,7 @@ import { Footer } from "@/components/footer"
 import { CheckCircle2, Leaf, Ruler, Trees, Droplets, Snowflake, Pickaxe, SprayCan, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { submitQuote } from "./actions"
+import { BUSINESS } from "@/lib/business-info"
 
 const serviceOptions = [
   { id: "lawn-care", label: "Lawn Care & Mowing", icon: Leaf },
@@ -183,7 +184,7 @@ export default function QuotePage() {
                       name="phone"
                       required
                       className="w-full px-4 py-2.5 rounded-lg border border-input bg-card text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                      placeholder="(407) 600-0301"
+                      placeholder={BUSINESS.phoneDisplay}
                     />
                   </div>
                 </div>
@@ -252,7 +253,7 @@ export default function QuotePage() {
                 </p>
                 <p className="text-xs text-primary mb-5">
                   For fastest booking, call or text us at{" "}
-                  <a href="tel:+14076000301" className="underline font-medium">(407) 600-0301</a>.
+                  <a href={BUSINESS.telHref} className="underline font-medium">{BUSINESS.phoneDisplay}</a>.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {serviceOptions.map((service) => {

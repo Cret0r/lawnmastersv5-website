@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer"
 import { Award, Users, Leaf, Heart } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { BUSINESS } from "@/lib/business-info"
 
 export const metadata: Metadata = {
   title: "About Lawn Masters V5 — Local Lawn Care in Covington, GA",
@@ -201,30 +202,12 @@ export default function AboutPage() {
               Lawn Masters V5 proudly serves homeowners in:
             </p>
             <ul className="space-y-3 text-base text-muted-foreground">
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                Covington
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                Conyers
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                Oxford
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                Porterdale
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                Social Circle
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                Monroe, GA
-              </li>
+              {BUSINESS.cities.map((city, i) => (
+                <li key={city} className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                  {i === BUSINESS.cities.length - 1 ? `${city}, GA` : city}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

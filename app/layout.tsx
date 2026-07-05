@@ -4,6 +4,7 @@ import { DM_Serif_Display, Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { FloatingCTA } from "@/components/floating-cta"
+import { BUSINESS } from "@/lib/business-info"
 import "./globals.css"
 
 const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -27,12 +28,12 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LandscapeService",
-  name: "Lawn Masters V5",
+  name: BUSINESS.shortName,
   description:
     "Professional landscaping services including lawn care, landscape design, hardscaping, tree care, irrigation, pressure washing, and seasonal cleanup.",
-  url: "https://lawnmastersv5.com",
-  telephone: "+1-407-600-0301",
-  email: "lawnmastersv5@gmail.com",
+  url: `https://${BUSINESS.domain}`,
+  telephone: BUSINESS.phoneE164,
+  email: BUSINESS.email,
   address: {
     "@type": "PostalAddress",
     addressLocality: "Covington",
@@ -40,12 +41,7 @@ const jsonLd = {
     addressCountry: "US",
   },
   areaServed: [
-    { "@type": "City", name: "Covington" },
-    { "@type": "City", name: "Conyers" },
-    { "@type": "City", name: "Oxford" },
-    { "@type": "City", name: "Porterdale" },
-    { "@type": "City", name: "Social Circle" },
-    { "@type": "City", name: "Monroe" },
+    ...BUSINESS.cities.map((name) => ({ "@type": "City", name })),
     { "@type": "County", name: "Newton County" },
   ],
   openingHoursSpecification: [
@@ -72,7 +68,7 @@ const jsonLd = {
     "Seasonal Cleanup",
   ],
   priceRange: "$45–$120/mo",
-  sameAs: ["https://www.instagram.com/lawnmasters_v5/"],
+  sameAs: [BUSINESS.instagramUrl, BUSINESS.facebookUrl],
 }
 
 export default function RootLayout({

@@ -6,6 +6,7 @@ import { ReviewCard } from "@/components/review-card"
 import { summerRefresh } from "@/lib/summer-content"
 import { springRush } from "@/lib/spring-rush-content"
 import { reviews } from "@/lib/reviews-data"
+import { BUSINESS } from "@/lib/business-info"
 import {
   Phone,
   MessageSquare,
@@ -42,8 +43,8 @@ export default function SummerPage() {
             <ArrowLeft className="w-4 h-4" />
             <img src="/logo-contrast.png" alt="Lawn Masters V5" className="h-10 w-auto" />
           </Link>
-          <a href="tel:+14076000301" className="text-primary font-semibold text-sm hover:underline">
-            (407) 600-0301
+          <a href={BUSINESS.telHref} className="text-primary font-semibold text-sm hover:underline">
+            {BUSINESS.phoneDisplay}
           </a>
         </div>
       </nav>
@@ -302,7 +303,7 @@ export default function SummerPage() {
                         : "w-full bg-foreground hover:bg-foreground/90 text-background"
                     }
                   >
-                    <a href="tel:+14076000301" className="inline-flex items-center justify-center gap-2">
+                    <a href={BUSINESS.telHref} className="inline-flex items-center justify-center gap-2">
                       <Phone className="w-4 h-4" />
                       Lock In My Spot
                     </a>
@@ -476,8 +477,8 @@ export default function SummerPage() {
         <div className="container mx-auto px-4 text-center">
           <p className="text-sm text-primary-foreground/50">
             Lawn Masters V5 &middot; Serving Covington, GA &amp; Surrounding Areas &middot;{" "}
-            <a href="tel:+14076000301" className="hover:text-primary transition-colors">
-              (407) 600-0301
+            <a href={BUSINESS.telHref} className="hover:text-primary transition-colors">
+              {BUSINESS.phoneDisplay}
             </a>{" "}
             &middot;{" "}
             <Link href="/" className="hover:text-primary transition-colors">

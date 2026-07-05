@@ -8,6 +8,7 @@ import { BeforeAfterSlider } from "@/components/before-after-slider"
 import { ReviewCard } from "@/components/review-card"
 import { springRush } from "@/lib/spring-rush-content"
 import { reviews, googleReviewLink } from "@/lib/reviews-data"
+import { BUSINESS } from "@/lib/business-info"
 import {
   Scissors,
   Flower2,
@@ -35,8 +36,7 @@ import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "Lawn Care & Mowing in Covington, GA — Lawn Masters V5",
-  description:
-    "Reliable weekly lawn care in Covington & Conyers, GA. Starting at $120/mo, no contracts, Se Habla Español. Call (407) 600-0301 for a free estimate.",
+  description: `Reliable weekly lawn care in Covington & Conyers, GA. Starting at $120/mo, no contracts, Se Habla Español. Call ${BUSINESS.phoneDisplay} for a free estimate.`,
 }
 
 export default function Home() {
@@ -260,7 +260,7 @@ export default function Home() {
                         : "bg-foreground hover:bg-foreground/90 text-background"
                     }`}
                   >
-                    <a href="tel:+14076000301" className="inline-flex items-center justify-center gap-2">
+                    <a href={BUSINESS.telHref} className="inline-flex items-center justify-center gap-2">
                       <Phone className="w-4 h-4" />
                       Lock In My Spot
                     </a>
@@ -563,9 +563,9 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-10 py-6 transition-all hover:scale-105">
-              <a href="tel:+14076000301" className="inline-flex items-center gap-2">
+              <a href={BUSINESS.telHref} className="inline-flex items-center gap-2">
                 <Phone className="w-5 h-5" />
-                Call (407) 600-0301
+                Call {BUSINESS.phoneDisplay}
               </a>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-lg px-10 py-6 bg-transparent transition-all">

@@ -2,7 +2,12 @@
 // SUMMER REFRESH 2026 — /summer landing page content
 // Campaign: high-ticket PW + landscaping → recurring mowing
 // Source of truth: SUMMER_CAMPAIGN_2026.md
+// Phone/cities come from lib/business-info.ts — edit them THERE.
 // ═══════════════════════════════════════════════════
+
+import { BUSINESS, smsHref } from "./business-info"
+
+const QUOTE_SMS = smsHref("CLEAN — I'd like a free quote for my property. My address is ____.")
 
 export const summerRefresh = {
   meta: {
@@ -17,10 +22,10 @@ export const summerRefresh = {
     subheadline:
       "Full-service landscaping, pressure washing & lawn care — Covington, GA",
     bilingualBadge: "Se Habla Español",
-    ctaCall: { label: "Call Now", href: "tel:+14076000301" },
+    ctaCall: { label: "Call Now", href: BUSINESS.telHref },
     ctaText: {
       label: "Text for a Free Quote",
-      href: "sms:+14076000301?body=CLEAN%20%E2%80%94%20I%27d%20like%20a%20free%20quote%20for%20my%20property.%20My%20address%20is%20____.",
+      href: QUOTE_SMS,
     },
   },
 
@@ -182,8 +187,7 @@ export const summerRefresh = {
     steps: [
       {
         title: "Text Us",
-        description:
-          "Send a photo of your driveway, beds, or yard to (407) 600-0301.",
+        description: `Send a photo of your driveway, beds, or yard to ${BUSINESS.phoneDisplay}.`,
       },
       {
         title: "Free Quote",
@@ -201,34 +205,27 @@ export const summerRefresh = {
   serviceArea: {
     eyebrow: "Service Area",
     headline: "Proudly Serving Newton County & Beyond",
-    cities: [
-      "Covington",
-      "Conyers",
-      "Oxford",
-      "Porterdale",
-      "Social Circle",
-      "Monroe",
-    ],
+    cities: BUSINESS.cities,
   },
 
   bilingual: {
     headline: "¿Prefiere español? No hay problema.",
     text: "Llámenos o envíe un mensaje de texto en español cuando quiera. Presupuestos gratis, sin compromiso.",
     textEn: "Text or call us in Spanish anytime — free quotes, no obligation.",
-    ctaCall: { label: "Llame Ahora", href: "tel:+14076000301" },
+    ctaCall: { label: "Llame Ahora", href: BUSINESS.telHref },
     ctaText: {
       label: "Envíe un Texto",
-      href: "sms:+14076000301?body=Hola%2C%20quisiera%20un%20presupuesto%20gratis%20para%20mi%20propiedad.%20Mi%20direcci%C3%B3n%20es%20____.",
+      href: smsHref("Hola, quisiera un presupuesto gratis para mi propiedad. Mi dirección es ____."),
     },
   },
 
   finalCta: {
     headline: "Summer routes are filling up",
     text: "Lock in your spot before your neighborhood fills. Call or text now for a free quote — English or Spanish.",
-    ctaCall: { label: "Call (407) 600-0301", href: "tel:+14076000301" },
+    ctaCall: { label: `Call ${BUSINESS.phoneDisplay}`, href: BUSINESS.telHref },
     ctaText: {
       label: "Text for a Free Quote",
-      href: "sms:+14076000301?body=CLEAN%20%E2%80%94%20I%27d%20like%20a%20free%20quote%20for%20my%20property.%20My%20address%20is%20____.",
+      href: QUOTE_SMS,
     },
   },
 } as const

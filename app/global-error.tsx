@@ -2,6 +2,7 @@
 
 import * as Sentry from "@sentry/nextjs"
 import { useEffect } from "react"
+import { BUSINESS } from "@/lib/business-info"
 
 // Root error boundary — catches render errors anywhere in the app,
 // reports them to Sentry, and shows a branded fallback.
@@ -37,8 +38,8 @@ export default function GlobalError({
           <h1 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>Something went wrong</h1>
           <p style={{ color: "#7a7673", marginBottom: "1.5rem" }}>
             Sorry about that. Please try again, or call us at{" "}
-            <a href="tel:+14076000301" style={{ color: "#2d7a3a" }}>
-              (407) 600-0301
+            <a href={BUSINESS.telHref} style={{ color: "#2d7a3a" }}>
+              {BUSINESS.phoneDisplay}
             </a>
             .
           </p>

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { SocialButtons } from "./social-buttons"
+import { BUSINESS } from "@/lib/business-info"
 
 export function Footer() {
   return (
@@ -85,13 +86,13 @@ export function Footer() {
             <div className="space-y-2.5 text-sm text-primary-foreground/70">
               <p>Serving Covington, GA &amp; Surrounding Areas</p>
               <p>
-                <a href="tel:+14076000301" className="hover:text-primary transition-colors">
-                  (407) 600-0301
+                <a href={BUSINESS.telHref} className="hover:text-primary transition-colors">
+                  {BUSINESS.phoneDisplay}
                 </a>
               </p>
               <p>
-                <a href="mailto:lawnmastersv5@gmail.com" className="hover:text-primary transition-colors">
-                  lawnmastersv5@gmail.com
+                <a href={BUSINESS.mailtoHref} className="hover:text-primary transition-colors">
+                  {BUSINESS.email}
                 </a>
               </p>
             </div>
