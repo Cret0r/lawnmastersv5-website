@@ -6,10 +6,11 @@
 
 ## 🔴 Owner actions blocking shipped features (do these first)
 
+> ✅ **RESOLVED (July 2026):** `005_fix_rls_scoping.sql` has been run in production Supabase and verified with a live curl test against the anon key (returned `[]`) — the lead-data leak is confirmed closed.
+
 | Item | Why it's blocking | How |
 |---|---|---|
-| Verify `scripts/005_fix_rls_scoping.sql` was run in Supabase | Until run, the anon-key lead-data leak is OPEN in production regardless of all deployed code | SQL Editor → paste → run → verify query at file bottom; then curl test in docs/sops/database-migrations.md |
-| Run `scripts/006_create_gallery_items.sql` | Admin Gallery tab uploads fail without the table + bucket | Same procedure |
+| Run `scripts/006_create_gallery_items.sql` | Admin Gallery tab uploads fail without the table + bucket | SQL Editor → paste → run → verify queries at file bottom (docs/sops/gallery-migration.md) |
 | Set `NEXT_PUBLIC_SENTRY_DSN` in Vercel | Error tracking is silently off | sentry.io → create Next.js project → copy DSN → Vercel env vars (Prod+Preview) → redeploy |
 | Set `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` | Speed-to-lead emails are silently off — leads wait for an /admin check | Sign up at resend.com **with lawnmastersv5@gmail.com** (onboarding sender only delivers to account owner), create key, set vars, redeploy. Later: verify lawnmastersv5.com domain |
 | Google Business Profile buildout | #1 growth lever, gates the review flywheel and LSA | docs/GROWTH.md § 1 |

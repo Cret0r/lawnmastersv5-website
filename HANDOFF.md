@@ -150,7 +150,7 @@ scripts/
   002_create_admin_user.sql   Creates Supabase Auth user (NOT used by login system — skip)
   003_fix_admin_rls.sql       Adds authenticated user read/update/delete policies ✅ run (policies dropped by 005)
   004_create_contact_messages.sql  Creates contact_messages table + RLS ✅ run
-  005_fix_rls_scoping.sql     SECURITY FIX — scopes RLS to service_role, closes anon-key leak ⚠️ verify run in Supabase
+  005_fix_rls_scoping.sql     SECURITY FIX — scopes RLS to service_role, closes anon-key leak ✅ run + curl-verified
   generate-hero-images.mjs    Regenerates responsive hero variants in public/hero/ (node, uses sharp)
   development/quick-start.sh
   development/dev-verify.sh
@@ -250,7 +250,7 @@ CLAUDE.md                 Points to AGENTS.md
 - **[Session 4]** pnpm lockfile regenerated (unrs-resolver added to pnpm-workspace.yaml allowBuilds)
 - **[Session 5]** SCRIPTS.md created documenting every script in /scripts — committed and pushed
 - **[Session 5]** claude-mem worker incident diagnosed and resolved — see gotcha #14 for full details
-- **[Session 6]** Security audit fixes merged to master (branch security/admin-authz-rls-fix): auth guards (`isAdminAuthenticated()`) added to all 12 server actions in app/admin/actions.ts + app/admin/client-actions.ts, and scripts/005_fix_rls_scoping.sql created to fix the critical quote_submissions RLS leak (the 001 policy had no `to` clause, exposing all leads to the public anon key) — **verify 005 has been run in Supabase SQL Editor; the code fix alone does not close the database hole**
+- **[Session 6]** Security audit fixes merged to master (branch security/admin-authz-rls-fix): auth guards (`isAdminAuthenticated()`) added to all 12 server actions in app/admin/actions.ts + app/admin/client-actions.ts, and scripts/005_fix_rls_scoping.sql created to fix the critical quote_submissions RLS leak (the 001 policy had no `to` clause, exposing all leads to the public anon key) — ✅ later run in Supabase and verified closed via anon-key curl test (returned `[]`)
 - **[Session 6]** Norton "AI Agent Protection" briefly blocked all of Claude Code's direct file writes to the project folder — see gotcha #15
 - **[Session 6]** /summer landing page built — full 14-section structure from SUMMER_CAMPAIGN_2026.md; campaign copy centralized in lib/summer-content.ts; old /spring-rush page deleted with a permanent redirect /spring-rush → /summer (next.config.mjs) so printed QR/ad links keep working
 - **[Session 6]** Responsive hero backgrounds — scripts/generate-hero-images.mjs (sharp) generates mobile/tablet/desktop variants into public/hero/; homepage + /summer heroes now use `<picture>` art direction (homepage hero payload dropped from 2.6 MB to 99–256 KB depending on device)

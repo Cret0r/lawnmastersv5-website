@@ -73,7 +73,7 @@ Creates the `contact_messages` table that stores all `/contact` form submissions
 
 **Gotchas:**
 - Uses `drop policy if exists` throughout — safe to re-run.
-- The app is unaffected (all reads/writes use the service-role key), but **until this runs, the database leak is open** — verify it has been run in production.
+- ✅ **Run in production and verified (July 2026):** a live curl against the REST API with the anon key returned `[]` — the leak is confirmed closed.
 - Supersedes the RLS parts of `001` and `003`.
 
 ---

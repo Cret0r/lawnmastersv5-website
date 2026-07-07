@@ -25,7 +25,7 @@
 ## Database / Supabase
 
 10. **Roleless RLS policies apply to ALL roles including `anon`.** This caused a real customer-PII leak (001's policy had no `to` clause). Every new policy must say `to service_role` (or the deliberate `to anon` for form INSERTs). Pattern: scripts/005 and 006.
-11. **Migrations are manual** — nothing runs them automatically. If a feature "mysteriously" fails soft (gallery empty, uploads erroring), first question: has its migration been run in the Supabase SQL Editor? ⚠️ As of this writing, confirm 005 (RLS fix) and 006 (gallery) have been run in production.
+11. **Migrations are manual** — nothing runs them automatically. If a feature "mysteriously" fails soft (gallery empty, uploads erroring), first question: has its migration been run in the Supabase SQL Editor? Status: 005 (RLS fix) ✅ run and curl-verified closed (July 2026); 006 (gallery) ⚠️ still pending confirmation.
 12. **`002_create_admin_user.sql` is dev-only** — hardcoded test password, seeds a Supabase Auth user the app doesn't even use. Never run in production.
 
 ## Testing

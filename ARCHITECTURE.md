@@ -105,7 +105,7 @@ landscaping-business-website/
 │
 ├── scripts/                      # See SCRIPTS.md + docs/sops/ for run instructions
 │   ├── 001–004 *.sql             # Original table migrations (RLS superseded by 005)
-│   ├── 005_fix_rls_scoping.sql   # SECURITY: scopes RLS to service_role (⚠️ verify run in Supabase)
+│   ├── 005_fix_rls_scoping.sql   # SECURITY: scopes RLS to service_role (✅ run + curl-verified)
 │   ├── 006_create_gallery_items.sql  # Gallery table + storage bucket (⚠️ must run before gallery uploads)
 │   ├── generate-hero-images.mjs  # sharp — regenerates public/hero/ variants
 │   └── development|testing|monitoring|maintenance|automation/*.sh

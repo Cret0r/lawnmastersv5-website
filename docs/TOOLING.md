@@ -15,7 +15,7 @@ Verified against the actual files; full per-script detail in SCRIPTS.md.
 | `002_create_admin_user.sql` | dev-only Supabase Auth seed | ⛔ never run in production |
 | `003_fix_admin_rls.sql` | authenticated-role policies | ✅ run (policies dropped by 005) |
 | `004_create_contact_messages.sql` | contact_messages table | ✅ run |
-| `005_fix_rls_scoping.sql` | SECURITY: service_role scoping | ⚠️ verify run in production |
+| `005_fix_rls_scoping.sql` | SECURITY: service_role scoping | ✅ run + curl-verified (leak closed) |
 | `006_create_gallery_items.sql` | gallery table + storage bucket | ⚠️ must run before gallery uploads |
 
 ### Node
