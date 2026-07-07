@@ -1,5 +1,5 @@
 # Lawn Masters V5 Website — AI Handoff Document
-> Last updated: July 4, 2026 (session 6)
+> Last updated: July 6, 2026 (session 7)
 > Rule: Update this document at the end of every session before pushing.
 
 ---
@@ -253,6 +253,13 @@ CLAUDE.md                 Points to AGENTS.md
 - **[Session 6]** /summer landing page built — full 14-section structure from SUMMER_CAMPAIGN_2026.md; campaign copy centralized in lib/summer-content.ts; old /spring-rush page deleted with a permanent redirect /spring-rush → /summer (next.config.mjs) so printed QR/ad links keep working
 - **[Session 6]** Responsive hero backgrounds — scripts/generate-hero-images.mjs (sharp) generates mobile/tablet/desktop variants into public/hero/; homepage + /summer heroes now use `<picture>` art direction (homepage hero payload dropped from 2.6 MB to 99–256 KB depending on device)
 - **[Session 6]** "Licensed & Insured" claim removed from the /summer trust bar and SUMMER_CAMPAIGN_2026.md — not accurate for the business yet; do not re-add without owner confirmation
+- **[Session 7]** Sentry error tracking installed (@sentry/nextjs) — server/edge/client init + app/global-error.tsx boundary; **no-op until NEXT_PUBLIC_SENTRY_DSN is set in Vercel** (owner action pending)
+- **[Session 7]** Speed-to-lead email notifications — lib/notify.ts (Resend REST API, no SDK) fires on every quote/contact submission; fails soft if unconfigured; **needs RESEND_API_KEY + LEAD_NOTIFY_EMAIL in Vercel** (owner action pending; sign up at resend.com with the business email)
+- **[Session 7]** Orphaned app/admin/route-planner-tab.tsx deleted (never rendered, broken imports) — recoverable from git history if the feature is ever prioritized
+- **[Session 7]** `ignoreBuildErrors` removed from next.config.mjs — tsc is clean and TypeScript errors now FAIL the Vercel build (this is the point; check build logs for type errors if a deploy fails)
+- **[Session 7]** lib/business-info.ts created — single source of truth for phone, email, cities, socials; replaced ~33 hardcoded phone instances across 11 files
+- **[Session 7]** Fixed ERR_PNPM_OUTDATED_LOCKFILE deploy failure — Sentry had been installed via npm, which updated package-lock.json but not pnpm-lock.yaml (the one Vercel builds from); regenerated with `pnpm install` and approved @sentry/cli in pnpm-workspace.yaml allowBuilds
+- **[Session 7]** package-lock.json deleted — project is now pnpm-only; see gotcha #10 for the new dependency workflow
 
 ### IN PROGRESS 🔵
 - **Summer 2026 campaign** — SUMMER_CAMPAIGN_2026.md fully updated with Hormozi analysis
@@ -450,7 +457,7 @@ Local dev: create `.env.local` in project root
 
 9. **Session expires after 24 hours** — Admin is logged out automatically. This is intentional.
 
-10. **`npm install` requires `--legacy-peer-deps`** — `vaul@0.9.9` (shadcn Drawer) has a peer dep on React `^0.14–^18` but the project uses React 19. Every `npm install <package>` without `--legacy-peer-deps` throws `ERESOLVE` and aborts. Always use the flag.
+10. **The project is pnpm-only — use `pnpm add` / `pnpm install` for ALL dependency changes, never `npm install`** — Vercel builds from `pnpm-lock.yaml`, and `package-lock.json` was deleted in session 7 after an npm-installed dependency (@sentry/nextjs) desynced the two lockfiles and broke a production deploy (`ERR_PNPM_OUTDATED_LOCKFILE`). Running `npm install` would recreate `package-lock.json` and restart that cycle. pnpm handles the React 19 peer-dep conflicts (vaul@0.9.9 etc.) without any `--legacy-peer-deps` flag. If a new package has an install script, pnpm will prompt — approve it by setting the package to `true` under `allowBuilds` in `pnpm-workspace.yaml` (see cypress/sharp/@sentry/cli entries).
 
 11. **Cypress requires the dev server running first** — `npm run cypress:run` connects to `localhost:3000`. It does not start the dev server automatically. Run `npm run dev` in a separate terminal before running tests, or all 26 tests will fail with connection refused.
 
