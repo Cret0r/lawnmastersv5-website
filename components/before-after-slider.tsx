@@ -124,6 +124,8 @@ export function BeforeAfterSlider({
         <img
           src={afterImage || "/placeholder.svg"}
           alt="After"
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           onLoad={() => setAfterLoaded(true)}
           onError={() => setAfterLoaded(true)}
@@ -139,6 +141,8 @@ export function BeforeAfterSlider({
         <img
           src={beforeImage || "/placeholder.svg"}
           alt="Before"
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           style={{ minWidth: containerWidth > 0 ? `${containerWidth}px` : "100vw" }}
           onLoad={() => setBeforeLoaded(true)}

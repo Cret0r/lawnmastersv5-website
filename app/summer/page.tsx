@@ -41,13 +41,14 @@ export default function SummerPage() {
             className="flex items-center gap-2 text-primary-foreground text-sm hover:text-primary transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <img src="/logo-contrast.png" alt="Lawn Masters V5" className="h-10 w-auto" />
+            <img src="/logo-contrast.png" alt="Lawn Masters V5" width={1638} height={497} className="h-10 w-auto" />
           </Link>
           <a href={BUSINESS.telHref} className="text-primary font-semibold text-sm hover:underline">
             {BUSINESS.phoneDisplay}
           </a>
         </div>
       </nav>
+      <main>
 
       {/* ════════════ 1. HERO ════════════ */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-foreground">
@@ -471,6 +472,8 @@ export default function SummerPage() {
           </div>
         </div>
       </section>
+
+      </main>
 
       {/* Simple footer */}
       <footer className="bg-foreground border-t border-border py-6">

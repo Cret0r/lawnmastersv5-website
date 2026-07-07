@@ -37,6 +37,8 @@ export function Navigation() {
             <img
               src={isScrolled ? "/logo-color.png" : "/logo-contrast.png"}
               alt="Lawn Masters V5"
+              width={1638}
+              height={497}
               className="h-16 w-auto"
             />
           </Link>
@@ -83,6 +85,8 @@ export function Navigation() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={`md:hidden p-2 rounded-lg transition-colors ${isScrolled ? "text-foreground hover:bg-muted" : "text-primary-foreground hover:bg-primary-foreground/10"}`}
               aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -91,10 +95,17 @@ export function Navigation() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 bg-foreground/30 backdrop-blur-sm md:hidden" onClick={closeMobileMenu} />
+        <div
+          className="fixed inset-0 bg-foreground/30 backdrop-blur-sm md:hidden"
+          onClick={closeMobileMenu}
+          aria-hidden="true"
+        />
       )}
 
       <div
+        id="mobile-menu"
+        // inert removes the closed drawer from tab order and the a11y tree
+        inert={!isMobileMenuOpen}
         className={`fixed top-20 right-0 bottom-0 w-72 bg-card shadow-xl transform transition-transform duration-300 ease-in-out md:hidden border-l border-border ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}

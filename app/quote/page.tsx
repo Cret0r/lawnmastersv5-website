@@ -57,6 +57,7 @@ export default function QuotePage() {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />
+        <main>
         <section className="pt-32 pb-20">
           <div className="container mx-auto px-4">
             <div className="max-w-xl mx-auto text-center">
@@ -82,6 +83,7 @@ export default function QuotePage() {
             </div>
           </div>
         </section>
+        </main>
         <Footer />
       </div>
     )
@@ -90,6 +92,7 @@ export default function QuotePage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <main>
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -369,6 +372,7 @@ export default function QuotePage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   )

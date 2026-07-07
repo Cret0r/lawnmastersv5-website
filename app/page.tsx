@@ -84,6 +84,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <AnnouncementBar />
       <Navigation />
+      <main>
 
       {/* ════════════════ SPRING RUSH HERO ════════════════ */}
       <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 bg-foreground">
@@ -575,6 +576,7 @@ export default function Home() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   )

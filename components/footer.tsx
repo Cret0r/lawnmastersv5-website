@@ -13,6 +13,9 @@ export function Footer() {
               <img
                 src="/logo-contrast.png"
                 alt="Lawn Masters V5"
+                width={1638}
+                height={497}
+                loading="lazy"
                 className="h-14 w-auto"
               />
             </div>

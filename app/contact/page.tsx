@@ -36,6 +36,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <main>
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -301,6 +302,7 @@ export default function ContactPage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   )
