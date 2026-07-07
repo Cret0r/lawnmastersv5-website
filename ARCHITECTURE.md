@@ -1,7 +1,8 @@
 # Lawn Masters V5 — Architecture Reference
 
-> Last updated: June 2026
+> Last full refresh: July 2026 (session 9) — reflects Sentry, Resend notifications, /summer campaign page, business-info constants, gallery system, SEO/city pages, pnpm migration, and TypeScript enforcement.
 > Domain: lawnmastersv5.com | Location: Covington, GA | Phone: (407) 600-0301
+> Deeper docs live in `/docs` — see `docs/README.md` for the index.
 
 ---
 
@@ -10,22 +11,24 @@
 | Layer | Technology | Notes |
 |---|---|---|
 | Framework | Next.js 16 (App Router) | React 19, Server + Client Components |
-| Language | TypeScript 5 | Build errors suppressed — `ignoreBuildErrors: true` |
-| Styling | Tailwind CSS v4 | CSS custom properties, no tailwind.config.ts needed |
-| Component Library | shadcn/ui (Radix UI) | Full library installed, most unused |
-| Database | Supabase | PostgreSQL + Row Level Security |
-| Auth | Custom cookie session | NOT Supabase Auth — SESSION_TOKEN env var, fail-closed credentials |
-| Hosting | Vercel | Auto-deploys from GitHub `master` |
-| Analytics | Vercel Analytics | `<Analytics />` in app/layout.tsx |
-| Performance | Vercel Speed Insights | `<SpeedInsights />` in app/layout.tsx |
+| Language | TypeScript 5 | **Errors FAIL the build** — `ignoreBuildErrors` was removed in session 7 |
+| Package manager | **pnpm ONLY** | `package-lock.json` deleted after a lockfile desync broke a deploy. Never `npm install`. |
+| Styling | Tailwind CSS v4 | Design tokens as CSS custom properties in `app/globals.css` |
+| Component library | shadcn/ui (Radix UI) | Full library installed, most unused |
+| Database | Supabase | PostgreSQL + RLS (service_role-scoped — see § 7) + Storage (gallery bucket) |
+| Auth | Custom cookie session | NOT Supabase Auth — `SESSION_TOKEN` env var, fail-closed (see docs/DECISIONS.md) |
+| Hosting | Vercel | Auto-deploys on push to GitHub `master` |
+| Error tracking | Sentry (@sentry/nextjs) | No-op until `NEXT_PUBLIC_SENTRY_DSN` is set |
+| Lead notifications | Resend REST API (plain fetch, no SDK) | `lib/notify.ts`; no-op until `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` set |
+| Analytics | Vercel Analytics + Speed Insights | Injected in `app/layout.tsx` |
 | Fonts | Inter (sans), DM Serif Display (serif) | Google Fonts via next/font |
-| Icons | lucide-react | Used throughout site |
-| Forms | Server Actions + useTransition | No API routes — see app/contact/actions.ts |
-| Form Validation | Zod | `quoteSchema` + `contactSchema` in both form Server Actions |
-| Rate Limiting | Custom in-memory (lib/rate-limit.ts) | 3 requests per IP per 15 min on both form actions |
-| E2E Testing | Cypress | 26/26 tests — `npm run cypress:run` |
-| Linting | ESLint 9 (flat config) | eslint.config.mjs — extends eslint-config-next/core-web-vitals |
-| CSS Modules | Used for admin components | login.module.css, admin-nav-button.module.css |
+| Icons | lucide-react | Standard throughout |
+| Forms | Server Actions + useTransition | No API routes |
+| Validation | Zod | `quoteSchema` + `contactSchema` in form actions |
+| Rate limiting | In-memory (lib/rate-limit.ts) | 3 req/IP/15 min, shared across BOTH form actions |
+| Images | `unoptimized: true` + sharp pre-generation | Hero variants via `scripts/generate-hero-images.mjs` + `<picture>` art direction |
+| E2E testing | Cypress — **45 tests** | 9 specs; dev server must be running first |
+| Linting | ESLint 9 flat config | `eslint.config.mjs` |
 
 ---
 
@@ -34,498 +37,230 @@
 ```
 landscaping-business-website/
 │
-├── app/                          # Next.js App Router — all pages live here
-│   ├── layout.tsx                # Root layout: fonts, metadata, Schema.org JSON-LD, FloatingCTA, Analytics
-│   ├── page.tsx                  # Homepage (/)
-│   ├── globals.css               # Tailwind v4 imports + CSS custom properties (design tokens)
-│   ├── favicon.ico               # Browser favicon
-│   ├── apple-icon.png            # Apple touch icon
+├── app/
+│   ├── layout.tsx                # Root layout: fonts, metadata, LocalBusiness JSON-LD, FloatingCTA, Analytics
+│   ├── page.tsx                  # Homepage — campaign hero (responsive <picture>), pricing, reviews, portfolio
+│   ├── globals.css               # Tailwind v4 + design tokens (the ACTIVE one; styles/globals.css is dead)
+│   ├── global-error.tsx          # Root error boundary → Sentry captureException + branded fallback
+│   ├── sitemap.ts                # Generated /sitemap.xml (static routes + city pages)
+│   ├── robots.ts                 # Generated /robots.txt (disallows /admin)
 │   │
-│   ├── about/
-│   │   └── page.tsx              # /about — Company story, values, service area
+│   ├── about/page.tsx            # /about — story, values, service area (cities from BUSINESS.cities)
+│   ├── services/page.tsx         # /services — 7 services + ItemList Service JSON-LD
+│   ├── gallery/page.tsx          # /gallery — DB-backed uploads FIRST, then hardcoded transformations
+│   ├── contact/                  # /contact (CLIENT) — form → contact_messages + lead email
+│   ├── quote/                    # /quote (CLIENT) — form → quote_submissions + lead email
+│   ├── service-policies/page.tsx # /service-policies
+│   ├── summer/page.tsx           # /summer — Summer Refresh 2026 campaign page (14 sections)
+│   │                             #   (/spring-rush 308-redirects here via next.config.mjs)
+│   ├── lawn-care/[city]/page.tsx # Per-city SEO pages (covington/conyers/oxford; data in lib/city-pages.ts)
 │   │
-│   ├── services/
-│   │   └── page.tsx              # /services — Full service catalog with feature lists
-│   │
-│   ├── gallery/
-│   │   └── page.tsx              # /gallery — 12 before/after transformation sliders
-│   │
-│   ├── contact/
-│   │   ├── page.tsx              # /contact — Contact form + service area grid (CLIENT)
-│   │   ├── actions.ts            # Server Action: submitContactMessage → Supabase insert
-│   │   └── layout.tsx            # Contact page layout wrapper
-│   │
-│   ├── quote/
-│   │   ├── page.tsx              # /quote — Free estimate multi-step form (CLIENT)
-│   │   ├── actions.ts            # Server Action: submitQuote → Supabase insert
-│   │   └── layout.tsx            # Quote page layout wrapper
-│   │
-│   ├── service-policies/
-│   │   └── page.tsx              # /service-policies — Policy docs (pricing, weather, guarantee)
-│   │
-│   ├── spring-rush/
-│   │   └── page.tsx              # /spring-rush — Summer Special campaign landing page
-│   │
-│   └── admin/
-│       ├── page.tsx              # /admin — Protected dashboard (SERVER, requires auth)
-│       ├── login/
-│       │   └── page.tsx          # /admin/login — Login form
-│       ├── actions.ts            # Server Actions: login, logout
-│       ├── admin-tabs.tsx        # Tab switcher for Quotes/Messages (CLIENT)
-│       ├── client-actions.ts     # Client-side admin utilities
-│       ├── clients-tab.tsx       # Clients tab component
-│       ├── message-actions.tsx   # Mark-read / delete actions for messages (CLIENT)
-│       ├── route-planner-tab.tsx # Route planning tab (Leaflet map)
-│       ├── sign-out-button.tsx   # Sign-out button (CLIENT)
-│       └── submission-actions.tsx # Status update actions for quote submissions (CLIENT)
+│   └── admin/                    # /admin — protected dashboard
+│       ├── page.tsx              # Server component; re-checks auth on top of middleware
+│       ├── login/page.tsx        # Dark CSS-module login; inline "use server" loginAction
+│       ├── actions.ts            # Quote/message mutations — ALL auth-guarded
+│       ├── client-actions.ts     # Clients CRUD — ALL auth-guarded
+│       ├── gallery-actions.ts    # Gallery upload/delete/list — ALL auth-guarded
+│       ├── admin-tabs.tsx        # Tabs: Clients | Quotes | Messages | Gallery (CLIENT)
+│       ├── clients-tab.tsx       # Recurring-client tracker (due dates, gate codes, hazards)
+│       ├── gallery-tab.tsx       # Before/after photo upload UI (CLIENT)
+│       ├── submission-actions.tsx / message-actions.tsx / sign-out-button.tsx
+│       └── (route-planner-tab.tsx was DELETED in session 7 — see docs/DECISIONS.md)
 │
 ├── components/
-│   ├── announcement-bar.tsx      # Fixed top banner — Summer Special promo (CLIENT, dismissable)
-│   ├── before-after-slider.tsx   # Drag-to-reveal before/after image comparison (CLIENT)
-│   ├── floating-cta.tsx          # Mobile-only fixed bottom bar: Call + Text buttons (CLIENT)
-│   ├── footer.tsx                # Site footer: logo, nav links, contact info, social buttons
-│   ├── loading-waves.tsx         # Loading animation component
-│   ├── navigation.tsx            # Fixed top nav: scroll-aware, mobile drawer (CLIENT)
-│   ├── review-card.tsx           # Single customer review display card
-│   ├── social-buttons.tsx        # WhatsApp, Facebook, Instagram, SMS button cluster (CLIENT)
-│   ├── theme-provider.tsx        # next-themes provider (dark mode ready, not yet toggled)
-│   └── ui/                       # shadcn/ui component library (Radix UI wrappers)
-│       ├── button.tsx            # Primary button component
-│       ├── card.tsx              # Card + CardContent containers
-│       ├── badge.tsx             # Status badge (used in admin)
-│       ├── tabs.tsx              # Tab navigation
-│       ├── ... (60+ components)  # Full shadcn/ui library — most unused, available if needed
+│   ├── navigation.tsx            # Fixed nav; offsets below announcement bar via --announcement-height (CLIENT)
+│   ├── announcement-bar.tsx      # Dismissable promo bar; publishes its height as a CSS var (CLIENT)
+│   ├── footer.tsx                # Footer — contact info from BUSINESS, links to city pages
+│   ├── before-after-slider.tsx   # Drag/keyboard slider, role="slider", lazy-loaded imgs (CLIENT)
+│   ├── floating-cta.tsx          # Mobile call/text bar (CLIENT)
+│   ├── social-buttons.tsx        # WhatsApp/FB/IG/SMS cluster (CLIENT)
+│   ├── review-card.tsx
+│   ├── theme-provider.tsx        # next-themes (dark mode ready, unused)
+│   └── ui/                       # shadcn/ui library
 │
 ├── lib/
-│   ├── spring-rush-content.ts    # MASTER CONTENT FILE — all campaign copy, pricing, CTAs
-│   ├── reviews-data.ts           # Customer reviews array + Google review link
-│   ├── admin-auth.ts             # Cookie-based admin auth helpers (verify, create, destroy session)
-│   ├── utils.ts                  # Tailwind cn() merge utility
-│   ├── rate-limit.ts             # In-memory IP rate limiter (3 req/IP/15 min window)
+│   ├── business-info.ts          # ★ SINGLE SOURCE OF TRUTH: phone, email, cities, socials,
+│   │                             #   smsHref()/whatsappHref() builders. Edit business facts HERE ONLY.
+│   ├── spring-rush-content.ts    # Homepage campaign copy (springRush export) — pulls from business-info
+│   ├── summer-content.ts         # /summer campaign copy (summerRefresh export) — pulls from business-info
+│   ├── city-pages.ts             # Per-city landing page copy + getCityPage()
+│   ├── reviews-data.ts           # Reviews array + Google review link (3 PLACEHOLDERS — replace with real)
+│   ├── gallery.ts                # Public gallery reads (fails soft if migration 006 not run)
+│   ├── notify.ts                 # Resend lead-notification email (fails soft if unconfigured)
+│   ├── admin-auth.ts             # Cookie session: verify/create/destroy/check
+│   ├── rate-limit.ts             # In-memory IP limiter — used by both form actions, do not remove
+│   ├── utils.ts                  # cn()
 │   └── supabase/
-│       ├── client.ts             # Browser Supabase client (anon key)
-│       ├── server.ts             # Server Supabase client (anon key, cookie-aware)
-│       ├── admin.ts              # Admin Supabase client (service role key, bypasses RLS)
-│       └── proxy.ts              # Supabase proxy configuration
+│       ├── admin.ts              # ★ Service-role client — used for ALL app DB access (bypasses RLS)
+│       ├── client.ts / server.ts # Anon-key clients (browser / cookie-aware server) — mostly unused
+│       └── proxy.ts              # Supabase-auth middleware helper — NOT wired up (app uses custom auth)
 │
-├── hooks/
-│   ├── use-mobile.ts             # Breakpoint hook: returns true if viewport < 768px
-│   └── use-toast.ts              # Toast notification state hook
+├── public/
+│   ├── logo-color.png / logo-contrast.png   # DO NOT MODIFY (owner rule) — 1638×497
+│   ├── hero/                     # Generated responsive hero variants (mobile/tablet/desktop ×2 images)
+│   ├── hero-bg.jpg               # Homepage hero SOURCE (2.6 MB — never served directly anymore)
+│   ├── hero-landscaping-lush-garden.jpg     # /summer + city hero source
+│   ├── gallery/                  # 11 hardcoded before/after pairs
+│   └── [misc hero/section images]
 │
-├── public/                       # Static assets (served at root URL)
-│   ├── logo-color.png            # Color logo (used on scrolled/white nav)
-│   ├── logo-contrast.png         # White/contrast logo (used on dark/transparent nav + footer)
-│   ├── icon.svg                  # SVG icon
-│   ├── android-chrome-192x192.png
-│   ├── android-chrome-512x512.png
-│   ├── apple-icon.png
-│   ├── hero-bg.jpg               # Homepage hero background (Georgia home photo)
-│   ├── hero-landscaping-lush-garden.jpg # Secondary hero (About, Spring Rush page)
-│   ├── backyard-transformation-complete.jpg # Featured portfolio image (Gallery hero, Quote hero)
-│   ├── lawn-care-mowing-stripes.jpg  # Contact hero background
-│   ├── hardscaping-stone-patio-walkway.jpg
-│   ├── landscape-design-garden-planting.jpg  # Services hero
-│   ├── landscaping-section-bg.jpg
-│   ├── tree-shrub-care-pruning.jpg   # Homepage CTA section background
-│   ├── real-before-backyard.jpg  # Homepage before/after #1
-│   ├── real-after-backyard.jpg
-│   ├── real-before-sideyard.jpg  # Homepage before/after #2
-│   ├── real-after-sideyard.jpg
-│   └── gallery/                  # Gallery-specific before/after image pairs
-│       ├── front-yard-before.jpg / front-yard-after.jpg
-│       ├── brick-paver-before.jpg / brick-paver-after.jpg
-│       ├── driveway-before.jpg / driveway-after.jpg
-│       ├── mailbox-before.jpg / mailbox-after.jpg
-│       ├── sideyard2-before.jpg / sideyard2-after.jpg
-│       ├── backyard2-before.jpg / backyard2-after.jpg
-│       ├── fenced-backyard-before.jpg / fenced-backyard-after.jpg
-│       ├── ac-unit-before.jpg / ac-unit-after.jpg
-│       ├── mulch-before.jpg / mulch-after.jpg
-│       └── lot-clearing-before.jpg / lot-clearing-after.jpg
+├── scripts/                      # See SCRIPTS.md + docs/sops/ for run instructions
+│   ├── 001–004 *.sql             # Original table migrations (RLS superseded by 005)
+│   ├── 005_fix_rls_scoping.sql   # SECURITY: scopes RLS to service_role (⚠️ verify run in Supabase)
+│   ├── 006_create_gallery_items.sql  # Gallery table + storage bucket (⚠️ must run before gallery uploads)
+│   ├── generate-hero-images.mjs  # sharp — regenerates public/hero/ variants
+│   └── development|testing|monitoring|maintenance|automation/*.sh
 │
-├── styles/
-│   └── globals.css               # Duplicate/mirror of app/globals.css (legacy, app/ version takes precedence)
-│
-├── cypress/
-│   ├── e2e/                          # End-to-end tests (26 tests total, all passing)
-│   │   ├── admin.cy.ts               # Admin portal auth (5 tests)
-│   │   ├── contact.cy.ts             # Contact form (5 tests)
-│   │   ├── homepage.cy.ts            # Homepage load + content (4 tests)
-│   │   ├── navigation.cy.ts          # Nav links (5 tests)
-│   │   └── quote.cy.ts               # Quote form (7 tests)
-│   └── support/
-│       └── e2e.ts                    # Uncaught exception handler (hydration + Supabase errors)
-│
-├── scripts/
-│   ├── 001_create_submissions.sql  # Creates quote_submissions table + RLS policies
-│   ├── 002_create_admin_user.sql   # Admin user setup
-│   ├── 003_fix_admin_rls.sql       # RLS policy fixes
-│   ├── development/              # Dev workflow scripts
-│   ├── testing/                  # Build verification scripts
-│   ├── monitoring/               # Site health checks
-│   ├── maintenance/              # Code quality scripts
-│   └── automation/               # Documentation reminders
-│
-├── cypress.config.ts              # Cypress config: baseUrl http://localhost:3000 (dev server must be running)
-├── middleware.ts                  # Edge middleware: protects /admin/* routes via cookie session
-├── next.config.mjs               # Next.js config: TypeScript error bypass, unoptimized images, HTTP security headers
-├── eslint.config.mjs              # ESLint 9 flat config — extends eslint-config-next/core-web-vitals
-├── tsconfig.json                 # TypeScript config with path alias @/ → root
-├── tailwind.config.ts            # (Tailwind v4 — config is in CSS, this may be minimal)
-├── postcss.config.mjs            # PostCSS with Tailwind CSS plugin
-├── components.json               # shadcn/ui configuration
-├── package.json                  # Dependencies and npm scripts
-├── pnpm-lock.yaml                # pnpm lockfile
-├── ARCHITECTURE.md               # This file
-└── AGENTS.md                     # AI agent instructions
+├── cypress/e2e/                  # 9 specs, 45 tests (see § 8)
+├── docs/                         # ★ Knowledge base: playbook, SOPs, decisions, gotchas, growth, roadmap, tooling
+├── .claude/commands/close-session.md  # /close-session slash command (end-of-session doc sync)
+├── middleware.ts                 # Edge protection for /admin/* (cookie vs SESSION_TOKEN)
+├── next.config.mjs               # redirects (/spring-rush→/summer 308), headers, serverActions 20mb,
+│                                 #   images.unoptimized — TS errors NOT suppressed anymore
+├── instrumentation.ts / instrumentation-client.ts / sentry.*.config.ts   # Sentry wiring
+├── pnpm-lock.yaml                # THE lockfile (package-lock.json intentionally deleted)
+├── pnpm-workspace.yaml           # allowBuilds approvals: cypress, sharp, unrs-resolver, @sentry/cli
+└── AGENTS.md / HANDOFF.md / SCRIPTS.md / README.md / SUMMER_CAMPAIGN_2026.md
 ```
-
-### Architecture Pattern: Server vs Client Components
-
-This project uses the **Next.js App Router** with a deliberate split:
-
-| Type | Components |
-|---|---|
-| **Server Components** (default) | `app/layout.tsx`, `app/page.tsx`, `app/about/page.tsx`, `app/services/page.tsx`, `app/gallery/page.tsx`, `app/service-policies/page.tsx`, `app/spring-rush/page.tsx`, `app/admin/page.tsx` |
-| **Client Components** (`"use client"`) | `Navigation`, `AnnouncementBar`, `BeforeAfterSlider`, `FloatingCTA`, `SocialButtons`, `app/contact/page.tsx`, `app/quote/page.tsx`, all `app/admin/*-actions.tsx` |
-| **Server Actions** | `app/contact/actions.ts`, `app/quote/actions.ts`, `app/admin/actions.ts` |
-
-**Data flow for forms:** Client Component form → Server Action → Supabase insert → return result to client
 
 ---
 
-## 2. PAGES & ROUTES
+## 2. ROUTES
 
-### `/` — Homepage
-- **File:** `app/page.tsx` (Server Component)
-- **Layout sections (top to bottom):**
-  1. `AnnouncementBar` — "Summer Special — Now booking weekly routes" (dismissable)
-  2. `Navigation` — Transparent initially, white on scroll
-  3. **Summer Special Hero** — Big CTA with Call/Text buttons, "Covington & Conyers" headline
-  4. **Trust Strip** — Locally Owned, Reliable Scheduling, Se Habla Español
-  5. **Before & After Proof** — 3 `BeforeAfterSlider` instances from `springRush.proof`
-  6. **Pricing** — 3 cards: Biweekly ($90), Weekly ($120, highlighted), One-Time ($45–$55)
-  7. **Guarantee** — "If we miss, next cut is free"
-  8. **Reviews** — 3 `ReviewCard` instances + Google Review link button
-  9. **Referral** — "$20 off for every friend" promotion
-  10. **Service Area (compact)** — Text + link to /contact
-  11. **Secondary Hero** — Full-width landscape image with general landscaping CTA
-  12. **Stats Strip** — 130+ projects, 5+ years, 100% satisfaction
-  13. **Services Grid** — 7 service cards
-  14. **Portfolio Gallery** — 4 images in mosaic grid
-  15. **Final CTA** — Dark section with call/estimate buttons
-  16. `Footer`
-
-### `/about` — About Us
-- **File:** `app/about/page.tsx` (Server Component)
-- **Content:** Hero, Our Story narrative, 4 core values cards, 4 "Why Choose Us" cards, CTA section, Service Area bullet list
-- **Service Area listed:** Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe GA
-
-### `/services` — Services
-- **File:** `app/services/page.tsx` (Server Component)
-- **Content:** Hero, 7 service cards (each with 5 feature bullets), CTA
-- **Services:** Lawn Care & Mowing, Landscape Design, Tree & Shrub Care, Hardscaping, Irrigation & Drainage, Seasonal Cleanup, Pressure Washing
-
-### `/gallery` — Gallery
-- **File:** `app/gallery/page.tsx` (Server Component)
-- **Content:** Hero, 12 named before/after `BeforeAfterSlider` entries with descriptions and service tags, stats section (2,500+ properties, 15+ years, 100% satisfaction), CTA
-- **Note:** Stats on this page ("15+ Years") differ from homepage ("5+ Years") — inconsistency to resolve
-
-### `/contact` — Contact
-- **File:** `app/contact/page.tsx` (`"use client"`)
-- **Content:** Hero, 4 info cards (Phone, Email, Hours, Service Area), estimate button, contact form (name/email/phone/subject/message), service area grid
-- **Service Area displayed:** Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe
-- **Form → Action:** `submitContactMessage` → inserts into `contact_messages` Supabase table
-
-### `/quote` — Free Estimate
-- **File:** `app/quote/page.tsx` (`"use client"`)
-- **Content:** Hero, multi-section form (personal info, property details, service selection grid, timeline/notes), "What Happens Next" trust card
-- **Service options include:** summer-special (Summer Special Weekly/Biweekly/One-Time)
-- **Form → Action:** `submitQuote` → inserts into `quote_submissions` Supabase table
-
-### `/service-policies` — Service Policies
-- **File:** `app/service-policies/page.tsx` (Server Component)
-- **Content:** 6 policy sections: Pricing & Property Condition, Service Access, Weather Delays, Overgrowth/First-Cut, Referral Credits, Guarantee Terms, Scheduling Changes
-
-### `/spring-rush` — Summer Special Campaign Landing Page
-- **File:** `app/spring-rush/page.tsx` (Server Component)
-- **Content:** Minimal nav (logo + phone only), Hero, Trust strip, 3 before/after sliders, Pricing (same 3 cards), Guarantee, Referral, Service Area, Final CTA, Simple footer
-- **Note:** File and route are still named `spring-rush` but all displayed content says "Summer Special"
-- **Purpose:** Standalone conversion page for ads/campaigns — no main nav distractions
-
-### `/admin` — Admin Dashboard (Protected)
-- **File:** `app/admin/page.tsx` (Server Component)
-- **Access:** Requires `admin_session` cookie matching `SESSION_TOKEN` env var
-- **Content:** Two tabs — Quote Requests (from `quote_submissions` table) and Messages (from `contact_messages` table)
-- **Status workflow for quotes:** new → contacted → quoted → completed
-- **Features:** Unread message count badge, new quote count badge, sign-out
-
-### `/admin/login` — Admin Login
-- **File:** `app/admin/login/page.tsx`
-- **Auth:** Checks credentials against `ADMIN_EMAIL` / `ADMIN_PASSWORD` env vars, sets httpOnly cookie
-
----
-
-## 3. KEY PATTERNS & RULES
-
-### Content Configuration Pattern
-All campaign/marketing copy is centralized in **`lib/spring-rush-content.ts`** (`springRush` export). Never hardcode campaign text into components — pull from this file. This allows one-file campaign updates.
-
-```
-lib/spring-rush-content.ts → AnnouncementBar, app/page.tsx, app/spring-rush/page.tsx
-lib/reviews-data.ts → app/page.tsx (ReviewCard instances)
-```
-
-### Page Layout Pattern
-Every public page follows this shell:
-```tsx
-<div className="min-h-screen bg-background">
-  <Navigation />
-  <section className="relative pt-32 pb-20 overflow-hidden"> {/* Hero */}
-    <Image fill /> + gradient overlay + centered text
-  </section>
-  {/* Content sections alternating bg-background / bg-secondary / bg-primary */}
-  <Footer />
-</div>
-```
-
-### Hero Section Pattern
-```tsx
-<section className="relative pt-32 pb-20 overflow-hidden">
-  {/* Background image with gradient overlay */}
-  <div className="absolute inset-0 z-0">
-    <Image src="..." fill className="object-cover" />
-    <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/60 to-background" />
-  </div>
-  {/* Centered content on top */}
-  <div className="relative z-10 container mx-auto px-4 text-center">
-    <span className="text-primary text-sm font-semibold uppercase tracking-wider">Label</span>
-    <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif text-primary-foreground ...">Heading</h1>
-    <p className="text-lg text-primary-foreground/80 ...">Subtext</p>
-  </div>
-</section>
-```
-
-### Section Background Alternation
-| Section type | Background class |
-|---|---|
-| Default content | `bg-background` |
-| Alternate / highlighted | `bg-secondary` |
-| Dark CTA | `bg-primary` |
-| Overlay CTA | `bg-foreground` |
-
-### Button Styles
-```tsx
-// Primary green button
-className="bg-primary hover:bg-primary/90 text-primary-foreground"
-
-// Outline button (on light background)
-className="border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
-
-// Outline button (on dark background)
-className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 bg-transparent"
-
-// Inverted (on green bg)
-className="bg-primary-foreground text-primary hover:bg-primary-foreground/90"
-```
-
-### Card Pattern
-```tsx
-<Card className="bg-card border-border hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-  <CardContent className="p-6">...</CardContent>
-</Card>
-```
-
-### Design System — Colors
-
-| Token | Value (oklch) | Visual | Usage |
-|---|---|---|---|
-| `primary` | `0.45 0.12 145` | Forest green | Brand color, CTAs, icons, borders on focus |
-| `primary-foreground` | `0.99 0 0` | Near white | Text on green elements |
-| `background` | `0.97 0.005 90` | Warm off-white | Page background |
-| `foreground` | `0.20 0.02 50` | Near black | Body text, dark sections bg |
-| `secondary` | `0.92 0.01 90` | Light warm gray | Alternating section bg |
-| `card` | `0.99 0.003 90` | Almost white | Card backgrounds |
-| `muted-foreground` | `0.50 0.015 50` | Medium gray | Secondary/helper text |
-| `accent` | `0.55 0.10 55` | Warm amber | Accent (currently unused in UI) |
-| `destructive` | `0.577 0.245 27.325` | Red | Error states, required asterisks |
-| `border` | `0.88 0.01 90` | Light warm gray | Borders, dividers |
-
-### Design System — Typography
-
-| Font | Variable | Usage |
+| Route | Type | Notes |
 |---|---|---|
-| **Inter** | `--font-inter` / `font-sans` | Body text, UI labels, buttons |
-| **DM Serif Display** | `--font-dm-serif` / `font-serif` | All headings (h1–h3), hero titles |
-| **Geist Mono** | `font-mono` | Code blocks (rarely used) |
-
-### Typography Scale Pattern
-```
-h1 page: text-4xl sm:text-5xl md:text-6xl font-serif
-h2 section: text-3xl sm:text-4xl md:text-5xl font-serif
-h3 card: text-lg sm:text-xl font-semibold (sometimes font-serif)
-label/eyebrow: text-sm uppercase tracking-wider font-semibold text-primary
-body: text-base sm:text-lg text-muted-foreground
-small: text-sm text-muted-foreground
-```
-
-### Spacing Pattern
-- Container: `container mx-auto px-4 sm:px-6`
-- Section padding: `py-16 sm:py-20` (standard), `py-14 sm:py-18` (campaign sections)
-- Grid gaps: `gap-4 sm:gap-6`
-- Card padding: `p-6` or `p-6 sm:p-8`
-
-### Animation
-```css
-.animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
-/* Stagger via style={{ animationDelay: `${index * 80}ms` }} */
-```
-All `[data-slot="button"]` elements have a letter-spacing hover effect + green box shadow.
-
-### Known Issues / Watch Out For
-
-1. **`next.config.mjs` ignores TypeScript errors at build time** — `ignoreBuildErrors: true`. The site will build even with TS errors. Fix errors anyway; don't rely on this.
-
-2. **All images are unoptimized** — `images: { unoptimized: true }` means no automatic WebP/resize. Images serve at full original size. Consider removing this flag after optimizing image files.
-
-3. **Admin auth uses env var token** — Not Supabase Auth. The session token is `process.env.SESSION_TOKEN ?? ""` (fail-closed). All three auth env vars (`SESSION_TOKEN`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`) use null coalescing — if any are unset, login is impossible rather than falling back to test credentials.
-
-4. **Route still named `/spring-rush`** — The campaign was renamed to "Summer Special" but the URL route is still `/spring-rush`. Not a bug but may confuse future editors. The `lib/spring-rush-content.ts` file is similarly named.
-
-6. **`leaflet` / `react-leaflet` installed** — Used in `app/admin/route-planner-tab.tsx` for the admin route planner. The package requires `"use client"` and dynamic imports to avoid SSR issues with `window`.
-
-7. **Two CSS files** — `app/globals.css` and `styles/globals.css`. The `app/globals.css` is the active one (imported in `app/layout.tsx`). The `styles/` version appears to be a legacy duplicate.
+| `/` | Server | Campaign hero (responsive `<picture>`, hero-bg variants), pricing, proof, reviews, portfolio |
+| `/about` | Server | Cities rendered from `BUSINESS.cities` |
+| `/services` | Server | 7 services + `ItemList` of `Service` JSON-LD |
+| `/gallery` | Server (async) | Admin-uploaded items (Supabase) render above the hardcoded set; falls back silently |
+| `/contact` | Client | Form → `contact_messages` + Resend lead email |
+| `/quote` | Client | Form → `quote_submissions` + Resend lead email |
+| `/service-policies` | Server | Policy sections |
+| `/summer` | Server | Summer Refresh 2026 landing page — copy in `lib/summer-content.ts` |
+| `/spring-rush` | — | **308 permanent redirect → /summer** (next.config.mjs). Keep while old QR/ad links may circulate |
+| `/lawn-care/covington` `/conyers` `/oxford` | Server (SSG) | Local-SEO pages; unknown slugs 404; data in `lib/city-pages.ts` |
+| `/sitemap.xml` `/robots.txt` | Generated | `app/sitemap.ts` / `app/robots.ts` |
+| `/admin` | Server, protected | Tabs: Clients, Quote Requests, Contact Messages, Gallery |
+| `/admin/login` | Server | Dark login; `type="text"` username field is intentional |
 
 ---
 
-## 4. CONTENT & COPY
+## 3. SECURITY MODEL
 
-### Phone Number
-**Current number: (407) 600-0301 / +14076000301**
-
-Every place it appears:
-| File | Context |
-|---|---|
-| `app/layout.tsx:33` | Schema.org `telephone` field |
-| `app/page.tsx:259,562` | `<a href="tel:+14076000301">` in pricing cards and CTA section |
-| `app/spring-rush/page.tsx:37,188,250` | Top nav, pricing cards, final CTA |
-| `app/contact/page.tsx:85,301` | Phone info card + "Don't see your area?" note |
-| `app/quote/page.tsx:255` | "For fastest booking, call..." note |
-| `app/service-policies/page.tsx:119` | "Call Us" CTA link |
-| `components/floating-cta.tsx:10,16` | `tel:` and `sms:` mobile bottom bar |
-| `components/social-buttons.tsx:6` | WhatsApp + SMS buttons (as variable `whatsappNumber`) |
-| `lib/spring-rush-content.ts:21,23` | `ctaCall.href` and `ctaText.href` |
-
-**To change the phone number:** Update `lib/spring-rush-content.ts` first (controls most CTAs), then update the hardcoded instances in `app/page.tsx`, `app/contact/page.tsx`, `app/quote/page.tsx`, `app/service-policies/page.tsx`, `components/floating-cta.tsx`, `components/social-buttons.tsx`, and `app/layout.tsx` (Schema.org).
-
-### City / Location References
-
-**Primary service area:** Covington, GA (HQ) — Newton County
-
-| City | Files where it appears |
-|---|---|
-| Covington | `app/layout.tsx`, `app/page.tsx`, `app/about/page.tsx`, `app/services/page.tsx`, `app/contact/page.tsx`, `app/gallery/page.tsx`, `app/spring-rush/page.tsx`, `lib/spring-rush-content.ts`, `lib/reviews-data.ts`, `components/footer.tsx` |
-| Conyers | `app/layout.tsx`, `app/page.tsx`, `app/about/page.tsx`, `app/contact/page.tsx`, `app/gallery/page.tsx`, `lib/spring-rush-content.ts`, `lib/reviews-data.ts` |
-| Oxford | `app/layout.tsx`, `app/about/page.tsx`, `app/contact/page.tsx`, `lib/spring-rush-content.ts` |
-| Porterdale | `app/layout.tsx`, `app/about/page.tsx`, `app/contact/page.tsx`, `lib/spring-rush-content.ts` |
-| Social Circle | `app/layout.tsx`, `app/about/page.tsx`, `app/contact/page.tsx`, `lib/spring-rush-content.ts` |
-| Monroe | `app/layout.tsx`, `app/about/page.tsx`, `app/contact/page.tsx`, `lib/spring-rush-content.ts` |
-| Newton County | `app/layout.tsx` (Schema.org), `app/services/page.tsx` |
-
-**To update the service area list**, the canonical source is:
-- `app/layout.tsx` — Schema.org `areaServed` array
-- `lib/spring-rush-content.ts` — `serviceArea.text` string
-- `app/contact/page.tsx` — `serviceAreas` array (line 13–21)
-- `app/about/page.tsx` — `<ul>` bullet list
-
-### Seasonal Campaign References
-
-| Reference | File | Notes |
-|---|---|---|
-| "Summer Special — Now booking weekly routes" | `lib/spring-rush-content.ts:9` | Announcement bar text |
-| "Summer Special — Now Booking" | `components/announcement-bar.tsx:29` | Mobile-only shortened version |
-| "Summer Special" (metadata) | `app/spring-rush/page.tsx:19` | Page title |
-| "Summer Special weekly plan" | `lib/spring-rush-content.ts:23` | SMS pre-fill message |
-| "Summer Special weekly plan" | `components/floating-cta.tsx:17` | Mobile SMS button |
-| "Summer Special (Weekly / Biweekly...)" | `app/quote/page.tsx:21` | Quote form service option |
-| "this summer" / "summer" | `app/spring-rush/page.tsx:241,243` | Final CTA copy |
-| "Spring cleanup" / "fall cleanup" | `app/services/page.tsx:98,99` | Service feature bullet (generic, not campaign-specific) |
-| "Spring and fall cleanup" | `app/page.tsx:73` | Services section card description |
-
-**To update the campaign name**, the primary file is `lib/spring-rush-content.ts` (announcement, SMS messages). Secondary: `app/spring-rush/page.tsx` metadata and copy, `components/floating-cta.tsx` SMS message, `app/quote/page.tsx` service option label.
-
-### Other Key Copy Locations
-
-| Item | Location |
-|---|---|
-| Business email | `app/layout.tsx:34`, `components/footer.tsx:93`, `app/contact/page.tsx:104` |
-| Instagram handle | `app/layout.tsx:74`, `components/social-buttons.tsx:50` |
-| Facebook URL | `components/social-buttons.tsx:33` |
-| Google Review link | `lib/reviews-data.ts:37` |
-| Pricing ($90, $120, $45–$55) | `lib/spring-rush-content.ts:69,81,95` |
-| Guarantee copy | `lib/spring-rush-content.ts:111–113` |
-| Referral offer ($20 off) | `lib/spring-rush-content.ts:116–117` |
-| Business stats (130+ projects, 5+ years) | `app/page.tsx:415,421` (inline, not centralized) |
+1. **Middleware** (`middleware.ts`): every `/admin/*` request (except login) requires `admin_session` cookie === `SESSION_TOKEN` env var. Fail-closed: unset token ⇒ nothing matches.
+2. **Server actions**: EVERY admin action (`actions.ts`, `client-actions.ts`, `gallery-actions.ts`) independently checks `isAdminAuthenticated()` — defense in depth added in session 6 because Next.js treats server actions as public endpoints. **Never add an admin server action without this guard.**
+3. **RLS**: all tables scoped to `service_role` only, plus `anon` INSERT on the two form tables (`005_fix_rls_scoping.sql`). The app itself always uses `createAdminClient()` (service key), so RLS is the backstop against direct REST-API access with the public anon key — that exact leak existed and was fixed in session 6.
+4. **Credentials fail closed**: `ADMIN_EMAIL` / `ADMIN_PASSWORD` / `SESSION_TOKEN` all use `?? ""` — unset env vars make login impossible rather than falling back.
+5. **HTTP headers** (next.config.mjs): X-Frame-Options DENY, nosniff, HSTS, Referrer-Policy, Permissions-Policy.
+6. Session cookie: httpOnly, secure in prod, sameSite lax, 24 h expiry.
 
 ---
 
-## 5. ENVIRONMENT VARIABLES
+## 4. DATA & INTEGRATIONS
 
-Required in `.env.local` for development; set in Vercel dashboard for production.
-
-| Variable | Required | Used In | Purpose |
+### Supabase tables
+| Table | Written by | Read by | RLS |
 |---|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Yes | `lib/supabase/server.ts`, `lib/supabase/client.ts`, `lib/supabase/admin.ts` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | `lib/supabase/server.ts`, `lib/supabase/client.ts` | Public anon key (safe to expose) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Yes (admin only) | `lib/supabase/admin.ts` | Service role key — bypasses RLS. Never expose to browser. |
-| `SESSION_TOKEN` | Yes | `middleware.ts`, `lib/admin-auth.ts` | Admin session cookie value. Fail-closed — if unset, no authentication is possible |
-| `ADMIN_EMAIL` | Yes | `lib/admin-auth.ts` | Admin dashboard login email. Fail-closed — if unset, login is impossible |
-| `ADMIN_PASSWORD` | Yes | `lib/admin-auth.ts` | Admin dashboard login password. Fail-closed — if unset, login is impossible |
-| `NODE_ENV` | Auto-set | `lib/admin-auth.ts` | Controls cookie `secure` flag (true in production) |
+| `quote_submissions` | quote form action | /admin Quotes tab | service_role all + anon INSERT |
+| `contact_messages` | contact form action | /admin Messages tab | service_role all + anon INSERT |
+| `clients` | /admin Clients tab | /admin (due today / overdue / stats) | service_role only |
+| `gallery_items` | /admin Gallery tab | /gallery public page | service_role only |
+| Storage `gallery` bucket | gallery-actions upload | public CDN URLs | public-read bucket; uploads via service key |
 
-**Create `.env.local` in project root:**
+### Form → lead flow
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-ADMIN_EMAIL=your-email@example.com
-ADMIN_PASSWORD=your-strong-password
+Client form → Server Action
+  → isRateLimited(ip)          (3/IP/15min, shared across both forms)
+  → Zod validation + tag-strip sanitize
+  → createAdminClient().insert(...)
+  → sendLeadNotification(...)  (Resend email to owner — fails soft)
+  → { success } → client shows confirmation
 ```
+
+### Sentry
+- `instrumentation.ts` → `onRequestError` captures Server Component/Action errors
+- `instrumentation-client.ts` → browser errors + router transitions
+- `app/global-error.tsx` → render-crash boundary with branded fallback
+- Everything no-ops until `NEXT_PUBLIC_SENTRY_DSN` exists. Source-map upload (withSentryConfig) intentionally NOT wired — needs an auth token first.
 
 ---
 
-## 6. DEPLOYMENT
+## 5. CONTENT ARCHITECTURE
 
-### Current Setup
-| Item | Value |
-|---|---|
-| Hosting | Vercel |
-| Domain | lawnmastersv5.com |
-| Git remote | GitHub — user `Cret0r`, branch `master` |
-| Database | Supabase (PostgreSQL + Row Level Security) |
-| Analytics | Vercel Analytics (injected in `app/layout.tsx`) |
+**The hierarchy (edit at the highest applicable level):**
 
-### Database Schema
-Two tables (see `scripts/001_create_submissions.sql`):
-- `quote_submissions` — Fields: id, first_name, last_name, email, phone, address, property_type, property_size, services (text[]), timeline, details, status, created_at
-- `contact_messages` — Fields: id, name, email, phone, subject, message, read (boolean), created_at
+1. `lib/business-info.ts` — phone, email, cities, socials, sms/whatsapp builders. **The only place business facts live.** Owner-confirmation rules in AGENTS.md apply.
+2. `lib/spring-rush-content.ts` (`springRush`) — homepage + announcement bar campaign copy, mowing pricing plans.
+3. `lib/summer-content.ts` (`summerRefresh`) — everything on /summer.
+4. `lib/city-pages.ts` — per-city landing copy.
+5. `lib/reviews-data.ts` — reviews (⚠️ 3 placeholders) + Google review link.
+6. `lib/gallery.ts` + DB — dynamic gallery items.
 
-### Deploy Checklist
-1. Set all 5 environment variables in Vercel project settings
-2. Connect GitHub repo to Vercel (auto-deploys on push to `master`)
-3. Set custom domain `lawnmastersv5.com` in Vercel dashboard
-4. Run Supabase SQL scripts in order: `001_` → `002_` → `003_`
-5. Verify admin login at `lawnmastersv5.com/admin/login`
+Pricing displayed: Biweekly $90*/mo · Weekly $120*/mo (highlighted) · One-time $45–55* · PW from $197* · Bed refresh from $300*. Asterisk = final price quoted on-site.
 
-### Build Command
-```bash
-npm run build     # next build
-npm run dev       # next dev (localhost:3000)
-npm run start     # next start (production preview)
-npm run lint      # eslint .
-```
+---
 
-### Key Config Notes
-- **`next.config.mjs`** — TypeScript errors are suppressed at build time (`ignoreBuildErrors: true`). Image optimization is disabled (`unoptimized: true`). Remote images from `hebbkx1anhila5yf.public.blob.vercel-storage.com` (v0.dev) are allowed. HTTP security headers applied on all routes via `headers()` export: `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Strict-Transport-Security: max-age=31536000; includeSubDomains`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
-- **`middleware.ts`** — Runs at the edge on every `/admin/*` request. Protects all admin routes. Login page is excluded. Token read from `process.env.SESSION_TOKEN` — rotate in Vercel env vars and redeploy.
-- **Admin session** — Cookie-based, expires in 24 hours, httpOnly + secure in production.
+## 6. RESPONSIVE HERO IMAGE SYSTEM
+
+Because `images.unoptimized` is on (v0 legacy + Vercel image-transform cost), next/image produces no srcset. Instead:
+
+- `scripts/generate-hero-images.mjs` (sharp) renders each hero source into `public/hero/{name}-{mobile,tablet,desktop}.jpg` (828×1104 / 1536×1152 / 1920×1080, q72 mozjpeg, attention crop).
+- Heroes render a `<picture>` with `max-width: 640px` / `1024px` sources and the desktop img as default (`fetchPriority="high"`).
+- Result: homepage hero went 2.6 MB → 99 KB on phones.
+- **When replacing a hero source image:** drop the new file in `public/`, re-run the script, commit `public/hero/`. See `docs/sops/hero-images.md`.
+
+---
+
+## 7. SEO LAYER
+
+- Root JSON-LD (`app/layout.tsx`): `["LocalBusiness","HomeAndConstructionBusiness"]` with `@id: https://lawnmastersv5.com/#business` — city/service schema references this. (`LandscapeService` was removed — not a real schema.org type.)
+- `/services`: `ItemList` of 7 `Service` objects, provider-linked to the business `@id`.
+- City pages: `Service` schema with `areaServed` City + `Offer`s from the pricing plans; canonical URLs; `generateStaticParams`.
+- `app/sitemap.ts` + `app/robots.ts` (admin disallowed).
+- Footer links to city pages for crawlability.
+- NOT yet done: AggregateRating (blocked on real reviews), FAQ schema, OG images — see docs/ROADMAP.md.
+
+---
+
+## 8. TESTING
+
+**45 Cypress tests, 9 specs** — `npm run cypress:run` (dev server must already be running on :3000).
+
+| Spec | Tests | Covers |
+|---|---|---|
+| admin.cy.ts | 5 | Login page smoke + redirect |
+| admin-auth.cy.ts | 3 | Wrong creds rejected, forged cookie redirected, password masked |
+| city-pages.cy.ts | 5 | 3 city pages + 404 + CTAs |
+| contact.cy.ts | 5 | Fields + 1 REAL submission |
+| form-validation.cy.ts | 6 | Client-side validation (never hits server) |
+| homepage.cy.ts | 4 | Hero content + CTAs |
+| mobile-nav.cy.ts | 5 | Hamburger aria states, drawer, outside-tap close, floating CTA |
+| navigation.cy.ts | 5 | Desktop nav links |
+| quote.cy.ts | 7 | Fields + 1 REAL submission |
+
+**Hard constraint:** the suite makes exactly 2 real form submissions per run against a 3-per-IP-per-15-min rate limit. New tests must NOT add server-side submissions — assert client-side `:invalid` state instead.
+
+---
+
+## 9. ENVIRONMENT VARIABLES
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Public anon key (ships in browser by design) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Bypasses RLS — server-only, never expose |
+| `SESSION_TOKEN` | Yes | Admin cookie value; rotate in Vercel + redeploy |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Yes | Admin login; fail-closed |
+| `NEXT_PUBLIC_SENTRY_DSN` | Pending owner | Enables Sentry (currently no-op) |
+| `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` | Pending owner | Enables speed-to-lead emails (currently no-op) |
+| `LEAD_NOTIFY_FROM` | Optional | Verified Resend sender; defaults to onboarding@resend.dev |
+
+Set in Vercel (Production + Preview). Note: `vercel env pull` returns sensitive values as EMPTY strings — see docs/GOTCHAS.md.
+
+---
+
+## 10. DEPLOYMENT
+
+- Push to `master` → Vercel auto-deploys production. There is no staging environment — the merge-gate is the 45-test Cypress suite run locally.
+- Build: `pnpm build` (TypeScript errors now fail it — that's intentional).
+- DB migrations are MANUAL: paste `scripts/00X_*.sql` into Supabase SQL Editor (see docs/sops/database-migrations.md). Deploy order matters when code depends on schema: run SQL first, then push.
+- Failed deploy recovery: docs/sops/failed-vercel-deploy.md.
