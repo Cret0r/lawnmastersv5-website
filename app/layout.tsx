@@ -27,7 +27,12 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "LandscapeService",
+  // LandscapeService is not a schema.org type — HomeAndConstructionBusiness is
+  // the closest valid LocalBusiness subtype Google recognizes.
+  "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+  "@id": `https://${BUSINESS.domain}/#business`,
+  image: `https://${BUSINESS.domain}/logo-color.png`,
+  logo: `https://${BUSINESS.domain}/logo-color.png`,
   name: BUSINESS.shortName,
   description:
     "Professional landscaping services including lawn care, landscape design, hardscaping, tree care, irrigation, pressure washing, and seasonal cleanup.",

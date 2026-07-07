@@ -85,6 +85,13 @@ export function Footer() {
             <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Contact</h4>
             <div className="space-y-2.5 text-sm text-primary-foreground/70">
               <p>Serving Covington, GA &amp; Surrounding Areas</p>
+              <p className="text-primary-foreground/70">
+                <Link href="/lawn-care/covington" className="hover:text-primary transition-colors">Covington</Link>
+                {" · "}
+                <Link href="/lawn-care/conyers" className="hover:text-primary transition-colors">Conyers</Link>
+                {" · "}
+                <Link href="/lawn-care/oxford" className="hover:text-primary transition-colors">Oxford</Link>
+              </p>
               <p>
                 <a href={BUSINESS.telHref} className="hover:text-primary transition-colors">
                   {BUSINESS.phoneDisplay}

@@ -15,6 +15,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { BUSINESS } from "@/lib/business-info"
 
 export const metadata: Metadata = {
   title: "Lawn Care, Landscaping & Pressure Washing — Covington & Conyers, GA",
@@ -117,8 +118,23 @@ export default function ServicesPage() {
     },
   ]
 
+  const servicesJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: services.map((service, i) => ({
+      "@type": "Service",
+      position: i + 1,
+      serviceType: service.title,
+      name: service.title,
+      description: service.description,
+      provider: { "@id": `https://${BUSINESS.domain}/#business` },
+      areaServed: BUSINESS.cities.map((name) => ({ "@type": "City", name })),
+    })),
+  }
+
   return (
     <div className="min-h-screen bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }} />
       <Navigation />
 
       {/* Hero */}
