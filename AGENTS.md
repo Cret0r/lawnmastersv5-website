@@ -1,7 +1,7 @@
 # AGENTS.md — AI Agent Instructions for Lawn Masters V5 Website
 
 # Context Preservation Rules
-> **Rule:** Update HANDOFF.md at the end of every session before pushing.
+> **Rule:** Update HANDOFF.md at the end of every session before pushing. The `/close-session` slash command (`.claude/commands/close-session.md`) automates this — it syncs HANDOFF.md (always) and ARCHITECTURE/AGENTS/SCRIPTS/README (only if affected), then commits and pushes.
 
 > Read this file before making any changes to this project.
 > This project is a production lawn care business website for a real company.
@@ -124,20 +124,22 @@ bg-primary-foreground text-primary hover:bg-primary-foreground/90
 
 2. **The phone number** — `(407) 600-0301` / `+14076000301`
    - This is the real business number
-   - It appears in ~12 places across the codebase (see ARCHITECTURE.md § 4)
+   - Since session 7 it lives in ONE place: `lib/business-info.ts` (`BUSINESS.phoneDisplay` / `phoneE164` / `telHref`) — every page and component imports from there
    - Do not change it without the owner saying "update the phone number to..."
-   - If updating: start with `lib/spring-rush-content.ts`, then check all files listed in ARCHITECTURE.md
+   - If updating: edit `lib/business-info.ts` only, then grep for `14076000301` to confirm nothing hardcoded crept back in
 
 3. **The service area cities** — Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe, GA
    - These are the real cities served by this business
    - Do not add or remove cities without owner confirmation
-   - The canonical list lives in 4 places: `app/layout.tsx`, `lib/spring-rush-content.ts`, `app/contact/page.tsx`, `app/about/page.tsx`
+   - Since session 7 the canonical list lives in ONE place: `lib/business-info.ts` (`BUSINESS.cities`) — layout JSON-LD, contact, about, and the campaign content files all derive from it
 
 4. **Supabase credentials** — Never read, log, or output `.env.local` values
 
 5. **The admin password/email** — `ADMIN_EMAIL` and `ADMIN_PASSWORD` env vars — never reveal, log, or output these
 
 ### Always do:
+
+- **Use pnpm for ALL dependency changes** (`pnpm add <pkg>`) — never `npm install`. The project is pnpm-only (`package-lock.json` was deleted after a lockfile desync broke a deploy); Vercel builds from `pnpm-lock.yaml`. Packages with install scripts must be approved under `allowBuilds` in `pnpm-workspace.yaml`.
 
 - **Update `lib/spring-rush-content.ts`** when changing any campaign copy (announcement bar text, hero headlines, SMS pre-fill messages, pricing, guarantee, referral offer, service area text). This is the single source of truth for the homepage and `/spring-rush` landing page.
 

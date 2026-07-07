@@ -12,6 +12,7 @@ Run these in order in the **Supabase Dashboard → SQL Editor → New Query**. T
 | 2 | `scripts/002_create_admin_user.sql` | Seeds a test admin user |
 | 3 | `scripts/003_fix_admin_rls.sql` | Adds authenticated-user RLS policies |
 | 4 | `scripts/004_create_contact_messages.sql` | Creates `contact_messages` table |
+| 5 | `scripts/005_fix_rls_scoping.sql` | **SECURITY FIX** — scopes RLS to service_role, closes anon-key data leak |
 
 ---
 
@@ -61,6 +62,38 @@ Creates the `contact_messages` table that stores all `/contact` form submissions
 **Gotchas:**
 - Uses `CREATE TABLE IF NOT EXISTS` — safe to re-run.
 - Enables RLS with policies for: anon insert, service role full access, and authenticated select/update/delete.
+
+---
+
+### `scripts/005_fix_rls_scoping.sql`
+
+**Security fix (session 6 audit).** The policy from `001` had no `to` clause, so it applied to ALL roles — anyone with the public anon key could read/update/delete every lead. This script scopes `quote_submissions` to `service_role` (keeping anon INSERT so forms work), drops the dead `authenticated` policies from `003`, and defensively locks the `clients` table to `service_role` only.
+
+**How to run:** Paste into Supabase SQL Editor and execute, then run the `pg_policies` verification query at the bottom of the file.
+
+**Gotchas:**
+- Uses `drop policy if exists` throughout — safe to re-run.
+- The app is unaffected (all reads/writes use the service-role key), but **until this runs, the database leak is open** — verify it has been run in production.
+- Supersedes the RLS parts of `001` and `003`.
+
+---
+
+## Assets
+
+### `scripts/generate-hero-images.mjs`
+
+Generates responsive hero background variants (mobile 828×1104, tablet 1536×1152, desktop 1920×1080) into `public/hero/` from the source images in `public/`. Needed because `images.unoptimized` disables Next.js srcset generation — the heroes serve these via `<picture>` art direction.
+
+**How to run:**
+```bash
+node scripts/generate-hero-images.mjs
+```
+
+**Dependencies:** `sharp` (available as a transitive dependency of Next.js).
+
+**Gotchas:**
+- Re-run whenever a hero source image (`hero-bg.jpg`, `hero-landscaping-lush-garden.jpg`) is replaced, and commit the regenerated files in `public/hero/`.
+- Quality is set to 72 (mozjpeg) with `attention` cropping — tweak in the script if a crop looks off.
 
 ---
 
@@ -115,7 +148,7 @@ bash scripts/testing/verify-build.sh
 **Gotchas:**
 - Takes 1–2 minutes.
 - Warns if `.env.local` is missing (build may succeed but runtime features will break).
-- TypeScript errors are suppressed by `next.config.mjs` (`ignoreBuildErrors: true`) — fix them anyway.
+- TypeScript errors FAIL the build (`ignoreBuildErrors` was removed in session 7).
 
 ---
 
@@ -151,7 +184,7 @@ bash scripts/maintenance/code-quality.sh
 
 **Gotchas:**
 - Exits with code 1 if either check fails.
-- The build ignores TS errors (`ignoreBuildErrors: true`) but this script surfaces them directly — run before merging.
+- Since session 7 the production build also enforces TS errors (`ignoreBuildErrors` removed) — this script catches them earlier, before a failed deploy.
 
 ---
 

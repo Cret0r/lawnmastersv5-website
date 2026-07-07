@@ -1,5 +1,5 @@
 # Lawn Masters V5 Website — AI Handoff Document
-> Last updated: July 6, 2026 (session 7)
+> Last updated: July 6, 2026 (session 8)
 > Rule: Update this document at the end of every session before pushing.
 
 ---
@@ -171,6 +171,8 @@ ARCHITECTURE.md           Full technical reference
 AGENTS.md                 AI agent rules and instructions
 HANDOFF.md                This file
 CLAUDE.md                 Points to AGENTS.md
+.claude/commands/
+  close-session.md        /close-session slash command — end-of-session doc sync
 ```
 
 ---
@@ -260,6 +262,9 @@ CLAUDE.md                 Points to AGENTS.md
 - **[Session 7]** lib/business-info.ts created — single source of truth for phone, email, cities, socials; replaced ~33 hardcoded phone instances across 11 files
 - **[Session 7]** Fixed ERR_PNPM_OUTDATED_LOCKFILE deploy failure — Sentry had been installed via npm, which updated package-lock.json but not pnpm-lock.yaml (the one Vercel builds from); regenerated with `pnpm install` and approved @sentry/cli in pnpm-workspace.yaml allowBuilds
 - **[Session 7]** package-lock.json deleted — project is now pnpm-only; see gotcha #10 for the new dependency workflow
+- **[Session 8]** `/close-session` slash command created (`.claude/commands/close-session.md`) — automates end-of-session doc sync: HANDOFF.md always, ARCHITECTURE/AGENTS/SCRIPTS/README only if affected, then commit + push
+- **[Session 8]** SCRIPTS.md backfilled — documented `005_fix_rls_scoping.sql` and `generate-hero-images.mjs` (missed in sessions 6–7), fixed two stale `ignoreBuildErrors` notes
+- **[Session 8]** AGENTS.md updated — phone/cities rules now point to `lib/business-info.ts` as the single canonical location, pnpm-only dependency rule added, `/close-session` referenced in the context-preservation rule
 
 ### IN PROGRESS 🔵
 - **Summer 2026 campaign** — SUMMER_CAMPAIGN_2026.md fully updated with Hormozi analysis
