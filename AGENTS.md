@@ -151,7 +151,7 @@ bg-primary-foreground text-primary hover:bg-primary-foreground/90
 
 - **Use Server Actions** for form submissions — not API routes. See `app/contact/actions.ts` for the pattern.
 
-- **Run `npm run cypress:run` before merging to master** — all 26 tests must pass. Tests cover admin auth, contact form, homepage, navigation, and quote form.
+- **Run `npm run cypress:run` before merging to master** — all 45 tests must pass. Tests cover admin auth (incl. wrong-credential and forged-cookie cases), contact form, form validation edge cases, homepage, navigation, mobile nav, quote form, and the per-city landing pages. NOTE: the suite makes exactly 2 real form submissions per run against a 3-per-15-min rate limit — new tests must not add server-side form submissions (use client-side `:invalid` checks instead).
 
 - **Check ARCHITECTURE.md § 4** (Content & Copy) before adding a new instance of the phone number, city name, or campaign phrase so you know all locations to keep in sync.
 
