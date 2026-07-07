@@ -3,13 +3,10 @@
 describe("Mobile Navigation", () => {
   beforeEach(() => {
     cy.viewport("iphone-x")
-    // Pre-dismiss the announcement bar — it's fixed at z-60 over the nav
-    // and covers the hamburger button on small screens.
-    cy.visit("/", {
-      onBeforeLoad(win) {
-        win.localStorage.setItem("sr-bar-dismissed", "true")
-      },
-    })
+    // No announcement-bar workaround: the nav offsets itself below the
+    // bar via --announcement-height, so the hamburger must be clickable
+    // even while the bar is showing.
+    cy.visit("/")
   })
 
   it("shows the hamburger button on mobile, collapsed by default", () => {

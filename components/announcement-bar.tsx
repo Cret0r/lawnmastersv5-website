@@ -1,17 +1,34 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { X } from "lucide-react"
 import { springRush } from "@/lib/spring-rush-content"
 import Link from "next/link"
 
 export function AnnouncementBar() {
   const [dismissed, setDismissed] = useState(true) // start hidden to avoid flash
+  const barRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const stored = localStorage.getItem("sr-bar-dismissed")
     setDismissed(stored === "true")
   }, [])
+
+  // Publish the bar's measured height as a CSS variable so the fixed
+  // Navigation (and its mobile drawer) can sit below it instead of being
+  // overlapped. Resets to 0 on dismiss and on unmount.
+  useEffect(() => {
+    const setHeight = () => {
+      const h = !dismissed && barRef.current ? barRef.current.offsetHeight : 0
+      document.documentElement.style.setProperty("--announcement-height", `${h}px`)
+    }
+    setHeight()
+    window.addEventListener("resize", setHeight)
+    return () => {
+      window.removeEventListener("resize", setHeight)
+      document.documentElement.style.setProperty("--announcement-height", "0px")
+    }
+  }, [dismissed])
 
   const handleDismiss = () => {
     setDismissed(true)
@@ -23,7 +40,7 @@ export function AnnouncementBar() {
   const { text, cta, href } = springRush.announcement
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-primary text-primary-foreground">
+    <div ref={barRef} className="fixed top-0 left-0 right-0 z-[60] bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 py-2.5 flex items-center gap-3 text-sm">
         <div className="flex-1 flex items-center justify-center gap-3">
           <span className="hidden sm:inline font-medium">{text}</span>

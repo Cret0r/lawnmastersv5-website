@@ -25,7 +25,10 @@ export function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      // Sits below the announcement bar when it's visible (var set by
+      // AnnouncementBar; 0 when dismissed or absent) instead of under it.
+      style={{ top: "var(--announcement-height, 0px)" }}
+      className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-background/95 backdrop-blur-sm shadow-lg border-b border-border"
           : "bg-transparent"
@@ -106,7 +109,9 @@ export function Navigation() {
         id="mobile-menu"
         // inert removes the closed drawer from tab order and the a11y tree
         inert={!isMobileMenuOpen}
-        className={`fixed top-20 right-0 bottom-0 w-72 bg-card shadow-xl transform transition-transform duration-300 ease-in-out md:hidden border-l border-border ${
+        // 5rem = nav height (h-20); offset further when the bar is visible
+        style={{ top: "calc(var(--announcement-height, 0px) + 5rem)" }}
+        className={`fixed right-0 bottom-0 w-72 bg-card shadow-xl transform transition-transform duration-300 ease-in-out md:hidden border-l border-border ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
