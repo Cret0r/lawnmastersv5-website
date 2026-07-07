@@ -2,8 +2,9 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ClipboardList, MessageSquare, Users } from "lucide-react"
+import { ClipboardList, ImageIcon, MessageSquare, Users } from "lucide-react"
 import { ClientsTab } from "./clients-tab"
+import { GalleryTab } from "./gallery-tab"
 
 export function AdminTabs({
   quoteCount,
@@ -16,7 +17,7 @@ export function AdminTabs({
   quotesContent: React.ReactNode
   messagesContent: React.ReactNode
 }) {
-  const [activeTab, setActiveTab] = useState<"clients" | "quotes" | "messages">("clients")
+  const [activeTab, setActiveTab] = useState<"clients" | "quotes" | "messages" | "gallery">("clients")
 
   return (
     <>
@@ -58,11 +59,21 @@ export function AdminTabs({
             </span>
           )}
         </Button>
+        <Button
+          variant={activeTab === "gallery" ? "default" : "outline"}
+          size="sm"
+          onClick={() => setActiveTab("gallery")}
+          className={activeTab === "gallery" ? "" : "bg-transparent"}
+        >
+          <ImageIcon className="w-4 h-4 mr-2" />
+          Gallery
+        </Button>
       </div>
 
       {activeTab === "clients" && <ClientsTab />}
       {activeTab === "quotes" && quotesContent}
       {activeTab === "messages" && messagesContent}
+      {activeTab === "gallery" && <GalleryTab />}
     </>
   )
 }

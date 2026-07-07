@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: {
+      // Gallery uploads send two photos per request (default limit is 1 MB)
+      bodySizeLimit: "20mb",
+    },
+  },
   images: {
     unoptimized: true,
     remotePatterns: [

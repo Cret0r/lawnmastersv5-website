@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { BeforeAfterSlider } from "@/components/before-after-slider"
+import { getPublishedGalleryItems } from "@/lib/gallery"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -111,7 +112,18 @@ const transformations = [
   },
 ]
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  // Admin-uploaded items (Supabase) render first; the hardcoded list below
+  // stays as the permanent base set. Falls back silently if 006 hasn't run.
+  const uploaded = (await getPublishedGalleryItems()).map((item) => ({
+    title: item.title,
+    description: item.description ?? "",
+    beforeImage: item.before_url,
+    afterImage: item.after_url,
+    services: item.services,
+  }))
+  const allTransformations = [...uploaded, ...transformations]
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -159,7 +171,7 @@ export default function ProjectsPage() {
           </div>
 
           <div className="flex flex-col gap-16 sm:gap-20 max-w-5xl mx-auto">
-            {transformations.map((project, index) => (
+            {allTransformations.map((project, index) => (
               <div key={index} className="flex flex-col gap-6">
                 <BeforeAfterSlider
                   beforeImage={project.beforeImage}
