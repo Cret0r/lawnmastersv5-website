@@ -72,6 +72,12 @@
 **Decision:** Phone (33 hardcoded instances), cities (5 files), email (3 files), socials → one constants module.
 **Why:** AGENTS.md itself documented the drift risk ("appears in ~12 places"). A phone/city change is now a one-file edit. The AGENTS.md owner-confirmation rules still apply to the VALUES; the module just ends the hunt for locations.
 
+### Conversational quick-lead contact flow; old message form removed (session 11)
+**Decision:** /contact's multi-field form (name/email/phone/subject/message → contact_messages) was replaced by a 2-step conversational flow (tap a service → enter phone → submit) writing to `quote_submissions`.
+**Why:** multi-field forms lose leads mid-way; the business responds by TEXT, so phone + service is the minimum viable lead. Reusing quote_submissions keeps one pipeline (admin Quotes tab + Resend email).
+**Implementation choices:** the table's NOT NULL name/email/address columns get readable sentinels ("Quick"/"Lead"/"not-provided") — deliberately NOT a schema relaxation (no migration, no admin changes). `submitContactMessage` was deleted (an unused exported server action is a public endpoint for no benefit); historic contact_messages rows remain visible in the admin Messages tab.
+**Don't:** add fields back to the flow without conversion evidence — every extra field costs leads (owner directive).
+
 ### Placeholder reviews stay until real ones exist; AggregateRating schema blocked
 **Decision:** The 3 generic reviews remain (better than an empty section) but AggregateRating/star schema must NOT be added until real reviews replace them.
 **Why:** Schema markup on fabricated reviews risks a Google manual action against the whole domain. Reviews are also the gating item for Local Services Ads.

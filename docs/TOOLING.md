@@ -33,6 +33,13 @@ Verified against the actual files; full per-script detail in SCRIPTS.md.
 
 - **`/close-session`** (`.claude/commands/close-session.md`) — end-of-session doc sync: diffs/commits since the last HANDOFF entry → updates HANDOFF.md (always) and ARCHITECTURE/AGENTS/SCRIPTS/README (only if actually affected) → commits & pushes → reports what changed and what was skipped. Run at the end of every working session (AGENTS.md rule).
 
+### Project skills (`.claude/skills/` — written session 11 to encode working standards)
+- **security-sweep** — audit the codebase the way the session-6 audit did: RLS `to`-clause checks + anon-key curl verification, server-action guard sweep, secret scan, `pnpm audit`. Use before merging risky changes or when asked for a security check.
+- **safe-setup** — how to start ANY coding task here without breaking production: read order, pnpm-only, TS gate, migration sequencing, the 45-test gate, patterns to copy.
+- **planner** — turn a request into an executable plan: the clarifying questions worth asking here, this project's constraints, the plan shape (steps/verification/owner actions/judgment calls).
+- **honest-advisor** — critique plans/business decisions with the yes-man off, grounded in BUSINESS_PLAYBOOK stage + GROWTH's two strategic truths + real unit economics.
+- **bug-hunter** — verify fixes by OBSERVING the running app (curl/Cypress/screenshots), with the project's known fake-outs (cold-compile flake, silent pattern-regex failures, fail-soft features, rate limiter).
+
 ### hormozi-skills (offer/marketing frameworks — use when doing business strategy, not code)
 `/audit-offer` (find weak points in an offer) · `/pricing-strategy` (value-anchored pricing + tiers) · `/value-perception` (raise perceived value without cost) · `/objection-destroyer` (objection→belief-shift mapping) · `/bonus-stack` · `/offer-angles` · `/hormozi-offer` · `/hormozi-hooks` · `/hormozi-pitch` · `/landing-page-copy` · `/market-research` · `/business-model` · `/productize` (service→product, offer ladders, retention) · `/effort-reduction` · `/value-accelerator` · `/dfy-dwy-diy` · `/idea-to-product` · plus the `hormozi-orchestrator` agent for full offer builds.
 **When:** pricing/packaging questions, campaign copy, review/referral systems. The session-9 growth analysis (docs/GROWTH.md) used pricing-strategy, value-perception, objection-destroyer, and productize — check it before re-running them on the same questions.

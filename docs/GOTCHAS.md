@@ -60,3 +60,7 @@
 ## Marketing / off-site
 
 30. **Two Google Business Profiles live under ONE Google account** (successblueprint90@gmail.com): the old **Orlando/Florida** profile and the current **Georgia/Covington** profile. Any link, post, or edit must be double-checked against the GEORGIA listing. This bit once: the site shipped with the Florida profile's `g.page` review link until July 2026 (old place ID `ChIJpypOOl24CU0RVvi0zWCb8C4`; corrected to `https://share.google/AM7DCDpim0yALiqCR` in `lib/reviews-data.ts` — do not revert). The fate of the Florida profile (mark closed vs keep) is an open owner decision — docs/ROADMAP.md.
+
+## Forms / validation
+
+31. **HTML `pattern` attributes compile with the regex `v` flag** — `(`, `)` and some punctuation inside character classes must be backslash-escaped or the browser SILENTLY IGNORES the entire pattern (no error shown; the validation just doesn't happen). Bit the quick-lead phone field once: `[\d\s()+.-]` dead, `[\d\s\(\)\+\.\-]` works. Always test that invalid input is actually BLOCKED, not just that the attribute exists.

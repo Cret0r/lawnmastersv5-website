@@ -90,6 +90,7 @@
 - **Claude Code** — primary development agent; rules in AGENTS.md (via CLAUDE.md), knowledge base in /docs. Owner switches models with `/model` (Fable 5 default).
 - **claude-mem** (thedotmack plugin) — cross-session memory: Bun worker + SQLite; injects context at session start; `/claude-mem:mem-search` etc. Fragile parts + recovery: docs/sops/claude-mem-troubleshooting.md. Reliable fallback for history: HANDOFF.md + git log.
 - **Custom command:** `/close-session` — end-of-session doc sync (SOP: closing-a-session.md).
+- **Project skills** (`.claude/skills/`): security-sweep, safe-setup, planner, honest-advisor, bug-hunter — encode how work is done here; inventory in docs/TOOLING.md § 2.
 - **hormozi-skills** — 17 offer/marketing framework commands + orchestrator agent; use for business strategy, not code (inventory in docs/TOOLING.md § 2).
 - **Vercel plugin** — `/vercel:status`, `/vercel:env`, deploy-debugging knowledge skills.
 

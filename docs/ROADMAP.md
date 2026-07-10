@@ -33,7 +33,8 @@
 ## 🟡 Engineering — maintenance / hardening
 
 - **Next.js upgrade** — repo pinned to next@16.0.10, which had HIGH advisories (middleware bypass, server-action CSRF) flagged in the session-6 audit. `pnpm add next@latest` → full Cypress suite → deploy. Mitigated meanwhile by per-action auth guards, but do it.
-- **Delete dead code:** `styles/globals.css` (unused duplicate), `scripts/002_create_admin_user.sql` (dev-only, confusing auth story), possibly `lib/supabase/proxy.ts` + `server.ts` + `client.ts` (unused Supabase-auth wiring — verify no imports first).
+- **Delete dead code:** `styles/globals.css` (unused duplicate), `scripts/002_create_admin_user.sql` (dev-only, confusing auth story), possibly `lib/supabase/proxy.ts` + `server.ts` + `client.ts` (unused Supabase-auth wiring — verify no imports first), orphaned leaflet packages.
+- **Admin Messages tab is now historic-only** — the contact form was replaced by the quick-lead flow (writes to quote_submissions), so no new contact_messages rows arrive. Once old messages are handled, consider hiding/removing the tab (and eventually the table).
 - **CI (GitHub Actions):** lint + `tsc --noEmit` + Cypress on push. Removes the "run tests locally before pushing" honor system; the repeated pattern of Claude sessions running the suite manually is the cost of not having this.
 - **Rate limiter durability** — in-memory Map resets per serverless instance/cold start. Fine at current traffic; move to Upstash/Vercel KV if abuse appears.
 - **Timing-safe credential compare** in `lib/admin-auth.ts` (`crypto.timingSafeEqual`) — low severity, cheap fix.
