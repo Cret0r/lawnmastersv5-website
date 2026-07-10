@@ -29,28 +29,31 @@ describe("Quote Form Validation", () => {
   })
 })
 
-describe("Contact Form Validation", () => {
+describe("Contact Quick-Lead Flow Validation", () => {
   beforeEach(() => {
     cy.visit("/contact")
+    // Advance to the phone step
+    cy.contains("button", "Lawn Mowing").click()
   })
 
-  it("blocks submission when required fields are empty", () => {
+  it("blocks submission when the phone is empty", () => {
     cy.get('button[type="submit"]').click()
-    cy.get(":invalid").should("have.length.at.least", 1)
-    cy.url().should("include", "/contact")
-    cy.contains("Message Sent!").should("not.exist")
+    cy.get('input[name="phone"]:invalid').should("exist")
+    cy.contains("Got it!").should("not.exist")
   })
 
-  it("flags a malformed email address", () => {
-    cy.get('input[name="name"]').type("Test User")
-    cy.get('input[name="email"]').type("missing-at-sign.com")
-    cy.get('textarea[name="message"]').type("A long enough test message.")
+  it("blocks a too-short phone number", () => {
+    cy.get('input[name="phone"]').type("123")
     cy.get('button[type="submit"]').click()
-    cy.get('input[name="email"]:invalid').should("exist")
-    cy.contains("Message Sent!").should("not.exist")
+    cy.get('input[name="phone"]:invalid').should("exist")
+    cy.contains("Got it!").should("not.exist")
   })
 
-  it("requires the message field", () => {
-    cy.get('textarea[name="message"]').should("have.attr", "required")
+  it("phone input is required and uses the tel keyboard", () => {
+    // Separate assertions — after have.attr the subject becomes the attr
+    // value, so chaining .and("have.attr", ...) breaks.
+    cy.get('input[name="phone"]').should("have.attr", "required")
+    cy.get('input[name="phone"]').should("have.attr", "type", "tel")
+    cy.get('input[name="phone"]').should("have.attr", "inputmode", "tel")
   })
 })

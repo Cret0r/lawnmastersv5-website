@@ -1,4 +1,8 @@
-describe("Contact Page", () => {
+// Conversational quick-lead flow on /contact: one question at a time —
+// (1) service, (2) phone — then submit into quote_submissions.
+// NOTE: exactly ONE real submission in this spec (shared rate-limit budget).
+
+describe("Contact Page — Quick Lead Flow", () => {
   beforeEach(() => {
     cy.visit("/contact")
   })
@@ -8,32 +12,42 @@ describe("Contact Page", () => {
     cy.get("body").should("be.visible")
   })
 
-  it("has a name field", () => {
-    cy.get('input[name="name"]').should("exist")
+  it("asks the service question first", () => {
+    cy.contains("Step 1 of 2").should("be.visible")
+    cy.contains("What do you need done?").should("be.visible")
+    cy.contains("button", "Lawn Mowing").should("be.visible")
+    cy.contains("button", "Pressure Washing").should("be.visible")
   })
 
-  it("has an email field", () => {
-    cy.get('input[name="email"]').should("exist")
+  it("advances to the phone step after picking a service", () => {
+    cy.contains("button", "Lawn Mowing").click()
+    cy.contains("Step 2 of 2").should("be.visible")
+    cy.contains("best number to text your quote").should("be.visible")
+    cy.get('input[name="phone"]').should("be.visible")
+    // The chosen service is shown as a chip
+    cy.contains("Lawn Mowing").should("be.visible")
   })
 
-  it("has a message field", () => {
-    cy.get('textarea[name="message"]').should("exist")
+  it("can go back to change the service", () => {
+    cy.contains("button", "Pressure Washing").click()
+    cy.contains("button", "Back").click()
+    cy.contains("What do you need done?").should("be.visible")
+    cy.contains("Step 1 of 2").should("be.visible")
   })
 
-  it("submits the form and shows a response", () => {
-    cy.get('input[name="name"]').type("Test User")
-    cy.get('input[name="email"]').type("test@example.com")
-    cy.get('textarea[name="message"]').type("This is a test message from Cypress.")
+  it("submits the flow and shows a response", () => {
+    cy.contains("button", "Lawn Mowing").click()
+    cy.get('input[name="phone"]').type("(404) 555-0142")
     cy.get('button[type="submit"]').click()
-    // Accept either success (Supabase configured) or infrastructure error (no env vars)
+    // Accept success, infrastructure error (no env), or rate limit
     cy.get("body", { timeout: 8000 }).should(($body) => {
       const text = $body.text()
       expect(text).to.satisfy(
         (t: string) =>
-          t.includes("Message Sent!") ||
+          t.includes("Got it!") ||
           t.includes("Something went wrong") ||
           t.includes("Too many requests"),
-        "Form submitted — a response appeared (not stuck on validation error)"
+        "Flow submitted — a response appeared"
       )
     })
   })
