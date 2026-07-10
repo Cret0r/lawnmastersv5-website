@@ -33,8 +33,10 @@ export const reviews: Review[] = [
   },
 ]
 
-// Google Review link - Update this with your actual Google review link
-export const googleReviewLink = "https://g.page/r/CVb4tM1gm_AuEBE/review"
+// Google review link — points to the approved GEORGIA (Covington) Business
+// Profile. The old g.page link pointed at the Florida profile; do not revert.
+// (Owner-provided share link; resolves to the Lawn Masters V5 INC panel.)
+export const googleReviewLink = "https://share.google/AM7DCDpim0yALiqCR"
 
 // Business name for display
 export const businessName = "Lawn Masters V5 INC"
