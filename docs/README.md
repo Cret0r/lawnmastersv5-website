@@ -3,15 +3,17 @@
 > Written July 2026 (session 9) as the permanent knowledge-preservation pass. Root docs (AGENTS.md, ARCHITECTURE.md, HANDOFF.md, SCRIPTS.md, SUMMER_CAMPAIGN_2026.md) remain authoritative for what they cover; this folder extends them.
 
 ## Reading order for a cold start
-1. `AGENTS.md` (root) — the rules. Read before touching anything.
-2. `ARCHITECTURE.md` (root) — current technical reality (refreshed session 9).
-3. `docs/BUSINESS_PLAYBOOK.md` — how the business actually works; pitch-ready.
-4. `docs/GOTCHAS.md` — check here FIRST when anything behaves strangely.
-5. `HANDOFF.md` (root) — session-by-session history + current to-dos.
+1. **`docs/STACK_MAP.md` — START HERE.** The whole operation on one page: every tool/service, where it lives, how it's accessed, what connects to what, plus the COLD START checklist.
+2. `AGENTS.md` (root) — the rules. Read before touching anything.
+3. `ARCHITECTURE.md` (root) — current technical reality (refreshed session 9).
+4. `docs/BUSINESS_PLAYBOOK.md` — how the business actually works; pitch-ready.
+5. `docs/GOTCHAS.md` — check here FIRST when anything behaves strangely.
+6. `HANDOFF.md` (root) — session-by-session history + current to-dos.
 
 ## Contents
 | File | What it holds |
 |---|---|
+| `STACK_MAP.md` | Master orientation: every tool/service ("you use THIS for THIS"), access points, connections, env-var registry, cold-start checklist |
 | `BUSINESS_PLAYBOOK.md` | Services, pricing + reasoning, target customer, route-density model, guarantees, Starter Cut bonus, brand voice, bilingual angle |
 | `DECISIONS.md` | Every significant decision + WHY. **Do not reverse these without owner sign-off** |
 | `GOTCHAS.md` | Canonical consolidated gotcha list (Norton ×3, lockfile story, RLS leak lesson, claude-mem, z-index fix, …) |
