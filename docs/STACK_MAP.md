@@ -1,7 +1,7 @@
 # STACK MAP — The Entire Operation at a Glance
 
-> "You use THIS for THIS." One line per fact, organized by layer. For each tool: what it is, what it does HERE, where it lives, how you access it, what it connects to. Items marked **[confirm with owner]** are set up but not fully verifiable from the code.
-> Last verified: July 2026 (session 9). Deeper detail: ARCHITECTURE.md (technical), docs/TOOLING.md (commands), docs/sops/ (procedures).
+> "You use THIS for THIS." One line per fact, organized by layer. For each tool: what it is, what it does HERE, where it lives, how you access it, what it connects to.
+> Last verified: July 2026 (session 10 — account ownership owner-confirmed; DNS delegation verified via nslookup). Deeper detail: ARCHITECTURE.md (technical), docs/TOOLING.md (commands), docs/sops/ (procedures).
 
 ---
 
@@ -10,9 +10,9 @@
 - **What:** Serverless Next.js hosting. THE production environment.
 - **Used for:** Serves lawnmastersv5.com; runs all server actions/middleware; holds ALL production secrets as env vars.
 - **Where:** vercel.com → team `cret0rs-projects` → project `lawnmastersv5-website`.
-- **Access:** Owner's Vercel account (Google/GitHub login **[confirm which]**); CLI via `npx vercel` (device-code login; repo is `vercel link`ed).
+- **Access:** Owner's Vercel account — logs in via the owner's **GitHub account** (Google as fallback); CLI via `npx vercel` (device-code login; repo is `vercel link`ed).
 - **How deploys work:** every push to GitHub `master` → automatic PRODUCTION deploy. No staging; preview deploys only if a non-master branch is pushed. Failed build ⇒ Vercel keeps serving the last good deploy. Rollback = dashboard → Deployments → promote a previous one.
-- **Connects to:** GitHub (deploy trigger), the domain, Sentry/Resend/Supabase via env vars, Vercel Analytics + Speed Insights (built-in, wired in `app/layout.tsx`).
+- **Connects to:** GitHub (deploy trigger), the domain **and its entire DNS zone** (nameservers are delegated to Vercel — see § 4), Sentry/Resend/Supabase via env vars, Vercel Analytics + Speed Insights (built-in, wired in `app/layout.tsx`).
 - **Quirks:** `vercel env pull` returns sensitive values as EMPTY strings — the dashboard is the only place to read secrets. TypeScript errors fail the build (intentional).
 
 ## 2. DATABASE — Supabase
@@ -20,7 +20,7 @@
 - **What:** Hosted Postgres + Storage + auto REST API.
 - **Used for:** Lead storage (`quote_submissions`, `contact_messages`), recurring-client CRM (`clients` — addresses, gate codes, hazards, due dates), gallery uploads (`gallery_items` + `gallery` storage bucket).
 - **Where:** supabase.com dashboard → project "lawnmastersv5-website". Project URL is in `NEXT_PUBLIC_SUPABASE_URL`.
-- **Access:** Owner's Supabase account **[confirm login method]**. The app accesses it exclusively through `lib/supabase/admin.ts` (service-role key, bypasses RLS).
+- **Access:** Owner's Supabase account — logs in via the owner's **GitHub account** (Google as fallback). The app accesses it exclusively through `lib/supabase/admin.ts` (service-role key, bypasses RLS).
 - **RLS model:** every table `to service_role` only; `anon` may INSERT into the two form tables. RLS is the backstop against direct REST calls with the public anon key — a real leak existed and was closed+verified (005). New tables MUST follow the 005/006 pattern (docs/sops/database-migrations.md).
 - **Migrations:** MANUAL — paste `scripts/00X_*.sql` into Dashboard → SQL Editor. Status ledger in docs/TOOLING.md § 1 (⚠️ 006 gallery pending as of writing).
 - **Connects to:** Vercel (3 env vars), the admin dashboard at /admin, Resend flow (insert precedes the notification email).
@@ -35,8 +35,10 @@
 ## 4. DOMAIN — lawnmastersv5.com
 
 - **What:** The production domain, attached to the Vercel project.
-- **Registrar / DNS host:** **[confirm with owner]** — not determinable from the repo. Previously the domain was detached from an old V0 Vercel project (session 3), so it's assigned to the current project inside Vercel → Settings → Domains.
-- **Connects to:** Vercel (serving), Google Business Profile (website field), schema URLs (`https://lawnmastersv5.com/#business`), sitemap/robots.
+- **Registrar:** **Hostinger** (owner-confirmed) — handles registration and renewal ONLY.
+- **DNS:** delegated to **Vercel's nameservers** (`ns1.vercel-dns.com` / `ns2.vercel-dns.com` — verified via nslookup, July 2026). **All DNS records are managed in the Vercel dashboard (project → Settings → Domains), NOT in Hostinger.** Practical consequence: when verifying lawnmastersv5.com as a Resend sending domain (or adding any TXT/MX/DKIM record), add the records in Vercel DNS — Hostinger's DNS panel has no effect while the nameservers point at Vercel.
+- **History:** the domain was detached from an old V0 Vercel project in session 3 and assigned to the current project.
+- **Connects to:** Vercel (serving + DNS), Hostinger (renewal — keep the registration from lapsing), Google Business Profile (website field), schema URLs (`https://lawnmastersv5.com/#business`), sitemap/robots.
 
 ## 5. ERROR TRACKING — Sentry
 
@@ -50,7 +52,7 @@
 - **What:** Transactional email API, called via plain `fetch` in `lib/notify.ts` (no SDK). **Currently DORMANT** (no API key set).
 - **The speed-to-lead flow (once live):** quote or contact form submits → row inserted in Supabase → `sendLeadNotification()` emails the lead's full details + /admin link to `LEAD_NOTIFY_EMAIL` within seconds. Fails soft — email failure never blocks the lead.
 - **Where:** resend.com → **[owner must sign up — use lawnmastersv5@gmail.com; the default onboarding sender only delivers to the account owner's address until lawnmastersv5.com is verified as a sending domain]**.
-- **Activate:** `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` in Vercel + redeploy. Optional `LEAD_NOTIFY_FROM` after domain verification.
+- **Activate:** `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` in Vercel + redeploy. Optional `LEAD_NOTIFY_FROM` after domain verification — and note the verification DNS records (TXT/DKIM) go into **Vercel DNS**, not Hostinger (see § 4).
 - **Why Resend not Twilio:** docs/DECISIONS.md (no phone provisioning/A2P registration; free tier; zero deps).
 
 ## 7. PAYMENTS — Zelle (off-site only)
@@ -68,7 +70,7 @@
 
 ## 9. MARKETING — Google Business Profile & the SEO layer
 
-- **GBP:** live and approved (Georgia/Covington profile — the old Florida profile's link was purged from the code July 2026). Managed at business.google.com under the owner's Google account **[confirm which account]**. THE #1 growth lever (docs/GROWTH.md).
+- **GBP:** live and approved (Georgia/Covington profile). Managed at business.google.com under **successblueprint90@gmail.com** (owner-confirmed). ⚠️ **The SAME Google account also owns the older Orlando/Florida profile** — when copying review links, posting, or editing, always confirm you're on the GEORGIA listing. This exact mixup already happened once: the site shipped with the Florida profile's review link until July 2026 (fixed — see GOTCHAS #30). THE #1 growth lever (docs/GROWTH.md).
 - **Ties to the site:** `lib/reviews-data.ts` → `googleReviewLink` (`https://share.google/AM7DCDpim0yALiqCR`) powers the homepage "Leave Us a Google Review" button — the ONLY review CTA in the codebase; root JSON-LD in `app/layout.tsx` describes the same business entity; sitemap at /sitemap.xml for Search Console **[Search Console not yet verified — roadmap]**.
 - **Social:** Instagram @lawnmasters_v5, Facebook page id 61590265813532 — linked from `components/social-buttons.tsx` + schema `sameAs`, both from `lib/business-info.ts`. WhatsApp/SMS deep links generated by `smsHref()`/`whatsappHref()`.
 - **Campaign assets:** SUMMER_CAMPAIGN_2026.md (door hangers, Instagram plan, follow-up scripts) + /summer landing page (QR/ad target; /spring-rush 308s to it).
@@ -133,7 +135,7 @@
 ## COLD START — sit down today, in this order
 
 1. **Read** AGENTS.md (the rules — 5 min), then this file, then docs/GOTCHAS.md headlines.
-2. **Access check** — can you reach: GitHub repo (Cret0r/lawnmastersv5-website), Vercel dashboard (cret0rs-projects), Supabase dashboard, the owner's GBP **[all owner-account-gated — get access or work through the owner]**.
+2. **Access check** — can you reach: GitHub repo (Cret0r/lawnmastersv5-website — the keystone: it also logs you into Vercel and Supabase), Vercel dashboard (cret0rs-projects), Supabase dashboard, GBP (successblueprint90@gmail.com), Hostinger (domain renewal only — DNS lives in Vercel).
 3. **Local boot:** clone → `pnpm install` → get env values from Vercel dashboard into `.env.local` → `npm run dev` → localhost:3000 loads.
 4. **Verify the safety net:** `npx tsc --noEmit` clean → `npm run cypress:run` = 45/45 (dev server running first).
 5. **Know the blast radius:** any push to `master` IS a production deploy. DB changes are manual SQL in Supabase, run BEFORE pushing dependent code.

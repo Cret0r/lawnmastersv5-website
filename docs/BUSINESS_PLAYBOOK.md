@@ -16,6 +16,7 @@
 | Email | lawnmastersv5@gmail.com |
 | Instagram | @lawnmasters_v5 |
 | Facebook | profile.php?id=61590265813532 |
+| Google Business Profile | Georgia/Covington listing, owned by successblueprint90@gmail.com (⚠️ same account owns the old Orlando profile — GOTCHAS #30) |
 | Site | lawnmastersv5.com |
 | Crew | Father & son (owner-operated) |
 | Experience | 5+ years, 130+ projects (from Florida years) |

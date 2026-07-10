@@ -44,6 +44,11 @@
 
 - **Dashboard UI fix (separate repo)** — noted as pending from a prior session's list; the admin-facing operations dashboard work lives outside this website repo. Confirm repo name with owner before starting.
 
+## 🟣 GBP housekeeping (owner — new since the Georgia profile went live)
+
+- **Decide the fate of the old Orlando/Florida GBP** (same account: successblueprint90@gmail.com). Options: mark it "permanently closed" or update it as moved — leaving two active profiles under one brand risks review-splitting and confusing local-ranking signals. If the Florida profile holds valuable old reviews, weigh that before closing (reviews don't transfer). Decide before pushing hard on review collection.
+- **Optional review-link upgrade:** the current `share.google` link opens the business panel (visitor clicks Reviews → Write a review). GBP dashboard → "Ask for reviews" generates a link that opens the rating dialog directly — one less click. One-line swap in `lib/reviews-data.ts` when grabbed **from the Georgia profile**.
+
 ## 🟢 Campaign operations (owner, from SUMMER_CAMPAIGN_2026.md)
 
 - Print door hangers; first 150 in Covington Hwy 278 + Conyers (week-by-week plan in campaign doc § 9)
