@@ -90,6 +90,13 @@
 
 ## Growth Strategy (from the session-9 growth analysis)
 
+### Repositioned: transformation-first identity, high-ticket front end (session 12 — owner directive)
+**Decision:** The business identity is **"we make neglected properties look amazing"** — NOT a mowing-route builder. Named Refresh packages (Curb Appeal from ~$349 / Full Property from ~$749 / Total Transformation from ~$1,499 — prices pending owner sign-off) are the front end; maintenance plans are the retention back end, pitched only at the post-job walk-through.
+**Why:** mowing-only requires ~55+ clients for meaningful cash flow; 2 Full Refreshes/week ≈ $6k/mo from 8 customers. High ticket funds the business now; maintenance compounds it. Owner explicitly chose this (July 2026).
+**What this does NOT mean (do not over-rotate):** the recurring back end stays — it's the winter floor and the compounding asset; the Starter Cut, guarantees, route-density filter, and no-fake-scarcity rules all survive; the $28/cut math moved from the PITCH to the CLOSE, it wasn't deleted.
+**Full architecture:** docs/OFFERS.md. Notebook rebuilt to match (docs/NOTEBOOK.md v2).
+**Pending:** homepage//summer repositioning to match (roadmap; blocked on owner confirming tier names/prices — prices are owner-locked values).
+
 ### Paid ads deprioritized — GBP + free local channels first
 **Decision:** No Meta/Google Search spend now. Google Local Services Ads only after 10+ real reviews.
 **Why:** (1) Route-density economics conflict with broad ad radius — ads generate scattered leads the model correctly refuses; (2) landing paid traffic on 3 placeholder reviews burns trust and money; (3) Google Business Profile + Nextdoor + yard signs + door hangers are free, unsaturated, and compound. LSA is the exception when triggered because it's pay-per-lead with a trust badge that substitutes for a thin review profile.

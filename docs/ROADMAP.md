@@ -18,6 +18,8 @@
 
 ## 🟠 Engineering — ready to build (Claude can start immediately)
 
+- **★ REPOSITION THE SITE to transformation-first (new top item, session 12)** — homepage + /summer currently sell mowing plans first; the business now leads with Refresh packages (docs/OFFERS.md). Blocked ONLY on owner confirming tier names/prices ($349/$749/$1,499 proposals). Drafted hero: *"Covington's Property Refresh Specialists — we transform overgrown, dirty, and neglected yards into clean, beautiful properties. ✓ Yard Cleanups ✓ Mulch Installation ✓ Pressure Washing ✓ Shrub Trimming ✓ Lawn Maintenance (last, on purpose) — Free On-Site Estimate."* Scope: hero + pricing sections to tier cards, quick-lead flow options already fit, keep maintenance plans as the visible back end, update affected Cypress specs.
+
 - **City pages ×3** — Porterdale, Social Circle, Monroe. Template: `lib/city-pages.ts` + `app/lawn-care/[city]/page.tsx`; neighborhood hooks in BUSINESS_PLAYBOOK § 2. Follow docs/sops/adding-a-city-page.md. Add to sitemap automatically (it maps cityPages).
 - **FAQ sections + FAQPage schema** on city pages + /services. Answer real local queries (cost, contracts, scheduling, Spanish service). Keep answers consistent with service-policies page.
 - **Open Graph tags/images** — root metadata has no `openGraph`; add og:image (brand card or hero), og:title/description per page. Matters for Nextdoor/Facebook sharing (growth channel).

@@ -1,180 +1,199 @@
 # MY NOTEBOOK — Lawn Masters V5
+## Property Refresh Edition
 
-> Written to be copied by hand. Short lines. Real numbers.
-> Cold-start edition: new market, zero Georgia clients, everything earned from here.
+> v2 — rebuilt around the new identity. Copy by hand. Short lines. Real numbers.
+> The business: **we make neglected properties look amazing.**
+> Mulch, cleanups, pressure washing, mowing — those are just HOW.
 
 ---
 
 ## 1. MY OFFER (one sentence)
 
 **Best version:**
-I keep Covington-area yards cut, edged, and spotless every week
-for about $28 a visit — no contract,
-and if I ever miss your cut without telling you, the next one's free.
+I take overgrown, dirty, neglected properties in the Covington area
+and make them look amazing — usually in one day,
+walk-through guaranteed: anything you don't love, I fix free.
 
-**Alternate A (transformation-first):**
-I make Newton County properties look brand new —
-pressure washing and cleanups, guaranteed or I redo it free —
-then keep them that way from $90 a month.
+**Alternate A (shorter, for saying out loud):**
+We make ugly properties look great — in about a day, guaranteed.
 
-**Alternate B (local + bilingual):**
-Father-and-son crew based in Covington —
-weekly lawn care from $28 a cut, first cut free when you start a plan,
-English or Spanish.
+**Alternate B (with the back end):**
+We transform neglected yards — cleanup, mulch, pressure washing —
+then keep them looking that way from $90 a month.
 
 ---
 
-## 2. WHO I SERVE
+## 2. WHO I SERVE (they spend more and decide faster)
 
-The Newton County homeowner who:
-- works too much to deal with the yard (or physically can't anymore)
-- got burned by a solo lawn guy who just stopped showing up
-- is watching the yard get away from them — and knows the neighbors see it
-- in Conyers (Hwy 138): fears the HOA letter more than the price
-- in Covington (Hwy 278): has an older home with a mildew-stained driveway
-- in Oxford: tree-lined lot, beds fighting back by June
+The property got away from someone. That's my customer:
+- busy families — no weekends left for the yard
+- new homeowners — inherited a mess, want a fresh start
+- elderly homeowners — can't do it themselves anymore
+- HOA notice in hand (Conyers/Hwy 138) — deadline + embarrassment = fast yes
+- selling the house — every $1 of curb appeal is $5 at the sale
+- landlords / property managers — turnover between tenants, repeat business
 - Spanish-speaking families nobody else serves in their language
 
-What they're really buying: NOT grass cutting.
-They're buying "I never think about my yard and it always looks good."
-
-They'd hire me because: I'm local, I answer, I show up when I said,
-I guarantee it in plain words, and I talk to them like a neighbor.
+They are NOT buying mulch or mowing.
+They're buying: relief. Pride when they pull in the driveway.
+The neighbor saying "wow." The notice going away.
 
 ---
 
-## 3. MY PRICES + PER-VISIT MATH
+## 3. MY OFFERS (quote all three — anchor high)
 
-*(every price is a STARTING price — final number given on-site, always)*
+*(all prices "from" — final number on-site, always)*
 
-MOWING
-- Weekly — $120/mo — 3–4 cuts — **≈ $28 per cut. Best deal. Say this.**
-- Biweekly — $90/mo — 2 visits — ≈ $45 per visit
-- One-time cut — $45–55 — the anchor:
-  "one-time costs almost DOUBLE per cut vs the weekly plan"
-- Free first cut (Starter Cut) when they start any plan
-- No contracts. Cancel anytime. Missed cut without notice = next one free.
+**★ CURB APPEAL REFRESH — from $349**
+Front of house only, one visit:
+front beds weeded + mulched · shrubs shaped · walkway + porch rinsed.
+Say: "The front of your house looks new by dinner."
 
-PRESSURE WASHING
-- Driveway (up to 2-car) — from $197  ← lead service, fastest close
-- House exterior (single story) — from $250
-- Full property (drive + house + walks) — from $400
-- Roof soft wash — from $300
-- Fence — from $1.50/ft
+**★★ FULL PROPERTY REFRESH — from $749  ← SELL THIS ONE**
+Front + back: full cleanup + haul-away · every bed mulched ·
+shrubs shaped · driveway pressure washed.
+Say: "Your whole property, back under control, in one day."
 
-LANDSCAPING / CLEANUPS
-- Basic cleanup (weed, edge, haul) — from $150
-- Bush & shrub trim — from $125
-- Gutter cleaning — from $125
-- Mulch + weed barrier — from $250
-- Full bed refresh — from $300  ← best before/after photos
-- Full property cleanup — custom quote
+**★★★ TOTAL TRANSFORMATION — from $1,499**
+The really far-gone ones + pre-sale:
+lot cleared + hauled · beds rebuilt with fabric + mulch ·
+full pressure wash (drive, house, walks) · gutters.
+Say: "Neglected to knockout in 48 hours."
 
-THE BRIDGE (my whole model on one line):
-One-time job done right → "want me to just keep it this way?"
-→ weekly plan → $1,440/year per client.
+**SPECIALS:**
+- HOA Rescue — from $449 — "fixed in 72 hours, photo proof included"
+- Listing-Ready — $497 — for realtors — "photos in 72 hours"
+- Rental turnover — custom quote — landlords/PMs
+
+**THE STACK (say it when quoting the Full Refresh):**
+"Cleanup alone runs $150–250. Mulch and beds, $300+.
+Shrubs $125+. The driveway wash $197.
+Piecemeal you're at $800+, three separate appointments.
+One crew, one day: from $749."
+
+**THE GUARANTEE (say it BEFORE the price):**
+"When we finish, we walk the property together.
+Anything you don't love, we fix on the spot — free.
+You don't pay for a yard you're not proud of."
+
+**THE BACK END (only at the walk-through, never in the ad):**
+"You just put $749 into this yard.
+For about $28 a cut I make sure it never goes back.
+First cut's free — want me to just keep it like this?"
+→ Weekly $120/mo (≈$28/cut) · Biweekly $90/mo · no contract · rate locked
 
 ---
 
-## 4. MY SCRIPTS (word-for-word)
+## 4. MY FUNNEL (memorize this)
 
-**REVIEW REQUEST TEXT (send within 2 hours of a finished job):**
-"Hey [name], it's [my name] from Lawn Masters V5.
-Glad the yard came out good! If you've got 30 seconds,
-a quick Google review helps our small father-and-son crew a ton —
-even one line about us showing up on time:
-https://share.google/AM7DCDpim0yALiqCR"
+Before/after post (FB · GBP · Nextdoor · hanger)
+→ FREE ON-SITE ESTIMATE  ← the only thing I ever advertise
+→ walk it → quote 3 tiers
+→ Refresh job ($349–1,499)
+→ walk-through WOW → ask for review + referral RIGHT THEN
+→ Keep-It Plan ($90–120/mo, first cut free)
+→ seasonal work forever (leaves, gutters, mulch top-up, PW)
 
-**REVIEW REQUEST — SPANISH:**
-"Hola [nombre], soy [mi nombre] de Lawn Masters V5.
-¡Qué bueno que el patio quedó bien! Si tiene 30 segundos,
-una reseña en Google nos ayuda muchísimo —
-aunque sea una línea diciendo que llegamos a tiempo:
-https://share.google/AM7DCDpim0yALiqCR"
+One customer. Four paydays.
 
-**REFERRAL ASK (the Good Neighbor offer — say it after a compliment):**
-"Glad you like it. Know a neighbor who'd want theirs kept up too?
-They get their first cut FREE — we call it the Starter Cut —
-and you get $20 off your next one.
-Two neighbors and your next cut's free.
-Just text me their name, or have them text me."
+---
 
-**AT A DOOR / MEETING A NEIGHBOR:**
-"Hey, I'm [name] — my son and I run Lawn Masters V5,
-we're based right here in Covington.
-We're building our route on this street right now.
-Weekly service comes out to about $28 a cut, no contract,
-and if we ever miss you without notice, the next one's free.
-Want me to take a look and give you a number? Takes two minutes."
+## 5. MY SCRIPTS
+
+**AT A DOOR / TO A NEIGHBOR:**
+"Hey, I'm [name] — my son and I run Lawn Masters V5, right here in Covington.
+We take yards that have gotten away from people
+and make them look brand new — usually in one day.
+Want a free estimate? Takes ten minutes, no pressure.
+And everything's guaranteed: you walk it with me after,
+anything you don't love, I fix free."
 *(if it fits: "Hablamos español también.")*
 
+**THE ESTIMATE (on the property):**
+1. Walk it WITH them. Let them point. Listen.
+2. Say the guarantee BEFORE any number.
+3. Quote all 3 tiers, top down: "$1,499 gets you X... most people do the $749... if it's just the front, $349."
+4. Shut up and let them pick.
+
+**REVIEW ASK (at the walk-through, phone out, before/after ready):**
+"If you've got 30 seconds, a Google review helps our small crew a ton —
+even one line. I'll text you the link right now."
+Link (keep in phone, don't handwrite): share.google/AM7DCDpim0yALiqCR
+Spanish: "Una reseña en Google nos ayuda muchísimo — le mando el enlace ahorita."
+
+**REFERRAL ASK (right after they say wow):**
+"Know a neighbor whose yard's gotten away from them?
+They get $50 off any refresh, and you get $50 off your next service
+— or a free month of maintenance if you're on the plan.
+Just text me their name."
+
+**FOLLOW-UPS (unchanged):** Day 3 text · Day 10 text · Day 30 re-engage.
+
 ---
 
-## 5. MY WEEKLY NUMBERS (cold start — track every Sunday)
+## 6. MY WEEKLY SCORECARD (track every Sunday)
 
-| Track | Target |
+| Track | Cold-start target |
 |---|---|
-| Door hangers hung | 150 |
-| GBP posts + photos uploaded | 2–3 |
-| Nextdoor posts or thread replies | 2 |
-| Review asks sent | every finished job (100%) |
-| Referral asks made | every happy client, min 3 |
-| Quotes given | 3–5 |
-| Jobs closed | 1–2 |
-| New recurring clients | 0–2 (0 is normal early — the asks compound) |
+| Leads generated (calls/texts/forms) | 5–10 |
+| Estimates booked | 3–5 |
+| Estimates given | 3–5 |
+| Jobs sold | 1–2 |
+| **Average job value** | $500+ and climbing |
+| Google reviews (new) | +2 |
+| Before/after content posted | 3 (FB/GBP/Nextdoor) |
+| Refresh → maintenance conversions | 0–1 (track the %) |
 
-The only number that matters long-term: RECURRING CLIENTS.
-Everything above exists to move that one.
-
----
-
-## 6. MY MONEY RULES
-
-- Never quote a final price off-site. Starting prices only. Eyes on the property first.
-- FREE: the quote. The Starter Cut (only WITH a plan signup). Redo work under the guarantee. The makeup cut if I miss without notice.
-- NOT free: everything else. No trial cuts outside the Starter Cut. No "just this once."
-- Don't discount — ADD instead. If they push on price, throw in a shrub trim, don't cut the number. A discount is forever; a bonus is once.
-- Say NO when:
-  - the property is outside my 6 cities (Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe) — scattered stops kill the route
-  - they want below ~$45/cut — that's the flaky-guy price, let them have the flaky guy
-  - the job can't be done right — never risk the guarantee to win a job
-- Payment: Zelle. One-time jobs: payment request texted same day. Plans: monthly.
-- Referral $20 credit pays out AFTER the friend's first PAID service.
-- NEVER pay, discount, or trade for Google reviews. Referrals get rewards; reviews get asked for. Keep them separate.
-- Raise prices for NEW clients only (existing clients keep their rate — that's the loyalty deal).
+THE number: **AVERAGE JOB VALUE.**
+If it doubles, I need half the customers.
+Second number: maintenance conversions — that's the floor being built.
 
 ---
 
-## 7. MY WHY (only you can write this one)
+## 7. MY MONEY RULES
 
-Write 3–5 lines in your own words. Use these to get started:
+- Never quote final prices off-site. "From" prices only. Eyes on it first.
+- Quote three tiers every time. Anchor high. Let them buy down, never up-sell up.
+- Say the guarantee before the price — it's why the price holds.
+- Don't discount — ADD. Price pushback = throw in the gutter clean, keep the number.
+- FREE: the estimate. The Starter Cut (with a plan only). Guarantee fixes. Nothing else.
+- Say NO to: outside my 6 cities · sub-$45 mow shoppers · any job I can't guarantee.
+- Payment: Zelle. One-times: request texted same day. Plans: monthly. Big jobs ($1k+): half up front.
+- Referrals get rewards ($50/$50). Reviews get ASKED for, never paid for. Never mix them.
+- Winter (Nov–Feb): sell leaf + gutter packages, protect the maintenance floor, book spring refreshes early.
 
-- Why did we leave Florida and bet on Georgia — what does this move
-  have to prove?
-- Three years from now, what does this business pay for that
-  matters most to the family?
-- I work with my son every day. What do I want him to learn
-  from watching how I run this?
+---
+
+## 8. MY WHY (only you can write this one)
+
+3–5 lines, your words:
+- Why did we leave Florida and bet everything on Georgia?
+- Three years from now, what does this business pay for that matters most?
+- My son watches how I run this every day. What do I want him to learn?
 
 Write it. Read it on the bad weeks.
 
 ---
 
-## 8. LINES FOR THE COMMON PUSHBACKS *(bonus — added because you'll hear these weekly)*
+## 9. LINES FOR THE PUSHBACKS
 
-**"That's expensive."**
-"It's about $28 a cut on the weekly — a one-time visit runs $50.
-The plan's the cheap way to do this."
+**"That's a lot of money."**
+"Piecemeal this is $800+ across three appointments.
+One day, one crew, guaranteed — and you never have to think about it again."
 
-**"I usually mow it myself."**
-"Most of my clients did too. You're not buying a mow —
-you're buying your Saturdays back."
+**"I can do it myself."**
+"Sure — it's about three weekends of work.
+I'll have it done Tuesday. What's three weekends worth?"
 
-**"I had a guy. He disappeared."**
-"That's most of my business, honestly. That's why the guarantee
-exists: I miss you without notice, the next cut's free."
+**"I just need it mowed."**
+"I can do that — but mowing an overgrown yard just makes short weeds.
+Let me clean it up right once, THEN keep it cheap to maintain."
 
 **"Let me think about it."**
-"No pressure. One thing though — I'm building this street's route now,
-and once it's full, it's full. Want me to hold you a spot while you decide?"
-*(only true scarcity — never fake it)*
+"No pressure. Heads up though — I book refreshes about a week out,
+and this quote's good for 14 days. Want me to pencil you in while you decide?"
+*(only if true — never fake it)*
+
+**"I had a guy. He disappeared."**
+"That's half my business. That's why the walk-through guarantee exists —
+you see it done before I'm paid and gone."

@@ -7,7 +7,7 @@
 
 ## 1. The Business in One Paragraph
 
-**Lawn Masters V5 INC** is a father-and-son lawn care and landscaping company that relocated from Florida to **Covington, GA (Newton County)** and is rebuilding its client base there. It sells one-time high-ticket transformations (pressure washing, landscaping cleanups) as the front door, then converts those customers into **recurring weekly/biweekly mowing plans** — the compounding asset. It is bilingual (English/Spanish), contract-free, and competes on reliability and guarantees rather than being the cheapest.
+**Lawn Masters V5 INC** is a father-and-son property transformation company that relocated from Florida to **Covington, GA (Newton County)** and is building its client base there from zero. The identity (owner-set, July 2026): **"we make neglected properties look amazing."** It sells named high-ticket Refresh packages (cleanup + mulch + pressure washing + shrubs, ~$349–1,499 — see docs/OFFERS.md) as the front end, then converts those customers into **recurring maintenance plans** at the post-job walk-through — the compounding asset and winter floor. Mowing is a method and a retention product, not the pitch. Bilingual (English/Spanish), contract-free, competes on transformation + guarantees, never on being cheapest.
 
 | Fact | Value |
 |---|---|
