@@ -74,7 +74,7 @@ Verified against the actual files; full per-script detail in SCRIPTS.md.
 | **pnpm only** | `pnpm add <pkg>` for everything. Never `npm install` (recreates the deleted package-lock.json → deploy desync). Install-script approvals live in `pnpm-workspace.yaml` → `allowBuilds`. |
 | Node | Runs Next 16 / React 19; node 24.x observed in use. `npm run <script>` is fine for RUNNING scripts — the pnpm rule is about dependency installation. |
 | Bun | Only needed for claude-mem's worker, not the website. |
-| Cypress | `npm run dev` FIRST (separate process), then `npm run cypress:run`. 45 tests. Suite budget: max 2 real form submissions/run (rate limiter). |
+| Cypress | `npm run dev` FIRST (separate process), then `npm run cypress:run`. 50 tests (count grows). Suite budget: max 2 real form submissions/run (rate limiter). |
 | Vercel CLI | `npx vercel` (device-code login, `vercel link` to cret0rs-projects/lawnmastersv5-website). Sensitive env values pull as EMPTY strings — dashboard is the source of truth for secrets. |
 | Supabase | No CLI wired — migrations are copy-paste into the Dashboard SQL Editor. |
 | OS | Windows 11 · PowerShell 5.1 primary (no `&&`; use `;` + `if ($?)`) · Git Bash available · Norton 360 present (three known interference modes — GOTCHAS #1–3). |

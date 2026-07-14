@@ -2,7 +2,7 @@
 
 ## Running
 1. Dev server FIRST (separate/background process): `npm run dev` — wait for 200 on localhost:3000.
-2. `npm run cypress:run` — 9 specs, **45 tests**, ~1–1.5 min. All must pass before any merge/push (AGENTS.md).
+2. `npm run cypress:run` — 10 specs, **50 tests** (count grows — ALL must pass), ~1–1.5 min. All must pass before any merge/push (AGENTS.md).
 3. Single spec: `npx cypress run --spec "cypress/e2e/<name>.cy.ts"`. Failure screenshots land in `cypress/screenshots/` — read the PNG; it often shows the real problem (e.g., hydration overlay) faster than the log.
 
 ## Hard rules for new tests

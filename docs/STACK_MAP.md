@@ -29,7 +29,7 @@
 
 - **What:** Git remote + deploy trigger.
 - **Where:** github.com/Cret0r/lawnmastersv5-website — user `Cret0r`, default branch `master`.
-- **Branch strategy:** work lands on `master` directly (which deploys!); feature branches used for risky work (pattern: `security/admin-authz-rls-fix` was merged with `--no-ff` after DB prep). Gate before any push: 45/45 Cypress + `tsc --noEmit`.
+- **Branch strategy:** work lands on `master` directly (which deploys!); feature branches used for risky work (pattern: `security/admin-authz-rls-fix` was merged with `--no-ff` after DB prep). Gate before any push: full Cypress suite green (50 tests as of session 14 — count grows) + `tsc --noEmit`.
 - **Connects to:** Vercel (push → deploy). No CI on GitHub yet (roadmap item — Actions for lint/tsc/cypress).
 
 ## 4. DOMAIN — lawnmastersv5.com
@@ -83,7 +83,7 @@
 - **Package manager: pnpm ONLY** (`pnpm add`) — see docs/GOTCHAS.md #4–5. Node 24.x; `npm run <script>` is fine for RUNNING scripts.
 - **Bun:** required ONLY by claude-mem's worker, not the website (`~/.bun/bin/bun.exe`).
 - **Norton 360:** three known interference modes (SSL scanning breaks Claude Code API + claude-mem; "AI Agent Protection" can block file writes) — exceptions must stay configured; docs/GOTCHAS.md #1–3.
-- **Testing:** Cypress 15 — dev server first, then `npm run cypress:run`; 45 tests; max 2 real form submissions/run (rate limiter).
+- **Testing:** Cypress 15 — dev server first, then `npm run cypress:run`; 50 tests (count grows — all must pass); max 2 real form submissions/run (rate limiter).
 
 ## 11. AI TOOLING
 
@@ -138,7 +138,7 @@
 1. **Read** AGENTS.md (the rules — 5 min), then this file, then docs/GOTCHAS.md headlines.
 2. **Access check** — can you reach: GitHub repo (Cret0r/lawnmastersv5-website — the keystone: it also logs you into Vercel and Supabase), Vercel dashboard (cret0rs-projects), Supabase dashboard, GBP (successblueprint90@gmail.com), Hostinger (domain renewal only — DNS lives in Vercel).
 3. **Local boot:** clone → `pnpm install` → get env values from Vercel dashboard into `.env.local` → `npm run dev` → localhost:3000 loads.
-4. **Verify the safety net:** `npx tsc --noEmit` clean → `npm run cypress:run` = 45/45 (dev server running first).
+4. **Verify the safety net:** `npx tsc --noEmit` clean → `npm run cypress:run` = ALL passing (50 tests as of session 14; dev server running first).
 5. **Know the blast radius:** any push to `master` IS a production deploy. DB changes are manual SQL in Supabase, run BEFORE pushing dependent code.
 6. **Check state:** HANDOFF.md (latest session + open items) and docs/ROADMAP.md (what's pending; the 🔴 table is what's blocking already-shipped features).
 7. **Business context** when needed: docs/BUSINESS_PLAYBOOK.md (pitch-ready) and docs/GROWTH.md (strategy + the two strategic truths).

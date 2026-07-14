@@ -27,4 +27,4 @@ description: The safe way to start any new work or feature in this project so no
 - Fixed top-of-page elements must join the `--announcement-height` offset system (GOTCHAS #17)
 
 ## Finishing
-Commit with a clear message + the `Co-Authored-By: Claude` trailer. Push only after 45/45. Confirm the Vercel deploy went green. End the session with `/close-session`. New decision made? → docs/DECISIONS.md. New failure mode hit? → docs/GOTCHAS.md.
+Commit with a clear message + the `Co-Authored-By: Claude` trailer. Push only after the FULL Cypress suite passes (50 tests as of session 14 — the count grows). Confirm the Vercel deploy went green. End the session with `/close-session`. New decision made? → docs/DECISIONS.md. New failure mode hit? → docs/GOTCHAS.md.

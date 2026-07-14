@@ -27,7 +27,7 @@
 | Validation | Zod | `quoteSchema` + `contactSchema` in form actions |
 | Rate limiting | In-memory (lib/rate-limit.ts) | 3 req/IP/15 min, shared across BOTH form actions |
 | Images | `unoptimized: true` + sharp pre-generation | Hero variants via `scripts/generate-hero-images.mjs` + `<picture>` art direction |
-| E2E testing | Cypress — **45 tests** | 9 specs; dev server must be running first |
+| E2E testing | Cypress — **50 tests** | 10 specs; dev server must be running first |
 | Linting | ESLint 9 flat config | `eslint.config.mjs` |
 
 ---
@@ -110,7 +110,7 @@ landscaping-business-website/
 │   ├── generate-hero-images.mjs  # sharp — regenerates public/hero/ variants
 │   └── development|testing|monitoring|maintenance|automation/*.sh
 │
-├── cypress/e2e/                  # 9 specs, 45 tests (see § 8)
+├── cypress/e2e/                  # 10 specs, 50 tests (see § 8)
 ├── docs/                         # ★ Knowledge base: playbook, SOPs, decisions, gotchas, growth, roadmap, tooling
 ├── .claude/commands/close-session.md  # /close-session slash command (end-of-session doc sync)
 ├── middleware.ts                 # Edge protection for /admin/* (cookie vs SESSION_TOKEN)
@@ -214,28 +214,34 @@ Because `images.unoptimized` is on (v0 legacy + Vercel image-transform cost), ne
 
 - Root JSON-LD (`app/layout.tsx`): `["LocalBusiness","HomeAndConstructionBusiness"]` with `@id: https://www.lawnmastersv5.com/#business` — city/service schema references this. (`LandscapeService` was removed — not a real schema.org type.) All URLs derive from `BUSINESS.domain` = the primary **www** host (the apex 307s to it — GOTCHAS #33).
 - `/services`: `ItemList` of 7 `Service` objects, provider-linked to the business `@id`.
-- City pages: `Service` schema with `areaServed` City + `Offer`s from the pricing plans; canonical URLs; `generateStaticParams`.
-- `app/sitemap.ts` + `app/robots.ts` (admin disallowed).
-- Footer links to city pages for crawlability.
-- NOT yet done: AggregateRating (blocked on real reviews), FAQ schema, OG images — see docs/ROADMAP.md.
+- City pages: `Service` schema with `areaServed` City + `Offer`s from the pricing plans, PLUS `FAQPage` schema from per-city Q&As (`lib/city-pages.ts` → `faqs`) rendered as question-phrased headings; canonical URLs; `generateStaticParams`.
+- `/faq`: dedicated FAQ page — 12 Q&As with `FAQPage` schema; one data array drives both the page and the schema. Linked from nav + footer.
+- `/quote`: `HowTo` schema mirroring the visible "What Happens Next" 4 steps (same array drives both).
+- **Canonical tags on every page** (`alternates.canonical`, resolved against `metadataBase` = www) — home, about, services, gallery, contact, quote, faq, service-policies, summer, city pages.
+- Root `openGraph` + `twitter` metadata + `public/og-image.jpg` (1200×630).
+- Founder/E-E-A-T schema is WIRED but dormant — activates when the owner sets `ownerFirstName` in `lib/business-info.ts` (never ship a made-up name).
+- `app/sitemap.ts` (includes /faq) + `app/robots.ts` (admin disallowed).
+- Footer links to city pages + /faq for crawlability.
+- NOT yet done: AggregateRating (blocked on real reviews) — see docs/ROADMAP.md.
 
 ---
 
 ## 8. TESTING
 
-**45 Cypress tests, 9 specs** — `npm run cypress:run` (dev server must already be running on :3000).
+**50 Cypress tests, 10 specs** — `npm run cypress:run` (dev server must already be running on :3000).
 
 | Spec | Tests | Covers |
 |---|---|---|
 | admin.cy.ts | 5 | Login page smoke + redirect |
 | admin-auth.cy.ts | 3 | Wrong creds rejected, forged cookie redirected, password masked |
 | city-pages.cy.ts | 5 | 3 city pages + 404 + CTAs |
-| contact.cy.ts | 5 | Fields + 1 REAL submission |
-| form-validation.cy.ts | 6 | Client-side validation (never hits server) |
+| contact.cy.ts | 5 | Quick-lead flow + 1 REAL submission |
+| faq.cy.ts | 5 | FAQ headings, FAQPage schema, nav link, CTA |
+| form-validation.cy.ts | 6 | Client-side validation on both quick-lead flows (never hits server) |
 | homepage.cy.ts | 4 | Hero content + CTAs |
 | mobile-nav.cy.ts | 5 | Hamburger aria states, drawer, outside-tap close, floating CTA |
 | navigation.cy.ts | 5 | Desktop nav links |
-| quote.cy.ts | 7 | Fields + 1 REAL submission |
+| quote.cy.ts | 7 | Quick-lead flow, HowTo schema + 1 REAL submission |
 
 **Hard constraint:** the suite makes exactly 2 real form submissions per run against a 3-per-IP-per-15-min rate limit. New tests must NOT add server-side submissions — assert client-side `:invalid` state instead.
 

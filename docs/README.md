@@ -25,7 +25,7 @@
 | `sops/` | Step-by-step procedures — one file per repeatable task |
 
 ## SOPs
-deploying-changes · adding-a-dependency · database-migrations · hero-images · adding-a-city-page · updating-business-info · running-cypress · closing-a-session · failed-vercel-deploy · claude-mem-troubleshooting · gallery-migration
+deploying-changes · adding-a-dependency · database-migrations · hero-images · adding-a-city-page · updating-business-info · running-cypress · closing-a-session · failed-vercel-deploy · claude-mem-troubleshooting · gallery-migration · google-search-console
 
 ## Maintenance rule
 When a session makes a decision → add it to DECISIONS.md. Hits a new failure mode → GOTCHAS.md. Ships/creates a pending item → ROADMAP.md. `/close-session` handles HANDOFF.md; these files are the layer above it.

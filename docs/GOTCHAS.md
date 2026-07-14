@@ -30,7 +30,7 @@
 
 ## Testing
 
-13. **Cypress needs the dev server already running** on localhost:3000 (`npm run dev` first). Otherwise all 45 tests fail with connection refused.
+13. **Cypress needs the dev server already running** on localhost:3000 (`npm run dev` first). Otherwise every test fails with connection refused.
 14. **The rate limiter counts requests BEFORE validation** — 3/IP/15min shared across BOTH forms. The suite budget is exactly 2 real submissions per run. New tests must use client-side `:invalid` assertions, never real submissions. The two submission tests accept "Too many requests" as a pass for repeated local runs.
 15. **`next build` and `next dev` share `.next/`** — running a build while the dev server is up usually survives but can corrupt dev state; restart the dev server if pages act strange after a build.
 16. **Dev-mode hydration recovery on /admin/login briefly disables the form** — React re-renders the server-action form shortly after load; typing during that window fails. The admin-auth spec waits 1.5 s for it. Dev-only noise; harmless in production.

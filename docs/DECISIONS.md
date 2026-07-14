@@ -78,6 +78,15 @@
 **Implementation choices:** the table's NOT NULL name/email/address columns get readable sentinels ("Quick"/"Lead"/"not-provided") — deliberately NOT a schema relaxation (no migration, no admin changes). `submitContactMessage` was deleted (an unused exported server action is a public endpoint for no benefit); historic contact_messages rows remain visible in the admin Messages tab.
 **Don't:** add fields back to the flow without conversion evidence — every extra field costs leads (owner directive).
 
+### /quote rebuilt as the quick-lead flow; multi-field form deleted (session 14 — owner directive)
+**Decision:** /quote now uses the same 2-step conversational flow as /contact, via the shared `components/quick-lead-form.tsx` (a `source` prop tags which page the lead came from). The old multi-field quote form and its `submitQuote` server action were DELETED.
+**Why:** multi-field forms cause abandonment (same reasoning as the session-11 contact decision); one shared component means one place to maintain validation/copy; the deleted action was an unused public endpoint once nothing called it. The "What Happens Next" explainer survived as a 4-step section that also emits HowTo schema.
+**Consequence:** name/email/address are no longer collected on ANY public form — every lead is service+phone, and the owner asks for the address by text. Don't add fields back without conversion evidence (standing owner rule).
+
+### Homepage v0-scaffold sections removed (session 14 — owner directive)
+**Decision:** deleted the mid-page "Your Landscape, Perfected" second hero and the "Ready to transform your outdoor space?" pre-footer CTA banner from app/page.tsx.
+**Why:** redundant second hero with generic copy, off the transformation positioning; the page already carries multiple CTAs. `/tree-shrub-care-pruning.jpg` lost its homepage usage and was reused as the /faq hero.
+
 ### Placeholder reviews stay until real ones exist; AggregateRating schema blocked
 **Decision:** The 3 generic reviews remain (better than an empty section) but AggregateRating/star schema must NOT be added until real reviews replace them.
 **Why:** Schema markup on fabricated reviews risks a Google manual action against the whole domain. Reviews are also the gating item for Local Services Ads.

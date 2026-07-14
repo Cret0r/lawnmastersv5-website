@@ -11,7 +11,7 @@ The standard here: a fix is done when you have OBSERVED the corrected behavior i
 1. `npx tsc --noEmit` — floor, not proof.
 2. **Start the app and hit the real surface:** `npm run dev` (background), wait for a 200 on :3000, then `curl` the affected route — check status code AND grep the response for the content that proves the change ("expected string FOUND / MISSING" style). For redirects, check the code + Location (e.g., /spring-rush → 308 → /summer).
 3. **Exercise the flow, not just the page:** forms → run the relevant Cypress spec; interactions (drawers, sliders, multi-step flows) → the spec that clicks through them. For visual/layout claims, a Cypress failure screenshot or the claude-in-chrome browser is observation; your mental model is not.
-4. **Full suite** (`npm run cypress:run`, 45 tests) before any commit that touches product code.
+4. **Full suite** (`npm run cypress:run`, all ~50 tests) before any commit that touches product code.
 
 ## Project-specific traps that fake you out
 - **Cold-compile flake:** the first suite run against a freshly started dev server can fail on timing (contact submit, drawer animation). Before believing a failure, re-run the failing spec in isolation; before a full run, pre-warm pages with curl. A test that fails cold and passes warm is flake — but a test that fails twice warm is REAL.

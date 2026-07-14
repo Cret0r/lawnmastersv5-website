@@ -18,12 +18,12 @@
 
 **Pending:**
 - 👤 **GBP setup** (see truth #2) — all 7 service categories, 6-city service area, weekly photo uploads, offer posts. ~1 hour. Highest-ROI item in this document.
-- 🔨 City pages for Porterdale, Social Circle, Monroe (template + neighborhood hooks exist).
-- 🔨 FAQ sections + FAQ schema on city pages and /services ("How much does mowing cost in Covington?", "Do you require contracts?").
+- 🔨 City pages for Porterdale, Social Circle, Monroe (template + neighborhood hooks exist — new cities must include `faqs` entries).
+- ✅ FAQ built (July 2026): dedicated /faq (12 Q&As + FAQPage schema, nav+footer linked) AND per-city Q&As with question-phrased headings + FAQPage schema on all city pages. /quote carries HowTo schema. Canonical tags on every page. This was the AEO 3/10 fix.
 - 🔨 Seasonal Georgia content (4–6 guides: pre-emergent timing in Newton County, Bermuda vs Zoysia heights) — compounding long-tail; owner fact-checks agronomy.
 - ✅ Open Graph + Twitter card tags shipped July 2026 (root layout, `public/og-image.jpg` 1200×630). Per-page og:title/description overrides remain 🔨 optional polish.
 - 👤 Citations: consistent NAP on Yelp, Angi, Thumbtack, BBB, Nextdoor Business (~2 hrs, free).
-- 👤 Google Search Console verification + sitemap submission.
+- 👤 Google Search Console verification + sitemap submission — **exact steps ready: docs/sops/google-search-console.md** (TXT record goes in VERCEL DNS, sitemap submitted as the www URL).
 - 🔨(gated) AggregateRating schema — ONLY after real reviews exist. Never on placeholders (manual-action risk).
 
 ## 2. Local & Community Marketing

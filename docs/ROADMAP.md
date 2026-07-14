@@ -15,22 +15,25 @@
 | ~~Set `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL`~~ ✅ **DONE 7/6/2026** | Speed-to-lead email is LIVE — keys were added to Vercel by the owner | Remaining polish: verify lawnmastersv5.com as a Resend sending domain (DNS records go in **Vercel DNS**, not Hostinger) |
 | Google Business Profile buildout | Profile is **verified & approved (7/10/2026)** ✅ — now needs photos, categories, service area, weekly posts; gates the review flywheel and LSA | docs/GROWTH.md § 1 |
 | ★ **Set the GEORGIA price sheet** | Every dollar on the site + docs is Florida-era and known-underpriced for GA lot sizes (weekly likely $150+/mo, ~$50/cut, Refresh tiers $349/$749/$1,499 proposals). Blocks the repricing pass AND the site repositioning below | Owner decides numbers; then edit the pricing locations list below in one pass |
+| **Google Search Console setup** | Nothing tells us what searches the FAQ/city pages are winning until this exists | Follow docs/sops/google-search-console.md exactly (~15 min; TXT record goes in VERCEL DNS) |
+| **Supply your first name** | Unblocks the founder/E-E-A-T schema (already wired, dormant) + a named-owner line on /about | One line: `ownerFirstName` in `lib/business-info.ts` — tell Claude the name and it ships |
 | Ask for a review at every GA job's walk-through | Cold start: zero GA clients — reviews come one job at a time (the old "text the First 15" plan assumed the Florida client list) | Script in docs/NOTEBOOK.md § 5 |
 
 ## 🟠 Engineering — ready to build (Claude can start immediately)
 
 - **★ REPOSITION THE SITE to transformation-first (new top item, session 12)** — homepage + /summer currently sell mowing plans first; the business now leads with Refresh packages (docs/OFFERS.md). Blocked ONLY on owner confirming tier names/prices ($349/$749/$1,499 proposals). Drafted hero: *"Covington's Property Refresh Specialists — we transform overgrown, dirty, and neglected yards into clean, beautiful properties. ✓ Yard Cleanups ✓ Mulch Installation ✓ Pressure Washing ✓ Shrub Trimming ✓ Lawn Maintenance (last, on purpose) — Free On-Site Estimate."* Scope: hero + pricing sections to tier cards, quick-lead flow options already fit, keep maintenance plans as the visible back end, update affected Cypress specs.
 
-- **City pages ×3** — Porterdale, Social Circle, Monroe. Template: `lib/city-pages.ts` + `app/lawn-care/[city]/page.tsx`; neighborhood hooks in BUSINESS_PLAYBOOK § 2. Follow docs/sops/adding-a-city-page.md. Add to sitemap automatically (it maps cityPages).
-- **FAQ sections + FAQPage schema** on city pages + /services. Answer real local queries (cost, contracts, scheduling, Spanish service). Keep answers consistent with service-policies page.
+- **City pages ×3** — Porterdale, Social Circle, Monroe. Template: `lib/city-pages.ts` + `app/lawn-care/[city]/page.tsx`; neighborhood hooks in BUSINESS_PLAYBOOK § 2. Follow docs/sops/adding-a-city-page.md. Add to sitemap automatically (it maps cityPages). **New cities must include 2 unique `faqs` entries** (the interface requires them).
+- ~~**FAQ sections + FAQPage schema**~~ ✅ **DONE (session 14):** dedicated /faq (12 Q&As, FAQPage schema, nav+footer+sitemap) + per-city Q&As with question headings + FAQPage schema + HowTo schema on /quote + canonical tags on every page. Remaining optional: a small FAQ block on /services itself.
 - ~~**Open Graph tags/images**~~ ✅ **DONE (session 13):** root `openGraph` + `twitter` metadata + `metadataBase` + `public/og-image.jpg` (1200×630). Optional polish: per-page og:title/description overrides.
 - **★ SITE-WIDE REPRICING PASS (blocked on the owner's GA price sheet — do it in ONE commit).** Every place a price renders or is declared:
   1. `lib/spring-rush-content.ts` → `hero.subheadline` ("$120/month*") + `pricing.plans` ($90 / $120 / $45–$55) — consumed by BOTH the homepage pricing cards and the /summer mowing-plan cards
   2. `app/page.tsx` → metadata description ("Starting at $120/mo")
   3. `app/layout.tsx` → root metadata description ("Weekly mowing from $120/mo") + `jsonLd.priceRange` ("$45–$120/mo")
   4. `lib/summer-content.ts` → `meta.description` ("from $197"), `pressureWashing.packages` ($197/$250/$400/$300/$1.50-ft), `landscaping.packages` ($300/$150/$250/$125/$125)
-  5. `lib/city-pages.ts` → all three `description` fields ("from $90/mo")
-  6. Docs that quote prices: SUMMER_CAMPAIGN_2026.md, docs/BUSINESS_PLAYBOOK.md § 3, docs/OFFERS.md, docs/NOTEBOOK.md § 3
+  5. `lib/city-pages.ts` → all three `description` fields ("from $90/mo") AND the per-city `faqs` answers (quote $90/$120/$197/$300)
+  6. `app/faq/page.tsx` → the cost answer ($90–$120/$45/$197) + the pressure-washing answer ($197)
+  7. Docs that quote prices: SUMMER_CAMPAIGN_2026.md, docs/BUSINESS_PLAYBOOK.md § 3, docs/OFFERS.md, docs/NOTEBOOK.md § 3
   ⚠️ Prices are owner-locked — do not change any of these until the owner hands over the GA numbers.
 - **Per-visit pricing math on cards** — superseded until repricing: the old "≈ $28/cut" math was Florida-priced and is WRONG for GA. Re-derive from the GA sheet, then ship.
 - **Premium anchor tier card** ("Full Property Care") — needs owner's GA price before shipping.

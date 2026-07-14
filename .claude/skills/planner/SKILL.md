@@ -31,6 +31,6 @@ Every plan must account for:
 6. **Judgment calls made** — list them so the owner can veto.
 
 ## Step 5 — Sanity checks before presenting
-- Would any step break the 45 tests? Which specs need updating alongside?
+- Would any step break the Cypress suite (~50 tests)? Which specs need updating alongside?
 - Does anything in the plan contradict docs/DECISIONS.md or an AGENTS.md rule? Fix the plan, or explicitly call out that you're proposing to change a settled decision and why.
 - Can each step be verified independently? If two steps can only be tested together, merge them.
