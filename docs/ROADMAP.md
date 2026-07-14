@@ -12,9 +12,10 @@
 |---|---|---|
 | Run `scripts/006_create_gallery_items.sql` | Admin Gallery tab uploads fail without the table + bucket | SQL Editor → paste → run → verify queries at file bottom (docs/sops/gallery-migration.md) |
 | Set `NEXT_PUBLIC_SENTRY_DSN` in Vercel | Error tracking is silently off | sentry.io → create Next.js project → copy DSN → Vercel env vars (Prod+Preview) → redeploy |
-| Set `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` | Speed-to-lead emails are silently off — leads wait for an /admin check | Sign up at resend.com **with lawnmastersv5@gmail.com** (onboarding sender only delivers to account owner), create key, set vars, redeploy. Later: verify lawnmastersv5.com domain |
-| Google Business Profile buildout | #1 growth lever, gates the review flywheel and LSA | docs/GROWTH.md § 1 |
-| Send "First 15" review texts | 3 placeholder reviews are hurting trust; blocks AggregateRating schema + LSA | docs/GROWTH.md § 4 |
+| ~~Set `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL`~~ ✅ **DONE 7/6/2026** | Speed-to-lead email is LIVE — keys were added to Vercel by the owner | Remaining polish: verify lawnmastersv5.com as a Resend sending domain (DNS records go in **Vercel DNS**, not Hostinger) |
+| Google Business Profile buildout | Profile is **verified & approved (7/10/2026)** ✅ — now needs photos, categories, service area, weekly posts; gates the review flywheel and LSA | docs/GROWTH.md § 1 |
+| ★ **Set the GEORGIA price sheet** | Every dollar on the site + docs is Florida-era and known-underpriced for GA lot sizes (weekly likely $150+/mo, ~$50/cut, Refresh tiers $349/$749/$1,499 proposals). Blocks the repricing pass AND the site repositioning below | Owner decides numbers; then edit the pricing locations list below in one pass |
+| Ask for a review at every GA job's walk-through | Cold start: zero GA clients — reviews come one job at a time (the old "text the First 15" plan assumed the Florida client list) | Script in docs/NOTEBOOK.md § 5 |
 
 ## 🟠 Engineering — ready to build (Claude can start immediately)
 
@@ -22,10 +23,18 @@
 
 - **City pages ×3** — Porterdale, Social Circle, Monroe. Template: `lib/city-pages.ts` + `app/lawn-care/[city]/page.tsx`; neighborhood hooks in BUSINESS_PLAYBOOK § 2. Follow docs/sops/adding-a-city-page.md. Add to sitemap automatically (it maps cityPages).
 - **FAQ sections + FAQPage schema** on city pages + /services. Answer real local queries (cost, contracts, scheduling, Spanish service). Keep answers consistent with service-policies page.
-- **Open Graph tags/images** — root metadata has no `openGraph`; add og:image (brand card or hero), og:title/description per page. Matters for Nextdoor/Facebook sharing (growth channel).
-- **Per-visit pricing math on cards** — "≈ $28/cut" on the weekly plan (springRush.pricing consumers: homepage, /summer, city pages). Highest-leverage copy change identified by the pricing analysis.
-- **Premium anchor tier card** ("Full Property Care") — needs owner's price (~$199–249/mo) before shipping.
-- **"Refresh + Keep" bundle on /summer** (~$297 PW + first month weekly) — needs owner price approval.
+- ~~**Open Graph tags/images**~~ ✅ **DONE (session 13):** root `openGraph` + `twitter` metadata + `metadataBase` + `public/og-image.jpg` (1200×630). Optional polish: per-page og:title/description overrides.
+- **★ SITE-WIDE REPRICING PASS (blocked on the owner's GA price sheet — do it in ONE commit).** Every place a price renders or is declared:
+  1. `lib/spring-rush-content.ts` → `hero.subheadline` ("$120/month*") + `pricing.plans` ($90 / $120 / $45–$55) — consumed by BOTH the homepage pricing cards and the /summer mowing-plan cards
+  2. `app/page.tsx` → metadata description ("Starting at $120/mo")
+  3. `app/layout.tsx` → root metadata description ("Weekly mowing from $120/mo") + `jsonLd.priceRange` ("$45–$120/mo")
+  4. `lib/summer-content.ts` → `meta.description` ("from $197"), `pressureWashing.packages` ($197/$250/$400/$300/$1.50-ft), `landscaping.packages` ($300/$150/$250/$125/$125)
+  5. `lib/city-pages.ts` → all three `description` fields ("from $90/mo")
+  6. Docs that quote prices: SUMMER_CAMPAIGN_2026.md, docs/BUSINESS_PLAYBOOK.md § 3, docs/OFFERS.md, docs/NOTEBOOK.md § 3
+  ⚠️ Prices are owner-locked — do not change any of these until the owner hands over the GA numbers.
+- **Per-visit pricing math on cards** — superseded until repricing: the old "≈ $28/cut" math was Florida-priced and is WRONG for GA. Re-derive from the GA sheet, then ship.
+- **Premium anchor tier card** ("Full Property Care") — needs owner's GA price before shipping.
+- **"Refresh + Keep" bundle on /summer** (PW + first month weekly) — needs owner's GA price before shipping.
 - **Review/referral SMS template bank (EN+ES)** + printable QR review card — deliver as docs or a small /admin reference page.
 - **Georgia Lawn Calendar page** + seasonal upsell SMS templates (retention system, docs/GROWTH.md § 6).
 - **Admin upsell flags** — clients tab: flag e.g. "3+ months active, no PW recorded". Data already in `clients` table.

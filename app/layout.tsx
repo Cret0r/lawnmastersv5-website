@@ -11,9 +11,34 @@ const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const _dmSerif = DM_Serif_Display({ weight: "400", subsets: ["latin"], variable: "--font-dm-serif" })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`https://${BUSINESS.domain}`),
   title: "Lawn Masters V5 — Lawn Care & Landscaping in Covington & Conyers, GA",
   description:
     "Professional lawn care and landscaping in Covington, Conyers, and the greater Georgia area. Weekly mowing from $120/mo. Landscape design, hardscaping, pressure washing, and more. Se Habla Espanol.",
+  openGraph: {
+    type: "website",
+    siteName: BUSINESS.shortName,
+    title: "Lawn Masters V5 — Lawn Care & Landscaping in Covington & Conyers, GA",
+    description:
+      "Professional lawn care, landscaping, and pressure washing in Covington, Conyers, and Newton County, GA. Free estimates. Se Habla Español.",
+    url: `https://${BUSINESS.domain}`,
+    locale: "en_US",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Lawn Masters V5 — lawn care and landscaping in Covington, GA",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lawn Masters V5 — Lawn Care & Landscaping in Covington, GA",
+    description:
+      "Professional lawn care, landscaping, and pressure washing in Covington and Newton County, GA. Free estimates. Se Habla Español.",
+    images: ["/og-image.jpg"],
+  },
   generator: "v0.app",
   icons: {
     icon: [

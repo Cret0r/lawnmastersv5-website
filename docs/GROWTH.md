@@ -21,7 +21,7 @@
 - 🔨 City pages for Porterdale, Social Circle, Monroe (template + neighborhood hooks exist).
 - 🔨 FAQ sections + FAQ schema on city pages and /services ("How much does mowing cost in Covington?", "Do you require contracts?").
 - 🔨 Seasonal Georgia content (4–6 guides: pre-emergent timing in Newton County, Bermuda vs Zoysia heights) — compounding long-tail; owner fact-checks agronomy.
-- 🔨 Open Graph images/tags (currently none — matters for Nextdoor/Facebook link sharing).
+- ✅ Open Graph + Twitter card tags shipped July 2026 (root layout, `public/og-image.jpg` 1200×630). Per-page og:title/description overrides remain 🔨 optional polish.
 - 👤 Citations: consistent NAP on Yelp, Angi, Thumbtack, BBB, Nextdoor Business (~2 hrs, free).
 - 👤 Google Search Console verification + sitemap submission.
 - 🔨(gated) AggregateRating schema — ONLY after real reviews exist. Never on placeholders (manual-action risk).
@@ -48,7 +48,7 @@ Stacks on the existing door-hanger system (weekly targets + neighborhood-specifi
 
 ## 4. Reviews & Referrals (objection-destroyer output)
 
-**Problem:** 3 placeholder reviews actively signal filler; ~13 real clients hold the first 15 reviews in their text history.
+**Problem:** 3 placeholder reviews actively signal filler — and the Georgia client base is ZERO (the ~13 recurring clients were Florida; they can't review the Georgia GBP). Reviews must be earned one Georgia job at a time: the ask happens at every walk-through, at peak wow, starting with job #1.
 
 **Objection map:**
 | Client's hidden belief | Counter |
@@ -57,21 +57,21 @@ Stacks on the existing door-hanger system (weekly targets + neighborhood-specifi
 | "Don't know what to write" | Prompt them: "one line about the crew showing up on time helps" |
 | "Only had one cut, too soon" | Ask after 2nd–3rd cut, or right after a transformation reveal (peak wow) |
 | "Privacy" | "First name + neighborhood is all anyone sees" |
-| Referral: "awkward selling friends" | Two-sided gift reframe: friend gets Starter Cut free, you get $20 — "you're saving them the flaky-lawn-guy lottery" |
+| Referral: "awkward selling friends" | Two-sided gift reframe: friend gets $30 off, you get $30 off — "you're saving them the flaky-lawn-guy lottery" |
 
-**The First 15 plan:** 👤 personally text every current client the direct review link this week (EN+ES); on-site ask + QR card after every high-ticket reveal. **Never incentivize reviews** (Google prohibition — profile-nuke risk); incentivize referrals instead ("Good Neighbor Program": friend gets free Starter Cut, referrer $20, 2 referrals = free month).
+**The First 15 plan (rewritten July 2026 — cold start, no client list to text):** 👤 the review ask is built into EVERY job's walk-through (script in docs/NOTEBOOK.md § 5), EN+ES, link texted on the spot; QR card after every high-ticket reveal. **Never incentivize reviews** (Google prohibition — profile-nuke risk); incentivize referrals instead ("Good Neighbor Program": $30 off both sides — **no free cuts or free months; the owner gives no free service**).
 🔨 buildable: SMS/WhatsApp template bank (EN+ES), printable QR card, site referral section, swapping real reviews into `lib/reviews-data.ts` as they land.
 
 ## 5. Offers & Pricing (pricing-strategy + value-perception output)
 
-**Core finding:** weekly $120/mo ≈ **$28/visit — nearly half** the $45–55 one-time rate, and the site never says so. The pricing grid's premium slot is empty, so $120 reads as the expensive ceiling instead of the sensible middle.
+> ⚠️ **SUPERSEDED IN PART (July 2026):** this analysis was run against the FLORIDA price sheet ($90/$120/$45–55). The owner has since flagged those numbers as **too low for Georgia property sizes** — weekly likely $150+/mo, per-visit ~$50/cut territory, priced per property. The *structural* advice below (anchoring, tiers, per-visit framing) survives; **every dollar figure needs re-running against the GA sheet once the owner sets it.** Also: the old "$28/visit" math is dead — do not resurrect it.
 
 Recommendations (all copy 🔨 buildable; numbers 💰 owner decisions):
-1. **Show per-visit math on the pricing cards** — highest-leverage copy change available.
-2. **Add a premium anchor tier** — "Full Property Care" ~$199–249/mo (weekly mow + quarterly bed touch-up + annual PW) — repositions $120 as the value pick; occasional buyers are $2.4–3k/yr clients.
-3. **Credit-back trial:** one-time cut $59 flat; join a plan within 7 days and it converts into the free Starter Cut.
-4. **Bridge bundle "Refresh + Keep":** driveway PW + first month weekly ≈ $297 — one purchase decision instead of an upsell conversation.
-5. **Price integrity:** hold $90/$120 through the campaign; raise weekly to ~$130 for NEW clients next season once 10+ reviews exist; grandfather current clients (doubles as the retention rate-lock).
+1. **Show per-visit math on the pricing cards** — highest-leverage copy change available (with GA numbers, once set).
+2. **Add a premium anchor tier** — "Full Property Care" (weekly mow + quarterly bed touch-up + annual PW) — repositions the weekly plan as the value pick; occasional buyers become multi-service clients.
+3. **Credit-back trial:** flat one-time cut that converts into the discounted Starter Cut if they join a plan within 7 days (no free cuts — owner rule).
+4. **Bridge bundle "Refresh + Keep":** driveway PW + first month weekly — one purchase decision instead of an upsell conversation. 💰 price it off the GA sheet.
+5. **Price integrity:** grandfather early GA clients at their signup rate (the retention rate-lock); raise for NEW clients once 10+ reviews exist.
 6. **Naming/framing:** make hidden value explicit on every card — no contracts · missed-cut guarantee · same crew every visit · priority scheduling · English/Español.
 
 ## 6. Retention (productize output)
@@ -90,4 +90,4 @@ Recommendations (all copy 🔨 buildable; numbers 💰 owner decisions):
 
 ## Campaign Reference (from SUMMER_CAMPAIGN_2026.md — owner-locked decisions)
 
-Campaign: **Summer Refresh** · Hero: "Your Property Deserves More Than a Mow" · Lead services: Driveway PW from $197, Full Bed Refresh from $300 · Bonus: **The Summer Starter Cut** (free first mow, named, featured — never buried) · Guarantee: "Not satisfied? We redo it. No questions asked." · Honest scarcity: route-density waitlist language · Se Habla Español at hero level · Door hangers: neighborhood-specific front hooks (table in BUSINESS_PLAYBOOK § 2) + mowing-conversion back panel with QR → /summer · Instagram: 8 post concepts + reels, Spanish-first weekly, hashtag bank in campaign doc § 7 · Follow-up cadence: same-day upsell → Day 3 text → Day 10 text → Day 30 re-engage (scripts in campaign doc § 4).
+Campaign: **Summer Refresh** · Hero: "Your Property Deserves More Than a Mow" · Lead services: Driveway PW from $197, Full Bed Refresh from $300 · Bonus: **The Summer Starter Cut** (DISCOUNTED first mow — changed from free July 2026, owner directive; named, featured — never buried) · Guarantee: "Not satisfied? We redo it. No questions asked." · Honest scarcity: route-density waitlist language · Se Habla Español at hero level · Door hangers: neighborhood-specific front hooks (table in BUSINESS_PLAYBOOK § 2) + mowing-conversion back panel with QR → /summer · Instagram: 8 post concepts + reels, Spanish-first weekly, hashtag bank in campaign doc § 7 · Follow-up cadence: same-day upsell → Day 3 text → Day 10 text → Day 30 re-engage (scripts in campaign doc § 4).

@@ -1,7 +1,7 @@
 # MY NOTEBOOK — Lawn Masters V5
 ## Property Refresh Edition
 
-> v2 — rebuilt around the new identity. Copy by hand. Short lines. Real numbers.
+> v3 — corrected July 2026: solo owner-operator, Georgia pricing (no more Florida numbers), no free offers. Copy by hand. Short lines. Real numbers.
 > The business: **we make neglected properties look amazing.**
 > Mulch, cleanups, pressure washing, mowing — those are just HOW.
 
@@ -19,7 +19,7 @@ We make ugly properties look great — in about a day, guaranteed.
 
 **Alternate B (with the back end):**
 We transform neglected yards — cleanup, mulch, pressure washing —
-then keep them looking that way from $90 a month.
+then keep them looking that way.
 
 ---
 
@@ -42,11 +42,14 @@ The neighbor saying "wow." The notice going away.
 
 ## 3. MY OFFERS (quote all three — anchor high)
 
-*(all prices "from" — final number on-site, always)*
+*(no fixed price list — every job is priced per property.
+See the property, then SEND the exact quote to the client.
+The numbers below are "from" starting points, nothing more.)*
 
 **★ CURB APPEAL REFRESH — from $349**
 Front of house only, one visit:
-front beds weeded + mulched · shrubs shaped · walkway + porch rinsed.
+front beds weeded + mulched · shrubs shaped ·
+walkway + porch PRESSURE WASHED.
 Say: "The front of your house looks new by dinner."
 
 **★★ FULL PROPERTY REFRESH — from $749  ← SELL THIS ONE**
@@ -60,10 +63,26 @@ lot cleared + hauled · beds rebuilt with fabric + mulch ·
 full pressure wash (drive, house, walks) · gutters.
 Say: "Neglected to knockout in 48 hours."
 
-**SPECIALS:**
-- HOA Rescue — from $449 — "fixed in 72 hours, photo proof included"
-- Listing-Ready — $497 — for realtors — "photos in 72 hours"
-- Rental turnover — custom quote — landlords/PMs
+**SPECIALS (know exactly what each one includes):**
+
+- **HOA Rescue — from $449** — "fixed in 72 hours, photo proof included"
+  WHAT IT IS: fix ONLY what the HOA notice lists, fast.
+  Includes: mow + edge the violations · overgrowth cut back ·
+  beds weeded/edged where cited · debris hauled ·
+  BEFORE + AFTER photos texted to them to send the HOA.
+  (Anything the notice doesn't mention = quote separately.)
+
+- **Listing-Ready — from $497** — for realtors/sellers — "photos in 72 hours"
+  WHAT IT IS: curb appeal for the listing photos, front-first.
+  Includes: mow + crisp edges · front beds weeded + fresh mulch ·
+  shrubs shaped · driveway + front walk pressure washed ·
+  porch/entry blown clean. Done before the photographer comes.
+
+- **Rental Turnover — custom quote, per property** — landlords/PMs
+  WHAT IT IS: outside ready-to-show between tenants.
+  Includes: full yard cleanup + haul-away · mow + edge ·
+  beds tidied · walkways/patio rinsed.
+  PMs get net-30 and priority scheduling — one PM = repeat volume.
 
 **THE STACK (say it when quoting the Full Refresh):**
 "Cleanup alone runs $150–250. Mulch and beds, $300+.
@@ -78,9 +97,11 @@ You don't pay for a yard you're not proud of."
 
 **THE BACK END (only at the walk-through, never in the ad):**
 "You just put $749 into this yard.
-For about $28 a cut I make sure it never goes back.
-First cut's free — want me to just keep it like this?"
-→ Weekly $120/mo (≈$28/cut) · Biweekly $90/mo · no contract · rate locked
+For about $50 a cut I make sure it never goes back.
+First cut's discounted — want me to just keep it like this?"
+→ Weekly likely $150+/mo — PRICE IT TO THE PROPERTY (GA lots are big;
+   size sets the number, never quote a flat rate blind)
+→ no contract · rate locked while they stay on
 
 ---
 
@@ -91,8 +112,11 @@ Before/after post (FB · GBP · Nextdoor · hanger)
 → walk it → quote 3 tiers
 → Refresh job ($349–1,499)
 → walk-through WOW → ask for review + referral RIGHT THEN
-→ Keep-It Plan ($90–120/mo, first cut free)
-→ seasonal work forever (leaves, gutters, mulch top-up, PW)
+→ Keep-It Plan (priced to the property — $150+/mo weekly territory,
+   discounted first cut when they start)
+→ seasonal ADD-ON JOBS, each quoted and PAID SEPARATELY
+   (leaves, gutters, mulch top-up, PW — extra revenue,
+   NEVER included in the monthly plan)
 
 One customer. Four paydays.
 
@@ -101,8 +125,8 @@ One customer. Four paydays.
 ## 5. MY SCRIPTS
 
 **AT A DOOR / TO A NEIGHBOR:**
-"Hey, I'm [name] — my son and I run Lawn Masters V5, right here in Covington.
-We take yards that have gotten away from people
+"Hey, I'm [name] — I run Lawn Masters V5, right here in Covington.
+I take yards that have gotten away from people
 and make them look brand new — usually in one day.
 Want a free estimate? Takes ten minutes, no pressure.
 And everything's guaranteed: you walk it with me after,
@@ -123,8 +147,7 @@ Spanish: "Una reseña en Google nos ayuda muchísimo — le mando el enlace ahor
 
 **REFERRAL ASK (right after they say wow):**
 "Know a neighbor whose yard's gotten away from them?
-They get $50 off any refresh, and you get $50 off your next service
-— or a free month of maintenance if you're on the plan.
+They get $30 off, and you get $30 off your next service.
 Just text me their name."
 
 **FOLLOW-UPS (unchanged):** Day 3 text · Day 10 text · Day 30 re-engage.
@@ -152,14 +175,15 @@ Second number: maintenance conversions — that's the floor being built.
 
 ## 7. MY MONEY RULES
 
-- Never quote final prices off-site. "From" prices only. Eyes on it first.
+- No fixed price list. "From" prices only until I've SEEN the property — then send the exact quote.
 - Quote three tiers every time. Anchor high. Let them buy down, never up-sell up.
 - Say the guarantee before the price — it's why the price holds.
 - Don't discount — ADD. Price pushback = throw in the gutter clean, keep the number.
-- FREE: the estimate. The Starter Cut (with a plan only). Guarantee fixes. Nothing else.
-- Say NO to: outside my 6 cities · sub-$45 mow shoppers · any job I can't guarantee.
+- FREE: the estimate. Guarantee fixes. NOTHING else — no free cuts, no free months.
+  (The Starter Cut is a DISCOUNTED first cut with a plan — never free.)
+- Say NO to: outside my 6 cities · sub-$50 mow shoppers · any job I can't guarantee.
 - Payment: Zelle. One-times: request texted same day. Plans: monthly. Big jobs ($1k+): half up front.
-- Referrals get rewards ($50/$50). Reviews get ASKED for, never paid for. Never mix them.
+- Referrals get rewards ($30 off, both sides). Reviews get ASKED for, never paid for. Never mix them.
 - Winter (Nov–Feb): sell leaf + gutter packages, protect the maintenance floor, book spring refreshes early.
 
 ---
@@ -167,9 +191,11 @@ Second number: maintenance conversions — that's the floor being built.
 ## 8. MY WHY (only you can write this one)
 
 3–5 lines, your words:
-- Why did we leave Florida and bet everything on Georgia?
+- Why did I leave Florida and bet on building this in Georgia?
 - Three years from now, what does this business pay for that matters most?
-- My son watches how I run this every day. What do I want him to learn?
+- I'm building this young, and I'm building it myself.
+  What do I want to be able to say I did — without anyone's name on it but mine?
+- Who do I want to become by running this?
 
 Write it. Read it on the bad weeks.
 

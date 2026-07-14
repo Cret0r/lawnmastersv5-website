@@ -7,7 +7,7 @@
 
 ## 1. The Business in One Paragraph
 
-**Lawn Masters V5 INC** is a father-and-son property transformation company that relocated from Florida to **Covington, GA (Newton County)** and is building its client base there from zero. The identity (owner-set, July 2026): **"we make neglected properties look amazing."** It sells named high-ticket Refresh packages (cleanup + mulch + pressure washing + shrubs, ~$349–1,499 — see docs/OFFERS.md) as the front end, then converts those customers into **recurring maintenance plans** at the post-job walk-through — the compounding asset and winter floor. Mowing is a method and a retention product, not the pitch. Bilingual (English/Spanish), contract-free, competes on transformation + guarantees, never on being cheapest.
+**Lawn Masters V5 INC** is a property transformation company run by a **young solo owner-operator** who relocated from Florida to **Covington, GA (Newton County)** and is building his client base there from zero. (His father works full-time at Gaylor Electric and may help on weekends only — in Florida the dad's name/phone were on the business because the owner was a minor; that arrangement does not carry to Georgia. **The son runs this business.**) The identity (owner-set, July 2026): **"we make neglected properties look amazing."** It sells named high-ticket Refresh packages (cleanup + mulch + pressure washing + shrubs, ~$349–1,499 — see docs/OFFERS.md) as the **PRIMARY income engine**, then converts those customers into recurring maintenance plans at the post-job walk-through — the retention floor, deliberately **secondary** (the owner does not want to be stuck mowing long-term). Bilingual (English/Spanish), contract-free, competes on transformation + guarantees, never on being cheapest.
 
 | Fact | Value |
 |---|---|
@@ -18,8 +18,8 @@
 | Facebook | profile.php?id=61590265813532 |
 | Google Business Profile | Georgia/Covington listing, owned by successblueprint90@gmail.com (⚠️ same account owns the old Orlando profile — GOTCHAS #30) |
 | Site | lawnmastersv5.com |
-| Crew | Father & son (owner-operated) |
-| Experience | 5+ years, 130+ projects (from Florida years) |
+| Crew | Solo owner-operator (father may help weekends only — he works full-time elsewhere) |
+| Experience | 3+ years, 50+ projects (from Florida years) |
 | Languages | English + Spanish ("Se Habla Español" is a deliberate competitive moat) |
 
 ---
@@ -42,16 +42,17 @@ Neighborhood intelligence (from campaign research):
 
 ## 3. The Business Model — Two Engines
 
-### Engine 1: High-ticket one-time jobs (cash now)
+> **Hierarchy (owner-set, July 2026): Engine 1 is the PRIMARY income goal. Engine 2 is deliberately SECONDARY** — the owner does not want to be stuck mowing long-term. Maintenance exists as the floor and the retention asset, not the ambition.
+
+### Engine 1: High-ticket one-time jobs (PRIMARY — cash now)
 - Pressure washing: Driveway from $197 (lead service — fastest close, best before/after photo), House exterior from $250, Full property from $400, Roof soft wash from $300, Fence from $1.50/ft
 - Landscaping: Full Bed Refresh from $300 (second lead — buyers who invest in beds convert to mowing), Basic cleanup from $150, Mulch & barrier from $250, Shrub trim from $125, Gutter cleaning from $125, Full property = custom
-- **Pricing rule: everything is a STARTING price. Final price is always quoted on-site. Never quote final prices remotely.**
+- **Pricing rule: everything is a STARTING price. There is no fixed price list — every job is priced per property, and the exact quote is sent to the client after seeing the property. Never commit to a final number sight-unseen.**
 
-### Engine 2: Recurring mowing (the asset)
-- Biweekly $90*/mo (2 visits) · Weekly $120*/mo (3–4 visits, the highlighted plan) · One-time cut $45–55*
-- Weekly plan ≈ $28/visit vs $45–55 one-time — the strongest under-communicated value fact in the business
+### Engine 2: Recurring maintenance (SECONDARY — the floor)
+- ⚠️ **PRICING FLAGGED FOR GEORGIA REPRICING (July 2026):** the $90 biweekly / $120 weekly / $45–55 one-time numbers are **Florida-era and too low for Georgia property sizes** (GA lots are much larger). Weekly likely lands **$150+/mo**, per-visit in **~$50/cut territory**, both scaling with property size. The old "≈$28/visit" math is WRONG for Georgia — do not use it in any pitch or copy. Final numbers are an owner decision; the live site still shows the old prices until the owner confirms (see docs/ROADMAP.md repricing item).
 - **No contracts, cancel anytime** — a core promise, also the answer to the #1 objection
-- LTV math: one weekly client ≈ $1,440/year. 23 clients ≈ $2,400+/mo recurring.
+- LTV math needs re-running once GA prices are set (at $150/mo weekly, one client ≈ $1,800/year).
 
 ### The bridge between them: route density
 The unit economics depend on **multiple clients per street**, not scattered one-offs. Every marketing decision filters through: *does this add stops to an existing route?* This is why door hangers, yard signs, and neighbor referrals beat broad-radius digital ads (see docs/GROWTH.md § paid ads).
@@ -69,10 +70,10 @@ Key framing: mowing is never pitched as a separate sale — it's positioned as *
 
 ## 4. The Offer Architecture (Hormozi-derived)
 
-- **The Summer Starter Cut** — the named bonus: first mowing cut FREE ($45–55 value) when signing up for any plan after booking a service. Costs <3% of first-year LTV; the single most powerful conversion lever. Always use its name — named bonuses feel like products, unnamed discounts feel like margin.
+- **The Summer Starter Cut** — the named bonus: a **DISCOUNTED first cut** when signing up for any plan after booking a service. ⚠️ Changed from "free" July 2026 — **the owner never committed to a free first cut**; the exact discount amount is his call. Always use the bonus name — named bonuses feel like products, unnamed discounts feel like margin. Do not write "free first cut" anywhere.
 - **High-ticket guarantee:** "Not satisfied? We come back and redo the problem area at no charge. No questions asked. Your property looks right or we make it right."
 - **Mowing guarantee:** "If we ever miss a scheduled service without notice, your next cut is 100% free."
-- **Referral:** $20 off per referred friend; 2 friends = free cut. (Growth plan proposes formalizing as a two-sided "Good Neighbor Program" — friend gets the Starter Cut free.)
+- **Referral:** $30 off per referred neighbor, two-sided (the friend gets $30 off their first service too). No free-cut or free-month milestones — the owner gives no free service, period (July 2026 correction).
 - **Honest scarcity:** "We're building our Newton County summer route now. Once your area fills, wait times increase." This is TRUE (route density is a real capacity constraint) — keep it honest, never invent fake countdowns.
 
 ## 5. Target Customer
@@ -97,16 +98,16 @@ Homeowners in Newton County suburbs who: (a) just watched their property get awa
 
 | Strength | Weakness |
 |---|---|
-| Working lead capture + admin CRM | Only 3 PLACEHOLDER reviews on site; near-zero Google review base |
-| Two strong guarantees + named bonus | Google Business Profile not (verified as) built out — the #1 gap |
-| Bilingual moat | ~13 recurring clients — route density still forming |
-| Campaign plan with weekly targets | Speed-to-lead email built but NOT live (Resend key pending) |
-| City SEO pages + valid schema | No real Newton County before/after photos on /summer yet |
+| Working lead capture + admin CRM | Only 3 PLACEHOLDER reviews on site; zero Google reviews on the new GA profile |
+| Two strong guarantees + named bonus | GBP is verified & approved (7/10/2026) ✅ but still needs buildout: photos, posts, categories |
+| Bilingual moat | **ZERO Georgia clients — true cold start.** (The ~13 recurring clients were FLORIDA; they did not carry over) |
+| Speed-to-lead email LIVE (Resend keys set in Vercel 7/6/2026) ✅ | Solo capacity: one operator most days caps jobs/week |
+| City SEO pages + valid schema | Real Newton County before/after photos: at least one real GA job so far (the owner's own property), more being photographed |
 
-Growth targets (campaign doc): 23–24 recurring clients by week 6, $3–4k/mo combined revenue by month 2.
+Growth targets (campaign doc): 23–24 recurring clients by week 6, $3–4k/mo combined revenue by month 2 — ⚠️ written pre-repositioning; the scorecard that matters now is in docs/NOTEBOOK.md § 6 (average job value first).
 
 ---
 
 ## 8. The Pitch (if you had to sell this tomorrow)
 
-"We're a father-and-son crew based right here in Covington. We do the one-time stuff — pressure washing, cleanups, mulch — and guarantee it: if it's not right, we come back free. Most folks then have us keep the yard up weekly. It's about $28 a cut on the weekly plan, no contract, and if we ever miss your cut without telling you, the next one's free. First cut's free when you start a plan. We speak Spanish too. We're building our route in this neighborhood now — once it fills, it fills."
+"I run Lawn Masters V5, right here in Covington. I take yards that have gotten away from people — cleanup, mulch, pressure washing — and make them look new, usually in a day. And it's guaranteed: when I'm done we walk the property together, and anything you don't love I fix on the spot, free. Most folks then have me keep the yard up on a plan — priced to your property, no contract, and your first cut's discounted when you start. If I ever miss a scheduled cut without telling you, the next one's free. Hablamos español. I'm building my route in this neighborhood now — once it fills, it fills."

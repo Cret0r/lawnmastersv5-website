@@ -11,7 +11,7 @@ import { BUSINESS } from "@/lib/business-info"
 export const metadata: Metadata = {
   title: "About Lawn Masters V5 — Local Lawn Care in Covington, GA",
   description:
-    "Family-owned lawn care company serving Covington, GA and surrounding areas. Reliable, affordable, and bilingual. Learn more about Lawn Masters V5.",
+    "Locally owned and operated lawn care company serving Covington, GA and surrounding areas. Reliable, affordable, and bilingual. Learn more about Lawn Masters V5.",
 }
 
 export default function AboutPage() {
@@ -78,10 +78,10 @@ export default function AboutPage() {
                     Lawn Masters V5 started with a simple goal: provide reliable, high-quality lawn care that homeowners can count on.
                   </p>
                   <p>
-                    What began as a small mowing operation has grown into a trusted local service helping homeowners maintain clean, healthy, and great-looking outdoor spaces.
+                    The business was built in Florida, where a small mowing operation grew job by job into a trusted local service. In 2026 we relocated to Covington, Georgia, and we&apos;re earning that same trust here in Newton County — one property at a time.
                   </p>
                   <p>
-                    With 5+ years of experience in lawn and property care, we understand what it takes to keep Georgia lawns looking their best through every season.
+                    Lawn Masters V5 is owner-operated: the person who quotes your property is the person who shows up and does the work. With 3+ years of hands-on experience in lawn and property care, we understand what it takes to keep a yard looking its best through every season.
                   </p>
                   <p>
                     From routine mowing and edging to driveway pressure washing and exterior cleaning, every job is completed with the same focus on detail, reliability, and customer satisfaction.

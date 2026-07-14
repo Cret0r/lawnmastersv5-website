@@ -64,3 +64,9 @@
 ## Forms / validation
 
 31. **HTML `pattern` attributes compile with the regex `v` flag** — `(`, `)` and some punctuation inside character classes must be backslash-escaped or the browser SILENTLY IGNORES the entire pattern (no error shown; the validation just doesn't happen). Bit the quick-lead phone field once: `[\d\s()+.-]` dead, `[\d\s\(\)\+\.\-]` works. Always test that invalid input is actually BLOCKED, not just that the attribute exists.
+
+## Business facts / data hygiene
+
+32. **Florida-era facts masquerade as Georgia facts.** The business relocated mid-2026, and docs/copy written from old materials repeatedly presented FL history as GA reality: "~13 recurring clients" (FL — GA started at ZERO), inflated stats (130+/2,500+ projects, 5+ years), FL prices ($90/$120/mo — too low for larger GA lots), the dad's name fronting the business (only because the owner was a minor in FL). A session-13 correction pass fixed all known instances (docs/DECISIONS.md "The Great Correction"), but generated docs (output/HORMOZI_SUMMER_OFFER.md) still contain stale numbers behind warning banners. **When quoting any business fact, source it from docs/BUSINESS_PLAYBOOK.md — not from campaign docs, generated analyses, or old session notes.**
+
+33. **The apex domain 307-redirects to www — SEO audit tools that don't follow redirects report FALSE negatives.** `lawnmastersv5.com` returns a 15-byte 307 to `www.lawnmastersv5.com`; a 7/11/2026 audit claimed "no structured data on any page" when the schema was fine (verified live: JSON-LD renders on www homepage + /services). Always verify against the FINAL url (`curl -L`). Related real inconsistency: `BUSINESS.domain` is the apex, so schema/sitemap/OG URLs point at the redirecting apex while www is canonical in Vercel — flagged for an owner decision (make apex primary in Vercel, or switch BUSINESS.domain to www).

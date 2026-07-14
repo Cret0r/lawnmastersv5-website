@@ -45,7 +45,7 @@ export default function ServicesPage() {
         "Transform your property with custom landscape designs that reflect your style and enhance your home's curb appeal. From concept to completion, we handle every detail.",
       features: [
         "Custom design consultations",
-        "3D landscape visualization",
+        "Bed layout and border design",
         "Plant selection for your climate zone",
         "Complete garden bed installation",
         "Mulching and soil amendment",
@@ -55,7 +55,7 @@ export default function ServicesPage() {
       icon: TreePine,
       title: "Tree & Shrub Care",
       description:
-        "Healthy trees and shrubs are the backbone of any great landscape. Our certified arborists provide expert care to keep your plants thriving and looking their best.",
+        "Healthy trees and shrubs are the backbone of any great landscape. We provide hands-on trimming, shaping, and care to keep your plants thriving and looking their best.",
       features: [
         "Professional pruning and shaping",
         "Tree and stump removal",
@@ -153,7 +153,7 @@ export default function ServicesPage() {
           <span className="text-primary text-sm font-semibold uppercase tracking-wider mb-3 inline-block">What We Offer</span>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif text-primary-foreground mb-6 text-balance">Our Services</h1>
           <p className="text-lg text-primary-foreground/80 max-w-3xl mx-auto text-balance leading-relaxed">
-            From routine lawn maintenance to exterior cleaning and property upkeep, Lawn Masters V5 serves Covington, GA and Newton County with 5+ years of experience.
+            From routine lawn maintenance to exterior cleaning and property upkeep, Lawn Masters V5 serves Covington, GA and Newton County with 3+ years of hands-on experience.
           </p>
         </div>
       </section>

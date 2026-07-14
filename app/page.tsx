@@ -417,22 +417,22 @@ export default function Home() {
             <div className="text-center flex items-center justify-center gap-3">
               <CheckCircle className="w-5 h-5 text-primary-foreground/80" />
               <div>
-                <span className="text-2xl sm:text-3xl font-bold">130+</span>
-                <span className="text-sm ml-2 text-primary-foreground/80">Local Projects Completed</span>
+                <span className="text-2xl sm:text-3xl font-bold">80+</span>
+                <span className="text-sm ml-2 text-primary-foreground/80">Projects Completed</span>
               </div>
             </div>
             <div className="text-center flex items-center justify-center gap-3">
               <Clock className="w-5 h-5 text-primary-foreground/80" />
               <div>
-                <span className="text-2xl sm:text-3xl font-bold">5+</span>
+                <span className="text-2xl sm:text-3xl font-bold">3+</span>
                 <span className="text-sm ml-2 text-primary-foreground/80">Years Experience</span>
               </div>
             </div>
             <div className="text-center flex items-center justify-center gap-3">
               <Award className="w-5 h-5 text-primary-foreground/80" />
               <div>
-                <span className="text-2xl sm:text-3xl font-bold">100%</span>
-                <span className="text-sm ml-2 text-primary-foreground/80">Satisfaction Guaranteed</span>
+                <span className="text-2xl sm:text-3xl font-bold">Guaranteed</span>
+                <span className="text-sm ml-2 text-primary-foreground/80">Not right? We redo it free</span>
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 # Lawn Masters V5 Website — AI Handoff Document
-> Last updated: July 6, 2026 (session 8)
+> Last updated: July 13, 2026 (session 13 — the correction/audit pass)
 > Rule: Update this document at the end of every session before pushing.
+> ⚠️ For CURRENT business facts (owner identity, stats, pricing status) always use docs/BUSINESS_PLAYBOOK.md — older session entries below may reference corrected facts (father-son framing, 5+ years/130+ projects, free Starter Cut, $90/$120 FL pricing). See docs/DECISIONS.md "The Great Correction".
 
 ---
 
@@ -265,6 +266,8 @@ CLAUDE.md                 Points to AGENTS.md
 - **[Session 8]** `/close-session` slash command created (`.claude/commands/close-session.md`) — automates end-of-session doc sync: HANDOFF.md always, ARCHITECTURE/AGENTS/SCRIPTS/README only if affected, then commit + push
 - **[Session 8]** SCRIPTS.md backfilled — documented `005_fix_rls_scoping.sql` and `generate-hero-images.mjs` (missed in sessions 6–7), fixed two stale `ignoreBuildErrors` notes
 - **[Session 8]** AGENTS.md updated — phone/cities rules now point to `lib/business-info.ts` as the single canonical location, pnpm-only dependency rule added, `/close-session` referenced in the context-preservation rule
+- **[Sessions 9–12]** (documented in /docs, not itemized here): /docs knowledge base created (BUSINESS_PLAYBOOK, DECISIONS, GOTCHAS, GROWTH, ROADMAP, TOOLING, STACK_MAP, NOTEBOOK, OFFERS + 11 SOPs); ARCHITECTURE.md rewritten; SEO overhaul (city pages ×3, sitemap, robots, Service schema); admin gallery upload system (006 migration pending); Cypress expanded 26→45 tests; announcement-bar/nav offset fix; Georgia GBP review link corrected (was Florida's); quick-lead 2-step contact flow; 5 project skills created; transformation-first repositioning (docs/OFFERS.md)
+- **[Session 13]** **THE CORRECTION PASS (owner-directed):** fixed five classes of doc/copy error — (1) owner identity: he's the SON, a young SOLO operator (dad = weekends at most; FL had dad's name on it only because owner was a minor) — swept all docs/copy/scripts; (2) honest stats: 3+ yrs (not 5+), 80+ projects on homepage (not 130+), 40+ properties on gallery (not 2,500+), "100% satisfaction" → redo-guarantee wording, "certified arborists" + "3D visualization" removed from /services; (3) FL≠GA: zero GA clients recorded everywhere (~13 were Florida), GBP marked verified (7/10/2026), Resend marked LIVE (keys set 7/6/2026), real GA before/after status corrected; (4) no free offers: Starter Cut → DISCOUNTED first cut everywhere incl. live /summer copy, referral → $30/$30 two-sided (no free cuts/months) incl. homepage; (5) FL pricing flagged dead: ~$50/cut / $150+/mo weekly territory pending owner's GA sheet — live cards intentionally unchanged (owner-locked), full repricing-location list in docs/ROADMAP.md. Investigated the 7/11 SEO audit: schema IS live (audit didn't follow the apex→www 307 — GOTCHAS #33); OG tags genuinely missing → added root openGraph/twitter metadata + public/og-image.jpg. New GOTCHAS #32–33; DECISIONS "The Great Correction"; SUMMER_CAMPAIGN_2026.md + output/HORMOZI_SUMMER_OFFER.md carry correction banners; NOTEBOOK v3.
 
 ### IN PROGRESS 🔵
 - **Summer 2026 campaign** — SUMMER_CAMPAIGN_2026.md fully updated with Hormozi analysis
@@ -275,8 +278,9 @@ CLAUDE.md                 Points to AGENTS.md
 
 ### MEDIUM PRIORITY 🟡
 - Add real customer reviews to lib/reviews-data.ts (currently 3 placeholder entries)
-- Update Google Review link in lib/reviews-data.ts to actual business Google My Business URL
+- ~~Update Google Review link~~ ✅ done session 10 — now the Georgia profile (`share.google/AM7DCDpim0yALiqCR`); see GOTCHAS #30 before touching it
 - Consider enabling image optimization: remove `unoptimized: true` from next.config.mjs after compressing image files
+- Full pending list now lives in docs/ROADMAP.md — treat that as authoritative over this section
 
 ---
 
@@ -284,7 +288,7 @@ CLAUDE.md                 Points to AGENTS.md
 
 | Bug | File | Severity | Fix |
 |---|---|---|---|
-| TypeScript errors silently ignored at build | next.config.mjs | Low | `ignoreBuildErrors: true` — don't rely on this |
+| ~~TypeScript errors silently ignored at build~~ | next.config.mjs | — | ✅ Fixed session 7 — `ignoreBuildErrors` removed; TS errors now fail the build |
 
 ---
 
@@ -360,9 +364,11 @@ Sections alternate in this order: `bg-background` → `bg-secondary` → `bg-pri
 | Facebook | facebook.com/profile.php?id=61590265813532 |
 | Google Reviews | Link in lib/reviews-data.ts → googleReviewLink |
 | Language | English + Spanish (Se Habla Español) |
-| Experience | 5+ years |
-| Projects | 130+ completed |
-| Current campaign | Summer Special — weekly lawn service |
+| Crew | Solo young owner-operator (father helps weekends at most — corrected session 13) |
+| Experience | 3+ years (corrected from "5+" — session 13) |
+| Projects | ~50–80 completed, Florida-era (corrected from "130+" — session 13) |
+| GA clients | ZERO at relocation (July 2026) — cold start; the ~13 recurring were Florida |
+| Current campaign | Summer Refresh — transformation-first (see docs/OFFERS.md) |
 
 ### Service Area
 Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe, GA (Newton County)
@@ -375,6 +381,7 @@ Covington, Conyers, Oxford, Porterdale, Social Circle, Monroe, GA (Newton County
 | One-Time Cut | $45–$55* | Per visit |
 
 *Asterisk = pricing may vary based on property size/condition
+⚠️ **These are Florida-era numbers, flagged as too low for Georgia lots (session 13)** — weekly likely $150+/mo, ~$50/cut territory. Live site intentionally unchanged until the owner sets the GA sheet; repricing locations list in docs/ROADMAP.md.
 
 ### Services Offered
 Lawn Care & Mowing, Landscape Design & Installation, Tree & Shrub Care, Hardscaping, Irrigation & Drainage, Seasonal Cleanup, Pressure Washing

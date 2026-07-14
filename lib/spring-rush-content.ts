@@ -117,8 +117,8 @@ export const springRush = {
 
   // — Referral
   referral: {
-    primary: "$20 off your next cut for every friend you send.*",
-    secondary: "Send 2 neighbors, your next cut is free.*",
+    primary: "$30 off your next service for every neighbor you send.*",
+    secondary: "And your neighbor gets $30 off their first service too.*",
   },
 
   // — Service area (homepage compact version)

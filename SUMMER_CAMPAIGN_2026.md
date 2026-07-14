@@ -2,6 +2,13 @@
 > Status: IN PROGRESS — Hormozi analysis complete. Most decisions locked. Remaining blockers: real photos + real reviews.
 > Strategy: Lead with high-ticket landscaping & pressure washing → convert to recurring mowing
 
+> ⚠️ **CORRECTIONS (July 2026 — owner directive; these OVERRIDE anything below):**
+> 1. **Solo owner-operator.** The owner is the SON, running the business alone most days (his father works full-time at Gaylor Electric; weekend help at most). Any "father & son" / "crew" framing below is outdated — do not re-import it into site copy.
+> 2. **The Summer Starter Cut is a DISCOUNTED first cut, never free.** The owner never committed to a free cut. Exact discount = owner's call.
+> 3. **All mowing prices below ($90/$120/$45–55) are Florida-era and too low for Georgia lot sizes** — weekly likely $150+/mo, ~$50/cut territory, priced per property. Do not build anything with the old numbers; wait for the owner's GA price sheet.
+> 4. **The week-by-week mowing totals in § 8 started from 13 Florida clients — the Georgia base is ZERO.** Targets need rebasing.
+> 5. **Referral reward is $30 off, two-sided** (not $20, no free cuts/months).
+
 ---
 
 ## 1. 💡 Campaign Name Options
@@ -89,7 +96,7 @@
 ---
 
 ## 4. 🔄 Conversion Funnel
-> 💡 HORMOZI INSIGHT: The free first mowing cut is the single most powerful conversion lever. A $45–$55 free cut converts a $197 one-time PW customer into a $1,440/year recurring client. It must be named and positioned as a bonus.
+> 💡 HORMOZI INSIGHT (updated July 2026): The DISCOUNTED first mowing cut is the single most powerful conversion lever — it converts a one-time PW customer into a recurring client for a small one-time cost. It must be named and positioned as a bonus. (Originally proposed as free; the owner chose a discount instead.)
 
 *How to turn a $300 pressure wash into a $1,440/year mowing client.*
 
@@ -110,9 +117,9 @@ High-ticket job completed (PW, cleanup, mulch)
 > *"Your yard looks great now — the last thing you want is for the grass to get out of control and undo all this work. We do weekly mowing starting at $120/mo — want us to just keep it up for you? We're already in the neighborhood."*
 
 Variations:
-- *"A lot of our cleanup customers add weekly mowing so they don't have to worry about it. First cut is on us if you sign up today."*
+- *"A lot of our cleanup customers add weekly mowing so they don't have to worry about it. Your first cut's discounted if you sign up today."*
 - *"We can be back next week for your first cut — lock in the price now before the summer route fills up."*
-- *"We guarantee the work — if anything doesn't look right, we come back and fix it at no charge. And if you want to keep the yard looking this good all summer, your first mowing cut is free when you sign up today. We call it the Summer Starter Cut."*
+- *"We guarantee the work — if anything doesn't look right, we come back and fix it at no charge. And if you want to keep the yard looking this good all summer, your first mowing cut is discounted when you sign up today. We call it the Summer Starter Cut."*
 
 **💡 Key principle:** Don't pitch it as a separate sale. Frame it as protecting the investment they just made.
 
@@ -120,12 +127,12 @@ Variations:
 
 ### 🎁 The Summer Starter Cut (Official Bonus Name)
 - Official name: "The Summer Starter Cut"
-- Value: $45–$55 (one full mowing visit)
-- How to offer it: "Sign up for weekly or biweekly mowing today and your first cut is on us — the Summer Starter Cut, free."
+- **What it is (corrected July 2026): a DISCOUNTED first cut — never free.** Exact discount amount = owner decision.
+- How to offer it: "Sign up for weekly or biweekly mowing today and your first cut is discounted — we call it the Summer Starter Cut."
 - Where to feature it:
   - /summer landing page — named bonus card, NOT buried in body text
-  - Door hangers — back panel headline: "Book any service today → get your first mow FREE (The Summer Starter Cut)"
-  - On-site pitch: "We call it the Summer Starter Cut — yours free when you lock in a mowing plan today"
+  - Door hangers — back panel headline: "Book any service today → get your first mow DISCOUNTED (The Summer Starter Cut)"
+  - On-site pitch: "We call it the Summer Starter Cut — a discount on your first cut when you lock in a mowing plan today"
   - Instagram — dedicated post as a conversion hook
 
 ---
@@ -161,7 +168,7 @@ Variations:
 *Sell the transformation first. Mowing is the smart follow-through.*
 
 1. **Hero** — "Your Property Deserves More Than a Mow" + "Se Habla Español" prominently in hero (NOT footer) + 2 CTAs
-2. **Trust bar** — "Father & Son Team · Se Habla Español · Newton County, GA"
+2. **Trust bar** — "Locally Owned & Operated · Se Habla Español · Newton County, GA"
 3. **Transformation System** — 3-step visual: Step 1: Refresh (PW + landscaping) → Step 2: Maintain (mowing) → Step 3: Peace of Mind (guarantees + no contracts)
 4. **Scarcity banner** — "We're building our Newton County summer route now. Once your area fills, wait times increase."
 5. **Pressure Washing Packages** — with satisfaction guarantee callout
@@ -200,7 +207,7 @@ Variations:
 - *"Already got a clean yard? Keep it that way."*
 - Mowing plan cards: Biweekly $90/mo / Weekly $120/mo
 - Missed-cut guarantee callout
-- **The Summer Starter Cut** — First mow FREE when you book any service
+- **The Summer Starter Cut** — First mow DISCOUNTED when you book any service
 - "Not satisfied? We redo it. No questions asked."
 - "Building Newton County routes now — spots are limited"
 - Instagram: @lawnmasters_v5
@@ -239,14 +246,14 @@ Side-by-side: dirty driveway + overgrown beds BEFORE / clean driveway + fresh mu
 **Post 3 — Educational Carousel**
 *"5 signs your Georgia lawn needs a summer cleanup (not just a mow)"* — educates homeowners on bed weeds, mulch breakdown, driveway algae, gutter clogs. Ends with soft CTA. Saves = algorithm boost.
 
-**Post 4 — Crew Credibility**
-Photo or short clip of the crew finishing a job in the summer heat. Caption: *"Father and son. 94°F. Another yard done. Covington, GA."* Humanizes the business, builds trust.
+**Post 4 — Owner Credibility**
+Photo or short clip of the owner finishing a job in the summer heat. Caption: *"94°F. Another yard done. Covington, GA."* Humanizes the business, builds trust — one person doing the work is the story, not a weakness.
 
 **Post 5 — Bilingual Reach**
 Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano? Presupuesto gratis."* English below. Reaches an underserved audience in Newton County.
 
 **Post 6 — The Summer Starter Cut reveal**
-"Book any pressure washing or landscaping job this summer → your first mowing cut is FREE. We're calling it the Summer Starter Cut. Text SUMMER to (407) 600-0301 to claim yours." Reel or graphic. This is a conversion post.
+"Book any pressure washing or landscaping job this summer → your first mowing cut is DISCOUNTED. We're calling it the Summer Starter Cut. Text SUMMER to (407) 600-0301 to claim yours." Reel or graphic. This is a conversion post.
 
 **Post 7 — Scarcity/route density post**
 "We're building our Newton County summer route right now. Once your neighborhood fills — it fills. We can't add more stops without compromising quality. If you're in Covington, Conyers, or Oxford — now is the time." No hard sell. Just honest.
@@ -270,7 +277,7 @@ Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano?
 - **Local:** `#CovingtonGA` `#NewtonCountyGA` `#ConyersGA` `#OxfordGA` `#GeorgiaLawnCare`
 - **High-ticket:** `#PressureWashing` `#LandscapingGA` `#CurbAppeal` `#PropertyCleanup` `#MulchInstall`
 - **Mowing:** `#LawnCare` `#LawnMowing` `#WeeklyLawnService` `#LawnMaintenance`
-- **Brand:** `#LawnMastersV5` `#SeHablaEspanol` `#FatherAndSon` `#SmallBusinessGA`
+- **Brand:** `#LawnMastersV5` `#SeHablaEspanol` `#OwnerOperated` `#SmallBusinessGA`
 
 **Owner decision on content calendar:** [ ]
 
@@ -308,7 +315,7 @@ Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano?
 - **Week 2 — Launch Push:** First 150 door hangers in Covington (Hwy 278 area) + Conyers, post PW before/after reel, follow up on any quotes from Week 1. Use neighborhood-specific door hanger headlines per the table in Section 6. Mention the Summer Starter Cut in every on-site pitch after completing a job.
 - **Week 3 — Content + Conversions:** Post "combo" content, second pass on Week 2 neighborhoods, add Oxford to hanger route, upsell mowing on every completed job. Post the guarantee post on Instagram (Post 8). Post the Summer Starter Cut reveal post (Post 6).
 - **Week 4 — Expand:** Hit Porterdale + Social Circle, post bilingual content, follow up Day 10 texts to Week 2–3 customers, check recurring client count vs target
-- **Week 5 — Referral Push:** Text all new clients referral offer ($20 off next service per friend), post crew credibility content, close open quotes, lighter hanger week
+- **Week 5 — Referral Push:** Text all new clients referral offer ($30 off next service per neighbor, two-sided), post owner credibility content, close open quotes, lighter hanger week
 - **Week 6 — Review:** Count high-ticket jobs completed + recurring clients signed, identify top-converting neighborhoods, decide whether to extend campaign or shift to fall cleanup messaging
 
 ---

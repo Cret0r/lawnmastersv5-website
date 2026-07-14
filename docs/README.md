@@ -15,7 +15,7 @@
 |---|---|
 | `STACK_MAP.md` | Master orientation: every tool/service ("you use THIS for THIS"), access points, connections, env-var registry, cold-start checklist |
 | `OFFERS.md` | The scalable offer architecture: named Refresh tiers with value stacks + guarantees, specialty offers (HOA Rescue, Listing-Ready), the funnel, the high-ticket math, assumptions to validate |
-| `NOTEBOOK.md` | The owner's hand-copyable field notebook (v2, transformation-first): offers, ideal customer, funnel, scripts (EN/ES), weekly scorecard, money rules, pushback lines |
+| `NOTEBOOK.md` | The owner's hand-copyable field notebook (v3 — solo-owner + GA-pricing corrected): offers, ideal customer, funnel, scripts (EN/ES), weekly scorecard, money rules, pushback lines |
 | `BUSINESS_PLAYBOOK.md` | Services, pricing + reasoning, target customer, route-density model, guarantees, Starter Cut bonus, brand voice, bilingual angle |
 | `DECISIONS.md` | Every significant decision + WHY. **Do not reverse these without owner sign-off** |
 | `GOTCHAS.md` | Canonical consolidated gotcha list (Norton ×3, lockfile story, RLS leak lesson, claude-mem, z-index fix, …) |

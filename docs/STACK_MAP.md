@@ -49,10 +49,10 @@
 
 ## 6. EMAIL / NOTIFICATIONS — Resend
 
-- **What:** Transactional email API, called via plain `fetch` in `lib/notify.ts` (no SDK). **Currently DORMANT** (no API key set).
-- **The speed-to-lead flow (once live):** quote or contact form submits → row inserted in Supabase → `sendLeadNotification()` emails the lead's full details + /admin link to `LEAD_NOTIFY_EMAIL` within seconds. Fails soft — email failure never blocks the lead.
-- **Where:** resend.com → **[owner must sign up — use lawnmastersv5@gmail.com; the default onboarding sender only delivers to the account owner's address until lawnmastersv5.com is verified as a sending domain]**.
-- **Activate:** `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` in Vercel + redeploy. Optional `LEAD_NOTIFY_FROM` after domain verification — and note the verification DNS records (TXT/DKIM) go into **Vercel DNS**, not Hostinger (see § 4).
+- **What:** Transactional email API, called via plain `fetch` in `lib/notify.ts` (no SDK). **LIVE — `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` were added to Vercel on 7/6/2026 (owner-confirmed).**
+- **The speed-to-lead flow:** quote or contact form submits → row inserted in Supabase → `sendLeadNotification()` emails the lead's full details + /admin link to `LEAD_NOTIFY_EMAIL` within seconds. Fails soft — email failure never blocks the lead.
+- **Where:** resend.com (account under lawnmastersv5@gmail.com; the default onboarding sender only delivers to the account owner's address until lawnmastersv5.com is verified as a sending domain).
+- **Remaining polish:** verify lawnmastersv5.com as a sending domain, then set optional `LEAD_NOTIFY_FROM` — the verification DNS records (TXT/DKIM) go into **Vercel DNS**, not Hostinger (see § 4).
 - **Why Resend not Twilio:** docs/DECISIONS.md (no phone provisioning/A2P registration; free tier; zero deps).
 
 ## 7. PAYMENTS — Zelle (off-site only)
@@ -119,8 +119,8 @@
 | `SESSION_TOKEN` | Admin cookie value; rotate = update + redeploy | Vercel + .env.local |
 | `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Admin login (fail-closed if unset) | Vercel + .env.local |
 | `NEXT_PUBLIC_SENTRY_DSN` | Enables Sentry (unset = dormant) | Vercel — ⚠️ not yet set |
-| `RESEND_API_KEY` | Enables lead emails (unset = dormant) | Vercel — ⚠️ not yet set |
-| `LEAD_NOTIFY_EMAIL` | Where lead alerts go | Vercel — ⚠️ not yet set |
+| `RESEND_API_KEY` | Enables lead emails | Vercel — ✅ set 7/6/2026 |
+| `LEAD_NOTIFY_EMAIL` | Where lead alerts go | Vercel — ✅ set 7/6/2026 |
 | `LEAD_NOTIFY_FROM` | Optional verified sender | Vercel — optional |
 | `NODE_ENV` | Auto; controls cookie `secure` flag | automatic |
 

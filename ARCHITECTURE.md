@@ -195,7 +195,7 @@ Client form → Server Action
 5. `lib/reviews-data.ts` — reviews (⚠️ 3 placeholders) + Google review link.
 6. `lib/gallery.ts` + DB — dynamic gallery items.
 
-Pricing displayed: Biweekly $90*/mo · Weekly $120*/mo (highlighted) · One-time $45–55* · PW from $197* · Bed refresh from $300*. Asterisk = final price quoted on-site.
+Pricing displayed: Biweekly $90*/mo · Weekly $120*/mo (highlighted) · One-time $45–55* · PW from $197* · Bed refresh from $300*. Asterisk = final price quoted per property. ⚠️ **The mowing prices are Florida-era and known-underpriced for Georgia lots** — a one-pass site-wide repricing is pending the owner's GA price sheet; the full list of price locations is in docs/ROADMAP.md. Do not change any displayed price without it.
 
 ---
 

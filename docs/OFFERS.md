@@ -20,7 +20,7 @@
 
 ## 2. The Front-End Offers (named, tiered, anchored)
 
-*(All prices "from" — final quote on-site, always. Tier names/prices = proposals for owner sign-off.)*
+*(All prices "from" — no fixed price list; every job is priced per property and the exact quote is sent after seeing it. Tier names/prices = proposals for owner sign-off.)*
 
 ### ★ THE CURB APPEAL REFRESH — from $349 *(entry)*
 The front of the house only, done in one visit:
@@ -63,11 +63,11 @@ AND the review/referral/maintenance conversation to happen at peak satisfaction.
 ## 4. The Back End (renamed, retained, non-negotiable)
 
 **THE KEEP-IT-LOOKING-GOOD PLAN** (maintenance, formerly "mowing plans")
-- Weekly from $120/mo · Biweekly from $90/mo · No contracts · Missed-cut guarantee · Rate lock while subscribed
-- **Starter Cut: first cut FREE with any Refresh package** (unchanged — still the conversion lever)
+- ⚠️ **Georgia repricing pending (July 2026):** the old $90/$120 Florida numbers are too low for GA property sizes. Weekly likely **$150+/mo**, per-visit **~$50/cut territory** — always priced to the property, never flat. No contracts · Missed-cut guarantee · Rate lock while subscribed.
+- **Starter Cut: first cut DISCOUNTED with any Refresh package** (changed from "free" July 2026 — the owner gives no free cuts; exact discount = owner's call)
 - Pitched ONLY at the walk-through, as protection: *"You just invested $749 in this yard.
-  For about $28 a cut I make sure it never goes back. First one's free."*
-- The per-visit math ($28 vs $50) lives HERE — at the close, not in the ads.
+  For about $50 a cut I make sure it never goes back. First one's discounted."*
+- The per-visit math lives HERE — at the close, not in the ads. Re-run it once GA prices are final.
 
 ## 5. The Funnel (memorize)
 
@@ -77,7 +77,7 @@ Before/after content (FB + GBP + Nextdoor + hangers)
       → walk property → quote 3 tiers (anchor high)
          → REFRESH JOB ($349–1,499)
             → walk-through wow → review ask + referral ask
-               → Keep-It Plan (from $90/mo, first cut free)
+               → Keep-It Plan (priced to the property, discounted first cut)
                   → seasonal upsells forever (docs/GROWTH.md § 6 calendar)
 ```
 
@@ -86,9 +86,9 @@ One customer. One estimate. Four revenue events.
 ## 6. Positioning
 
 - **For:** properties that got away from someone — busy families, new/elderly homeowners, HOA-notice recipients, sellers, landlords. They spend more and decide faster than price-shopping mow customers.
-- **Not for:** below-$45/cut shoppers, properties outside the 6 cities, "just mow it cheap" (refer them out — they were never the business).
+- **Not for:** below-$50/cut shoppers, properties outside the 6 cities, "just mow it cheap" (refer them out — they were never the business).
 - **One-liner:** "Covington's property refresh specialists — we make neglected properties look amazing, then keep them that way."
-- **Differentiators:** walk-through guarantee said before the quote · 48–72h turnaround · English/Español · father-and-son local, not a franchise.
+- **Differentiators:** walk-through guarantee said before the quote · 48–72h turnaround · English/Español · the owner quotes it AND does the work — local, not a franchise.
 
 ## 7. What changes operationally
 
@@ -99,12 +99,14 @@ One customer. One estimate. Four revenue events.
 | $28/cut in the pitch | Relief in the pitch, math at the close |
 | Homepage sells lawn care | Homepage sells the transformation (roadmap — pending price sign-off) |
 
-Unchanged: guarantees, no-contracts, Starter Cut, bilingual moat, route-density filter
+Unchanged: guarantees, no-contracts, bilingual moat, route-density filter
 (refreshes cluster by neighborhood too — same rule), never fake scarcity, review/referral separation.
+Changed July 2026: Starter Cut is a DISCOUNTED first cut (never free); maintenance pricing being redone for Georgia property sizes.
 
 ## 8. Assumptions to validate (honesty section)
 
 - Refresh→maintenance conversion rate is UNPROVEN (assume 25–40%; measure it).
+- Maintenance pricing for GEORGIA is unset — $90/$120 were Florida numbers on smaller lots. Weekly likely $150+/mo, ~$50/cut territory, by property size. Owner sets the sheet; site cards updated in one pass after (docs/ROADMAP.md).
 - $749 core price is a hypothesis — hold it for 10 quotes before judging; quote the stack, not apologetically.
 - Winter: refresh demand drops Nov–Feb → that's what leaf/gutter packages + the maintenance floor are for.
 - If estimates book but don't close, the problem is the quote conversation, not the price — record what objection killed each one.

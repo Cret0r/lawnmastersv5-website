@@ -212,21 +212,21 @@ export default async function ProjectsPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-center">
             <div>
               <div className="text-4xl sm:text-5xl font-bold text-primary mb-2 font-serif">
-                2,500+
+                40+
               </div>
               <div className="text-muted-foreground text-sm">Properties Maintained</div>
             </div>
             <div>
               <div className="text-4xl sm:text-5xl font-bold text-primary mb-2 font-serif">
-                5+
+                3+
               </div>
               <div className="text-muted-foreground text-sm">Years of Experience</div>
             </div>
             <div>
               <div className="text-4xl sm:text-5xl font-bold text-primary mb-2 font-serif">
-                100%
+                Guaranteed
               </div>
-              <div className="text-muted-foreground text-sm">Customer Satisfaction</div>
+              <div className="text-muted-foreground text-sm">Not right? We redo it free</div>
             </div>
           </div>
         </div>

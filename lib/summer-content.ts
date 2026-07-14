@@ -14,7 +14,7 @@ export const summerRefresh = {
     title:
       "Summer Refresh — Landscaping, Pressure Washing & Lawn Care | Lawn Masters V5 Covington, GA",
     description:
-      "Full-service landscaping, pressure washing & lawn care in Covington, GA. Driveway pressure washing from $197. Free first mow when you start a plan. Se Habla Español.",
+      "Full-service landscaping, pressure washing & lawn care in Covington, GA. Driveway pressure washing from $197. Discounted first mow when you start a plan. Se Habla Español.",
   },
 
   hero: {
@@ -30,7 +30,7 @@ export const summerRefresh = {
   },
 
   trustBar: [
-    "Father & Son Team",
+    "Locally Owned & Operated",
     "Se Habla Español",
     "Newton County, GA",
   ],
@@ -153,7 +153,7 @@ export const summerRefresh = {
   bridge: {
     eyebrow: "Love how it looks? Keep it that way.",
     headline: "The Summer Starter Cut",
-    text: "Book any pressure washing or landscaping job and sign up for a mowing plan — your first cut is FREE. A $45–$55 value, on us.",
+    text: "Book any pressure washing or landscaping job and sign up for a mowing plan — your first cut comes at a discount, as a thank-you for starting with us.",
     plansHeadline: "Mowing Plans — No Contracts, Cancel Anytime",
     mowingGuarantee:
       "If we ever miss a scheduled service without notice, your next cut is 100% free.*",
