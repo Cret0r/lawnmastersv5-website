@@ -43,10 +43,12 @@ app/                   Next.js pages (App Router)
   about/               /about
   services/            /services
   gallery/             /gallery
-  contact/             /contact (CLIENT)
-  quote/               /quote (CLIENT)
+  contact/             /contact — info cards + quick-lead flow
+  quote/               /quote — quick-lead flow + HowTo steps
+  faq/                 /faq — FAQ page with FAQPage schema
   service-policies/    /service-policies
-  spring-rush/         /spring-rush — Summer Special landing page
+  spring-rush/         308 redirect → /summer
+  summer/              /summer — campaign landing page
   admin/               /admin — Protected dashboard
 
 components/            Shared UI components
@@ -55,6 +57,7 @@ components/            Shared UI components
   floating-cta         Mobile bottom bar (CLIENT)
   footer               Site footer
   navigation           Fixed nav (CLIENT)
+  quick-lead-form      2-step service→phone lead capture, shared by /contact + /quote (CLIENT)
   review-card          Customer review
   social-buttons       WhatsApp/FB/IG/SMS (CLIENT)
   ui/                  shadcn/ui library
@@ -151,7 +154,7 @@ bg-primary-foreground text-primary hover:bg-primary-foreground/90
 
 - **Use Server Actions** for form submissions — not API routes. See `app/contact/actions.ts` for the pattern.
 
-- **Run `npm run cypress:run` before merging to master** — all 45 tests must pass. Tests cover admin auth (incl. wrong-credential and forged-cookie cases), contact form, form validation edge cases, homepage, navigation, mobile nav, quote form, and the per-city landing pages. NOTE: the suite makes exactly 2 real form submissions per run against a 3-per-15-min rate limit — new tests must not add server-side form submissions (use client-side `:invalid` checks instead).
+- **Run `npm run cypress:run` before merging to master** — all 50 tests must pass. Tests cover admin auth (incl. wrong-credential and forged-cookie cases), the quick-lead flows on /contact and /quote, form validation edge cases, homepage, navigation, mobile nav, the /faq page (incl. FAQPage schema), and the per-city landing pages. NOTE: the suite makes exactly 2 real form submissions per run against a 3-per-15-min rate limit — new tests must not add server-side form submissions (use client-side `:invalid` checks instead).
 
 - **Check ARCHITECTURE.md § 4** (Content & Copy) before adding a new instance of the phone number, city name, or campaign phrase so you know all locations to keep in sync.
 
@@ -188,7 +191,7 @@ Edit `app/gallery/page.tsx` — add an entry to the `transformations` array with
 1. Edit `lib/spring-rush-content.ts` — update `announcement.text`, `hero.*`, `ctaText.href` (SMS body), `serviceArea.text`
 2. Edit `components/announcement-bar.tsx:29` — update the mobile short version
 3. Edit `components/floating-cta.tsx:17` — update SMS body in the href
-4. Edit `app/quote/page.tsx:21` — update the service option label
+4. Check `components/quick-lead-form.tsx` — update the quick-service labels if the campaign changes what's offered
 5. Edit `app/spring-rush/page.tsx` metadata title/description if this page is used in ads
 
 ### Changing the phone number

@@ -7,8 +7,8 @@ import { isRateLimited } from "@/lib/rate-limit"
 import { sendLeadNotification } from "@/lib/notify"
 
 // Conversational quick-lead flow: two questions (service + phone), minimal
-// friction. Writes into quote_submissions so it rides the same pipeline as
-// the full quote form (admin Quotes tab + Resend speed-to-lead email).
+// friction. Shared by /contact and /quote via components/quick-lead-form.tsx;
+// writes into quote_submissions (admin Quotes tab + Resend speed-to-lead email).
 // The table's NOT NULL name/email/address columns get readable sentinels —
 // intentionally NOT a schema change (see docs/DECISIONS.md).
 
@@ -31,6 +31,8 @@ export async function submitQuickLead(formData: FormData) {
 
   const service = sanitize((formData.get("service") as string) || "")
   const phone = sanitize((formData.get("phone") as string) || "")
+  // Whitelisted, never interpolated raw — only two pages host this flow.
+  const source = formData.get("source") === "quote" ? "quote page" : "contact page"
 
   const validation = quickLeadSchema.safeParse({ service, phone })
   if (!validation.success) {
@@ -51,7 +53,7 @@ export async function submitQuickLead(formData: FormData) {
     phone,
     address: "Not provided — ask when texting",
     services: [service],
-    details: "Submitted via the quick contact flow (service + phone only). Reply by text.",
+    details: `Submitted via the quick lead flow on the ${source} (service + phone only). Reply by text.`,
     status: "new",
   })
 
@@ -64,7 +66,7 @@ export async function submitQuickLead(formData: FormData) {
     `Service: ${service}`,
     `Phone: ${phone}`,
     "",
-    "Source: quick contact flow (no name/email collected — reply by TEXT).",
+    `Source: quick lead flow on the ${source} (no name/email collected — reply by TEXT).`,
     "Reply fast — speed to lead wins the job. Full details at lawnmastersv5.com/admin",
   ])
 

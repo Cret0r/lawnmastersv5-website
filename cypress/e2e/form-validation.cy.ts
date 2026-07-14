@@ -3,29 +3,30 @@
 // the shared 3-requests-per-15-min rate-limit budget the real submission
 // tests in quote.cy.ts / contact.cy.ts depend on.
 
-describe("Quote Form Validation", () => {
+describe("Quote Quick-Lead Flow Validation", () => {
   beforeEach(() => {
     cy.visit("/quote")
+    // Advance to the phone step
+    cy.contains("button", "Lawn Mowing").click()
   })
 
-  it("blocks submission when required fields are empty", () => {
+  it("blocks submission when the phone is empty", () => {
     cy.get('button[type="submit"]').click()
-    cy.get("input:invalid").should("have.length.at.least", 1)
-    cy.url().should("include", "/quote")
-    cy.contains("Thank You!").should("not.exist")
+    cy.get('input[name="phone"]:invalid').should("exist")
+    cy.contains("Got it!").should("not.exist")
   })
 
-  it("flags a malformed email address", () => {
-    cy.get('input[name="email"]').type("not-an-email")
+  it("blocks a too-short phone number", () => {
+    cy.get('input[name="phone"]').type("123")
     cy.get('button[type="submit"]').click()
-    cy.get('input[name="email"]:invalid').should("exist")
-    cy.contains("Thank You!").should("not.exist")
+    cy.get('input[name="phone"]:invalid').should("exist")
+    cy.contains("Got it!").should("not.exist")
   })
 
-  it("requires first name, last name, email, phone, and address", () => {
-    for (const name of ["firstName", "lastName", "email", "phone", "address"]) {
-      cy.get(`input[name="${name}"]`).should("have.attr", "required")
-    }
+  it("phone input is required and uses the tel keyboard", () => {
+    cy.get('input[name="phone"]').should("have.attr", "required")
+    cy.get('input[name="phone"]').should("have.attr", "type", "tel")
+    cy.get('input[name="phone"]').should("have.attr", "inputmode", "tel")
   })
 })
 
