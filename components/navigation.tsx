@@ -66,6 +66,12 @@ export function Navigation() {
               About
             </Link>
             <Link
+              href="/faq"
+              className={`transition-colors ${isScrolled ? "text-muted-foreground hover:text-foreground" : "text-primary-foreground/80 hover:text-primary-foreground"}`}
+            >
+              FAQ
+            </Link>
+            <Link
               href="/contact"
               className={`transition-colors ${isScrolled ? "text-muted-foreground hover:text-foreground" : "text-primary-foreground/80 hover:text-primary-foreground"}`}
             >
@@ -136,6 +142,13 @@ export function Navigation() {
             onClick={closeMobileMenu}
           >
             About
+          </Link>
+          <Link
+            href="/faq"
+            className="text-foreground hover:text-primary transition-colors text-lg"
+            onClick={closeMobileMenu}
+          >
+            FAQ
           </Link>
           <Link
             href="/contact"
