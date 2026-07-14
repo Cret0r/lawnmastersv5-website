@@ -64,9 +64,9 @@ AND the review/referral/maintenance conversation to happen at peak satisfaction.
 
 **THE KEEP-IT-LOOKING-GOOD PLAN** (maintenance, formerly "mowing plans")
 - ⚠️ **Georgia repricing pending (July 2026):** the old $90/$120 Florida numbers are too low for GA property sizes. Weekly likely **$150+/mo**, per-visit **~$50/cut territory** — always priced to the property, never flat. No contracts · Missed-cut guarantee · Rate lock while subscribed.
-- **Starter Cut: first cut DISCOUNTED with any Refresh package** (changed from "free" July 2026 — the owner gives no free cuts; exact discount = owner's call)
+- **Starter Cut: $20 OFF the first cut with any Refresh package** (never free — owner rule; flat $20, not a percentage; starting number to validate after the first 10 quotes)
 - Pitched ONLY at the walk-through, as protection: *"You just invested $749 in this yard.
-  For about $50 a cut I make sure it never goes back. First one's discounted."*
+  For about $50 a cut I make sure it never goes back. First one's $20 off."*
 - The per-visit math lives HERE — at the close, not in the ads. Re-run it once GA prices are final.
 
 ## 5. The Funnel (memorize)
@@ -77,7 +77,7 @@ Before/after content (FB + GBP + Nextdoor + hangers)
       → walk property → quote 3 tiers (anchor high)
          → REFRESH JOB ($349–1,499)
             → walk-through wow → review ask + referral ask
-               → Keep-It Plan (priced to the property, discounted first cut)
+               → Keep-It Plan (priced to the property, $20 off the first cut)
                   → seasonal upsells forever (docs/GROWTH.md § 6 calendar)
 ```
 
@@ -101,7 +101,7 @@ One customer. One estimate. Four revenue events.
 
 Unchanged: guarantees, no-contracts, bilingual moat, route-density filter
 (refreshes cluster by neighborhood too — same rule), never fake scarcity, review/referral separation.
-Changed July 2026: Starter Cut is a DISCOUNTED first cut (never free); maintenance pricing being redone for Georgia property sizes.
+Changed July 2026: Starter Cut is **$20 off the first cut** (never free; validate the $20 after 10 quotes); maintenance pricing being redone for Georgia property sizes.
 
 ## 8. Assumptions to validate (honesty section)
 

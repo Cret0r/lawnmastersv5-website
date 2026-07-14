@@ -100,13 +100,18 @@
 ### The Great Correction — identity, honest stats, no free offers, GA repricing (session 13 — owner directive)
 **Decision:** A full audit pass corrected five classes of error that had crept into docs and site copy. These are now settled facts:
 1. **The owner is the SON — a young solo operator.** His father works full-time at Gaylor Electric and may help weekends only (in Florida the dad's name/phone fronted the business because the owner was a minor; that ended with the move). No "father & son team" / "crew" framing anywhere.
-2. **Honest stats only:** 3+ years experience (not 5+), ~50–80 Florida-era projects (not 130+/2,500+), ~40+ properties maintained. No "100% satisfaction" stat (unverifiable — the redo-guarantee wording replaced it), no "certified arborists", no "licensed & insured" (unchanged rule).
+2. **Honest stats only:** 3+ years experience (not 5+), **45+ projects (owner-set final number — use this everywhere, not 50+/80+/130+)**, 40+ properties maintained. No "100% satisfaction" stat (unverifiable — the redo-guarantee wording replaced it), no "certified arborists", no "licensed & insured" (unchanged rule).
 3. **Florida data ≠ Georgia data:** the GA client base started at ZERO July 2026; the ~13 recurring clients were Florida and never carried over. Never present FL history as GA traction.
 4. **No free offers, ever:** the Starter Cut is a DISCOUNTED first cut (never free); referrals are $30 off two-sided (no free cuts, no free months). The owner gives no free service except estimates and guarantee fixes.
 5. **Florida prices are dead:** $90/$120/mo and $45–55/cut are too low for GA lot sizes (~$50/cut territory, weekly likely $150+/mo, per-property). The "$28/cut" math is retired everywhere. Live site cards intentionally still show old prices — pricing is owner-locked; repricing happens in ONE pass once the owner sets the GA sheet (locations list in docs/ROADMAP.md).
 **Also settled:** Engine 1 (high-ticket transformations) is the PRIMARY income goal; Engine 2 (recurring maintenance) is deliberately secondary. GBP verified 7/10/2026. Resend speed-to-lead LIVE since 7/6/2026.
 **Supersedes** the "Starter Cut survives" and "$28/cut moved to the close" clauses of the session-12 repositioning entry below — the Starter Cut survives as a *discount*, and the close-math gets re-derived from GA prices.
 **Don't:** re-import stale facts from SUMMER_CAMPAIGN_2026.md or output/HORMOZI_SUMMER_OFFER.md (both now carry correction banners); when in doubt, docs/BUSINESS_PLAYBOOK.md § 1 and § 7 are the truth.
+**Final corrections (owner, 7/13/2026):**
+- **Project count = 45+** — the one number, used everywhere (homepage, playbook, all docs). Not 50+, not 80+.
+- **Starter Cut = flat $20 off the first cut** — not free, not a percentage. Starting number to validate after the first 10 quotes, not locked.
+- **Services lineup CONFIRMED:** Hardscaping, Irrigation & Drainage, and Landscape Design ARE real offered services — they stay on the site; do not question or remove them.
+- **Canonical domain = www.lawnmastersv5.com** (`BUSINESS.domain`) — www is primary in Vercel; the apex 307s to it. All canonicals/schema/OG/sitemap URLs use www.
 
 ### Paid ads deprioritized — GBP + free local channels first
 **Decision:** No Meta/Google Search spend now. Google Local Services Ads only after 10+ real reviews.

@@ -34,7 +34,7 @@
 
 ## 4. DOMAIN — lawnmastersv5.com
 
-- **What:** The production domain, attached to the Vercel project.
+- **What:** The production domain, attached to the Vercel project. **Primary host = `www.lawnmastersv5.com`** (the apex 307-redirects to it); `BUSINESS.domain` in code is the www host so canonicals/schema/OG/sitemap match — GOTCHAS #33.
 - **Registrar:** **Hostinger** (owner-confirmed) — handles registration and renewal ONLY.
 - **DNS:** delegated to **Vercel's nameservers** (`ns1.vercel-dns.com` / `ns2.vercel-dns.com` — verified via nslookup, July 2026). **All DNS records are managed in the Vercel dashboard (project → Settings → Domains), NOT in Hostinger.** Practical consequence: when verifying lawnmastersv5.com as a Resend sending domain (or adding any TXT/MX/DKIM record), add the records in Vercel DNS — Hostinger's DNS panel has no effect while the nameservers point at Vercel.
 - **History:** the domain was detached from an old V0 Vercel project in session 3 and assigned to the current project.

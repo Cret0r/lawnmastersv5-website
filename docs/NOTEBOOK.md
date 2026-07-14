@@ -98,7 +98,7 @@ You don't pay for a yard you're not proud of."
 **THE BACK END (only at the walk-through, never in the ad):**
 "You just put $749 into this yard.
 For about $50 a cut I make sure it never goes back.
-First cut's discounted — want me to just keep it like this?"
+First cut's $20 off — want me to just keep it like this?"
 → Weekly likely $150+/mo — PRICE IT TO THE PROPERTY (GA lots are big;
    size sets the number, never quote a flat rate blind)
 → no contract · rate locked while they stay on
@@ -113,7 +113,7 @@ Before/after post (FB · GBP · Nextdoor · hanger)
 → Refresh job ($349–1,499)
 → walk-through WOW → ask for review + referral RIGHT THEN
 → Keep-It Plan (priced to the property — $150+/mo weekly territory,
-   discounted first cut when they start)
+   $20 off the first cut when they start)
 → seasonal ADD-ON JOBS, each quoted and PAID SEPARATELY
    (leaves, gutters, mulch top-up, PW — extra revenue,
    NEVER included in the monthly plan)
@@ -180,7 +180,8 @@ Second number: maintenance conversions — that's the floor being built.
 - Say the guarantee before the price — it's why the price holds.
 - Don't discount — ADD. Price pushback = throw in the gutter clean, keep the number.
 - FREE: the estimate. Guarantee fixes. NOTHING else — no free cuts, no free months.
-  (The Starter Cut is a DISCOUNTED first cut with a plan — never free.)
+  (The Starter Cut = $20 OFF the first cut with a plan — never free.
+   The $20 is a starting number — check it after my first 10 quotes.)
 - Say NO to: outside my 6 cities · sub-$50 mow shoppers · any job I can't guarantee.
 - Payment: Zelle. One-times: request texted same day. Plans: monthly. Big jobs ($1k+): half up front.
 - Referrals get rewards ($30 off, both sides). Reviews get ASKED for, never paid for. Never mix them.

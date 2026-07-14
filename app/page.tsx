@@ -417,7 +417,7 @@ export default function Home() {
             <div className="text-center flex items-center justify-center gap-3">
               <CheckCircle className="w-5 h-5 text-primary-foreground/80" />
               <div>
-                <span className="text-2xl sm:text-3xl font-bold">80+</span>
+                <span className="text-2xl sm:text-3xl font-bold">45+</span>
                 <span className="text-sm ml-2 text-primary-foreground/80">Projects Completed</span>
               </div>
             </div>

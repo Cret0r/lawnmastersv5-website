@@ -4,7 +4,7 @@
 
 > ⚠️ **CORRECTIONS (July 2026 — owner directive; these OVERRIDE anything below):**
 > 1. **Solo owner-operator.** The owner is the SON, running the business alone most days (his father works full-time at Gaylor Electric; weekend help at most). Any "father & son" / "crew" framing below is outdated — do not re-import it into site copy.
-> 2. **The Summer Starter Cut is a DISCOUNTED first cut, never free.** The owner never committed to a free cut. Exact discount = owner's call.
+> 2. **The Summer Starter Cut is $20 OFF the first cut, never free.** Flat $20, not a percentage (owner-set 7/13/2026; a starting number to validate after the first 10 quotes).
 > 3. **All mowing prices below ($90/$120/$45–55) are Florida-era and too low for Georgia lot sizes** — weekly likely $150+/mo, ~$50/cut territory, priced per property. Do not build anything with the old numbers; wait for the owner's GA price sheet.
 > 4. **The week-by-week mowing totals in § 8 started from 13 Florida clients — the Georgia base is ZERO.** Targets need rebasing.
 > 5. **Referral reward is $30 off, two-sided** (not $20, no free cuts/months).
@@ -96,7 +96,7 @@
 ---
 
 ## 4. 🔄 Conversion Funnel
-> 💡 HORMOZI INSIGHT (updated July 2026): The DISCOUNTED first mowing cut is the single most powerful conversion lever — it converts a one-time PW customer into a recurring client for a small one-time cost. It must be named and positioned as a bonus. (Originally proposed as free; the owner chose a discount instead.)
+> 💡 HORMOZI INSIGHT (updated July 2026): The $20-off first mowing cut is the single most powerful conversion lever — it converts a one-time PW customer into a recurring client for a $20 one-time cost. It must be named and positioned as a bonus. (Originally proposed as free; the owner set $20 off instead.)
 
 *How to turn a $300 pressure wash into a $1,440/year mowing client.*
 
@@ -117,9 +117,9 @@ High-ticket job completed (PW, cleanup, mulch)
 > *"Your yard looks great now — the last thing you want is for the grass to get out of control and undo all this work. We do weekly mowing starting at $120/mo — want us to just keep it up for you? We're already in the neighborhood."*
 
 Variations:
-- *"A lot of our cleanup customers add weekly mowing so they don't have to worry about it. Your first cut's discounted if you sign up today."*
+- *"A lot of our cleanup customers add weekly mowing so they don't have to worry about it. Your first cut's $20 off if you sign up today."*
 - *"We can be back next week for your first cut — lock in the price now before the summer route fills up."*
-- *"We guarantee the work — if anything doesn't look right, we come back and fix it at no charge. And if you want to keep the yard looking this good all summer, your first mowing cut is discounted when you sign up today. We call it the Summer Starter Cut."*
+- *"We guarantee the work — if anything doesn't look right, we come back and fix it at no charge. And if you want to keep the yard looking this good all summer, your first mowing cut is $20 off when you sign up today. We call it the Summer Starter Cut."*
 
 **💡 Key principle:** Don't pitch it as a separate sale. Frame it as protecting the investment they just made.
 
@@ -127,12 +127,12 @@ Variations:
 
 ### 🎁 The Summer Starter Cut (Official Bonus Name)
 - Official name: "The Summer Starter Cut"
-- **What it is (corrected July 2026): a DISCOUNTED first cut — never free.** Exact discount amount = owner decision.
-- How to offer it: "Sign up for weekly or biweekly mowing today and your first cut is discounted — we call it the Summer Starter Cut."
+- **What it is (owner-set 7/13/2026): $20 OFF the first cut — never free, not a percentage.** The $20 is a starting number to validate after the first 10 quotes.
+- How to offer it: "Sign up for weekly or biweekly mowing today and your first cut is $20 off — we call it the Summer Starter Cut."
 - Where to feature it:
   - /summer landing page — named bonus card, NOT buried in body text
-  - Door hangers — back panel headline: "Book any service today → get your first mow DISCOUNTED (The Summer Starter Cut)"
-  - On-site pitch: "We call it the Summer Starter Cut — a discount on your first cut when you lock in a mowing plan today"
+  - Door hangers — back panel headline: "Book any service today → $20 OFF your first mow (The Summer Starter Cut)"
+  - On-site pitch: "We call it the Summer Starter Cut — $20 off your first cut when you lock in a mowing plan today"
   - Instagram — dedicated post as a conversion hook
 
 ---
@@ -207,7 +207,7 @@ Variations:
 - *"Already got a clean yard? Keep it that way."*
 - Mowing plan cards: Biweekly $90/mo / Weekly $120/mo
 - Missed-cut guarantee callout
-- **The Summer Starter Cut** — First mow DISCOUNTED when you book any service
+- **The Summer Starter Cut** — $20 OFF your first mow when you book any service
 - "Not satisfied? We redo it. No questions asked."
 - "Building Newton County routes now — spots are limited"
 - Instagram: @lawnmasters_v5
@@ -253,7 +253,7 @@ Photo or short clip of the owner finishing a job in the summer heat. Caption: *"
 Spanish caption first: *"¿Quiere que su propiedad luzca increíble este verano? Presupuesto gratis."* English below. Reaches an underserved audience in Newton County.
 
 **Post 6 — The Summer Starter Cut reveal**
-"Book any pressure washing or landscaping job this summer → your first mowing cut is DISCOUNTED. We're calling it the Summer Starter Cut. Text SUMMER to (407) 600-0301 to claim yours." Reel or graphic. This is a conversion post.
+"Book any pressure washing or landscaping job this summer → $20 OFF your first mowing cut. We're calling it the Summer Starter Cut. Text SUMMER to (407) 600-0301 to claim yours." Reel or graphic. This is a conversion post.
 
 **Post 7 — Scarcity/route density post**
 "We're building our Newton County summer route right now. Once your neighborhood fills — it fills. We can't add more stops without compromising quality. If you're in Covington, Conyers, or Oxford — now is the time." No hard sell. Just honest.

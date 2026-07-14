@@ -4,7 +4,7 @@
 > Do not edit website files based on this doc without owner review.
 
 > ⚠️ **STALE FACTS WARNING (July 2026 correction pass):** this is a GENERATED historical analysis and was NOT rewritten. Numbers and framing below are superseded:
-> - "130+ jobs / 5+ years" → real figures are **~50–80 projects / 3+ years** (Florida-era; see docs/BUSINESS_PLAYBOOK.md)
+> - "130+ jobs / 5+ years" → real figures are **45+ projects / 3+ years** (Florida-era; see docs/BUSINESS_PLAYBOOK.md)
 > - "family-operated / father-and-son crew" → **solo young owner-operator** (dad helps weekends at most)
 > - Free first mowing cut → **DISCOUNTED first cut** (owner gives no free service)
 > - All mowing prices ($90/$120, "$28–40/visit" math) → **Florida-era, too low for GA lots**; GA sheet pending (~$50/cut territory)

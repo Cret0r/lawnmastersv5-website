@@ -76,10 +76,10 @@ export default function ServicePolicies() {
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-4">Referral Credits</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                <strong>$20 off your next cut for every friend you send.*</strong>
+                <strong>$30 off your next service for every neighbor you send.*</strong>
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                <strong>Send 2 neighbors, your next cut is free.*</strong>
+                <strong>And your neighbor gets $30 off their first service too.*</strong>
               </p>
               <p className="text-muted-foreground leading-relaxed text-sm italic">
                 *Credit is applied after your referred friend completes their first paid service. Referral offer applies once per unique referral.

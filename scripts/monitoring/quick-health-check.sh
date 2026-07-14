@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# quick-health-check.sh — Ping lawnmastersv5.com and report if the site is up
+# quick-health-check.sh — Ping the site and report if it is up
+# www is the primary domain in Vercel; the apex 307-redirects to it (GOTCHAS #33),
+# so checking the apex would report false WARNs on every page.
 
-DOMAIN="lawnmastersv5.com"
+DOMAIN="www.lawnmastersv5.com"
 URL="https://$DOMAIN"
 
 echo ""
@@ -34,7 +36,7 @@ fi
 echo "  HTTP status: $HTTP_CODE"
 echo ""
 
-if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "301" ] || [ "$HTTP_CODE" = "302" ]; then
+if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "301" ] || [ "$HTTP_CODE" = "302" ] || [ "$HTTP_CODE" = "307" ] || [ "$HTTP_CODE" = "308" ]; then
   echo "  [UP] $DOMAIN is responding normally (HTTP $HTTP_CODE)"
 elif [ "$HTTP_CODE" = "503" ]; then
   echo "  [DOWN] $DOMAIN returned 503 — server unavailable (deploy failed or Vercel issue)"
@@ -53,7 +55,8 @@ echo "Checking key pages..."
 check_page() {
   local path="$1"
   local code
-  code=$(curl -o /dev/null -s -w "%{http_code}" --max-time 10 "$URL$path")
+  # -L follows redirects (e.g. /spring-rush 308s to /summer) so redirects count as OK
+  code=$(curl -L -o /dev/null -s -w "%{http_code}" --max-time 10 "$URL$path")
   if [ "$code" = "200" ]; then
     echo "  [OK]   $path (HTTP 200)"
   else

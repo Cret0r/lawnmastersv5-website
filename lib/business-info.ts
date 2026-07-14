@@ -9,7 +9,9 @@
 export const BUSINESS = {
   name: "Lawn Masters V5 INC",
   shortName: "Lawn Masters V5",
-  domain: "lawnmastersv5.com",
+  // www is the PRIMARY domain in Vercel (apex 307-redirects to it) — canonicals,
+  // schema @id, OG urls, sitemap and robots must all use www (GOTCHAS #33).
+  domain: "www.lawnmastersv5.com",
 
   phoneDisplay: "(407) 600-0301",
   phoneE164: "+14076000301",

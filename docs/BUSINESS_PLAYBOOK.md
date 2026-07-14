@@ -19,7 +19,7 @@
 | Google Business Profile | Georgia/Covington listing, owned by successblueprint90@gmail.com (⚠️ same account owns the old Orlando profile — GOTCHAS #30) |
 | Site | lawnmastersv5.com |
 | Crew | Solo owner-operator (father may help weekends only — he works full-time elsewhere) |
-| Experience | 3+ years, 50+ projects (from Florida years) |
+| Experience | 3+ years, 45+ projects (from Florida years — the ONE number used everywhere, owner-set) |
 | Languages | English + Spanish ("Se Habla Español" is a deliberate competitive moat) |
 
 ---
@@ -70,7 +70,7 @@ Key framing: mowing is never pitched as a separate sale — it's positioned as *
 
 ## 4. The Offer Architecture (Hormozi-derived)
 
-- **The Summer Starter Cut** — the named bonus: a **DISCOUNTED first cut** when signing up for any plan after booking a service. ⚠️ Changed from "free" July 2026 — **the owner never committed to a free first cut**; the exact discount amount is his call. Always use the bonus name — named bonuses feel like products, unnamed discounts feel like margin. Do not write "free first cut" anywhere.
+- **The Summer Starter Cut** — the named bonus: **$20 OFF the first cut** when signing up for any plan after booking a service. Never free (owner rule, July 2026), never a percentage — a flat $20 off. The $20 is a **starting number to validate after the first 10 quotes**, not a locked decision. Always use the bonus name — named bonuses feel like products, unnamed discounts feel like margin. Do not write "free first cut" anywhere.
 - **High-ticket guarantee:** "Not satisfied? We come back and redo the problem area at no charge. No questions asked. Your property looks right or we make it right."
 - **Mowing guarantee:** "If we ever miss a scheduled service without notice, your next cut is 100% free."
 - **Referral:** $30 off per referred neighbor, two-sided (the friend gets $30 off their first service too). No free-cut or free-month milestones — the owner gives no free service, period (July 2026 correction).
@@ -110,4 +110,4 @@ Growth targets (campaign doc): 23–24 recurring clients by week 6, $3–4k/mo c
 
 ## 8. The Pitch (if you had to sell this tomorrow)
 
-"I run Lawn Masters V5, right here in Covington. I take yards that have gotten away from people — cleanup, mulch, pressure washing — and make them look new, usually in a day. And it's guaranteed: when I'm done we walk the property together, and anything you don't love I fix on the spot, free. Most folks then have me keep the yard up on a plan — priced to your property, no contract, and your first cut's discounted when you start. If I ever miss a scheduled cut without telling you, the next one's free. Hablamos español. I'm building my route in this neighborhood now — once it fills, it fills."
+"I run Lawn Masters V5, right here in Covington. I take yards that have gotten away from people — cleanup, mulch, pressure washing — and make them look new, usually in a day. And it's guaranteed: when I'm done we walk the property together, and anything you don't love I fix on the spot, free. Most folks then have me keep the yard up on a plan — priced to your property, no contract, and $20 off your first cut when you start. If I ever miss a scheduled cut without telling you, the next one's free. Hablamos español. I'm building my route in this neighborhood now — once it fills, it fills."

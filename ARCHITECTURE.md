@@ -212,7 +212,7 @@ Because `images.unoptimized` is on (v0 legacy + Vercel image-transform cost), ne
 
 ## 7. SEO LAYER
 
-- Root JSON-LD (`app/layout.tsx`): `["LocalBusiness","HomeAndConstructionBusiness"]` with `@id: https://lawnmastersv5.com/#business` — city/service schema references this. (`LandscapeService` was removed — not a real schema.org type.)
+- Root JSON-LD (`app/layout.tsx`): `["LocalBusiness","HomeAndConstructionBusiness"]` with `@id: https://www.lawnmastersv5.com/#business` — city/service schema references this. (`LandscapeService` was removed — not a real schema.org type.) All URLs derive from `BUSINESS.domain` = the primary **www** host (the apex 307s to it — GOTCHAS #33).
 - `/services`: `ItemList` of 7 `Service` objects, provider-linked to the business `@id`.
 - City pages: `Service` schema with `areaServed` City + `Offer`s from the pricing plans; canonical URLs; `generateStaticParams`.
 - `app/sitemap.ts` + `app/robots.ts` (admin disallowed).
