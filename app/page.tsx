@@ -37,6 +37,7 @@ import Link from "next/link"
 export const metadata: Metadata = {
   title: "Lawn Care & Mowing in Covington, GA — Lawn Masters V5",
   description: `Reliable weekly lawn care in Covington & Conyers, GA. Starting at $120/mo, no contracts, Se Habla Español. Call ${BUSINESS.phoneDisplay} for a free estimate.`,
+  alternates: { canonical: "/" },
 }
 
 export default function Home() {
@@ -361,55 +362,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-           EXISTING CONTENT (preserved, pushed below)
-         ═══════════════════════════════════════════ */}
-
-      {/* Original Hero (demoted) */}
-      <section className="relative py-20 sm:py-28 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/hero-landscaping-lush-garden.jpg"
-            alt="Beautiful landscaped garden"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/70 via-foreground/50 to-foreground/30" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4 sm:px-6">
-          <div className="max-w-2xl">
-            <span className="inline-block text-primary text-sm font-semibold uppercase tracking-wider mb-4 animate-fade-in-up">
-              Full-Service Landscaping
-            </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-primary-foreground mb-6 text-balance animate-fade-in-up [animation-delay:100ms]">
-              Your Landscape,{" "}
-              <span className="text-primary">Perfected.</span>
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-primary-foreground/80 mb-8 max-w-xl text-pretty animate-fade-in-up [animation-delay:200ms]">
-              From lawn care and pressure washing to complete landscape transformations, we bring expertise and passion to every project.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-in-up [animation-delay:300ms]">
-              <Button
-                asChild
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-base sm:text-lg px-8 transition-all hover:scale-105"
-              >
-                <Link href="/quote">Get a Free Estimate</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base sm:text-lg px-8 bg-transparent transition-all"
-              >
-                <Link href="/services">Our Services</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Stats */}
       <section className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 py-8 sm:py-10">
@@ -543,34 +495,6 @@ export default function Home() {
               <Link href="/gallery" className="inline-flex items-center gap-2">
                 View Full Gallery <ArrowRight className="w-4 h-4" />
               </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="relative py-20 sm:py-28 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image src="/tree-shrub-care-pruning.jpg" alt="Beautiful landscaped property" fill className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/70 to-foreground/50" />
-        </div>
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-primary-foreground mb-6 text-balance">
-            Ready to transform your{" "}
-            <span className="text-primary">outdoor space?</span>
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-            Get a free, no-obligation estimate for your landscaping project today.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-10 py-6 transition-all hover:scale-105">
-              <a href={BUSINESS.telHref} className="inline-flex items-center gap-2">
-                <Phone className="w-5 h-5" />
-                Call {BUSINESS.phoneDisplay}
-              </a>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-lg px-10 py-6 bg-transparent transition-all">
-              <Link href="/quote">Request Free Estimate</Link>
             </Button>
           </div>
         </div>
