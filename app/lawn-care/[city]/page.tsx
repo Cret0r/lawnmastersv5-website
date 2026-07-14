@@ -61,9 +61,20 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
     })),
   }
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: page.faqs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Navigation />
 
       <main>
@@ -188,8 +199,30 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
           </div>
         </section>
 
-        {/* Reviews */}
+        {/* City Q&A — question-phrased headings for featured snippets */}
         <section className="py-14 sm:py-18 bg-secondary">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground text-balance">
+                Common questions in {page.city}
+              </h2>
+            </div>
+            <div className="max-w-3xl mx-auto flex flex-col gap-6">
+              {page.faqs.map((f) => (
+                <div key={f.question} className="bg-card border border-border rounded-xl p-6 sm:p-8">
+                  <h3 className="text-lg sm:text-xl font-serif text-foreground mb-3">{f.question}</h3>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{f.answer}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground text-center mt-8">
+              More answers on our <Link href="/faq" className="text-primary hover:underline">FAQ page</Link>.
+            </p>
+          </div>
+        </section>
+
+        {/* Reviews */}
+        <section className="py-14 sm:py-18 bg-background">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center mb-10">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground text-balance">

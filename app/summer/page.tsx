@@ -25,6 +25,7 @@ import Link from "next/link"
 export const metadata: Metadata = {
   title: summerRefresh.meta.title,
   description: summerRefresh.meta.description,
+  alternates: { canonical: "/summer" },
 }
 
 export default function SummerPage() {

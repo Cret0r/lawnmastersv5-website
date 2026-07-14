@@ -20,6 +20,11 @@ export const BUSINESS = {
   email: "lawnmastersv5@gmail.com",
   mailtoHref: "mailto:lawnmastersv5@gmail.com",
 
+  // E-E-A-T: the owner's first name for the About page + founder schema.
+  // ⚠️ Not on record — owner must supply it. Leave "" until then; the
+  // founder markup in app/layout.tsx activates automatically once set.
+  ownerFirstName: "",
+
   instagramHandle: "@lawnmasters_v5",
   instagramUrl: "https://www.instagram.com/lawnmasters_v5",
   facebookUrl: "https://www.facebook.com/profile.php?id=61590265813532",

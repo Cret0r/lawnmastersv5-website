@@ -18,9 +18,11 @@ import Link from "next/link"
 import { BUSINESS } from "@/lib/business-info"
 
 export const metadata: Metadata = {
-  title: "Lawn Care, Landscaping & Pressure Washing — Covington & Conyers, GA",
+  // Kept under 60 chars so it doesn't truncate in search results
+  title: "Lawn Care, Landscaping & Pressure Washing | Covington GA",
   description:
     "Professional lawn mowing, pressure washing, and landscaping in Covington, GA. Serving Newton County and surrounding areas. Free estimates available.",
+  alternates: { canonical: "/services" },
 }
 
 export default function ServicesPage() {

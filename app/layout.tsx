@@ -99,6 +99,17 @@ const jsonLd = {
   ],
   priceRange: "$45–$120/mo",
   sameAs: [BUSINESS.instagramUrl, BUSINESS.facebookUrl],
+  // Founder markup (E-E-A-T) switches on when the owner supplies his first
+  // name in lib/business-info.ts — never ship a made-up name.
+  ...((BUSINESS.ownerFirstName as string)
+    ? {
+        founder: {
+          "@type": "Person",
+          name: BUSINESS.ownerFirstName,
+          jobTitle: "Owner-Operator",
+        },
+      }
+    : {}),
 }
 
 export default function RootLayout({

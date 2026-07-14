@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "About Lawn Masters V5 — Local Lawn Care in Covington, GA",
   description:
     "Locally owned and operated lawn care company serving Covington, GA and surrounding areas. Reliable, affordable, and bilingual. Learn more about Lawn Masters V5.",
+  alternates: { canonical: "/about" },
 }
 
 export default function AboutPage() {

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Before & After Lawn Care Gallery — Covington, GA",
   description:
     "See real before and after lawn transformations by Lawn Masters V5 in Covington and Conyers, GA.",
+  alternates: { canonical: "/gallery" },
 }
 
 const transformations = [

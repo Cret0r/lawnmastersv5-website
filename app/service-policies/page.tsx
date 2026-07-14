@@ -7,6 +7,7 @@ export const metadata = {
   title: "Service Policies — Lawn Masters V5 Covington, GA",
   description:
     "Learn about Lawn Masters V5 service policies including missed cuts, weather delays, and cancellation terms in Covington, GA.",
+  alternates: { canonical: "/service-policies" },
 }
 
 export default function ServicePolicies() {
