@@ -87,6 +87,11 @@
 **Decision:** deleted the mid-page "Your Landscape, Perfected" second hero and the "Ready to transform your outdoor space?" pre-footer CTA banner from app/page.tsx.
 **Why:** redundant second hero with generic copy, off the transformation positioning; the page already carries multiple CTAs. `/tree-shrub-care-pruning.jpg` lost its homepage usage and was reused as the /faq hero.
 
+### Site repositioned transformation-first; tier prices owner-confirmed (session 15 — 7/14/2026)
+**Decision:** The site now SELLS the transformation identity: homepage hero "We Transform Properties / From Overgrown to Impressive — Often in One Day"; pricing = the 3 Refresh tiers (**Curb Appeal from $349 · Full Property Refresh from $749 · Total Transformation = "Custom Quote" on the site** — owner-confirmed; the ~$1,499 figure stays an internal quoting floor only); reviews sit ABOVE pricing; the walk-through guarantee is the primary promise (said before the price — matching the sales rule); services ordered maintenance-LAST; city pages rebuilt to match. Mowing remains as a small "recurring maintenance available after your refresh" note + /summer's conversion bridge.
+**Also owner-set the same day:** `ownerFirstName = "Angel"` (first name ONLY — no last name/personal details; /about line + founder schema). **NO dollar amounts on /faq, ever** — answers point to the free on-site estimate (this removed even the $30 referral figure from /faq; the amount still lives on /service-policies and the homepage referral strip).
+**Don't:** resurface mowing prices as the homepage anchor; put any price in an /faq answer; show a fixed price for Total Transformation.
+
 ### Placeholder reviews stay until real ones exist; AggregateRating schema blocked
 **Decision:** The 3 generic reviews remain (better than an empty section) but AggregateRating/star schema must NOT be added until real reviews replace them.
 **Why:** Schema markup on fabricated reviews risks a Google manual action against the whole domain. Reviews are also the gating item for Local Services Ads.

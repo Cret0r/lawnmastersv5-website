@@ -28,24 +28,29 @@ import {
   Star,
   Gift,
   MapPinIcon,
-  CalendarIcon,
   MessageCircleIcon,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Lawn Care & Mowing in Covington, GA — Lawn Masters V5",
-  description: `Reliable weekly lawn care in Covington & Conyers, GA. Starting at $120/mo, no contracts, Se Habla Español. Call ${BUSINESS.phoneDisplay} for a free estimate.`,
+  title: "Property Transformations & Lawn Care in Covington, GA — Lawn Masters V5",
+  description: `We transform overgrown, neglected properties in Covington & Conyers, GA — cleanups, mulch, pressure washing, shrub care — often in one day. Free estimates, walk-through guarantee. Call ${BUSINESS.phoneDisplay}. Se Habla Español.`,
   alternates: { canonical: "/" },
 }
 
 export default function Home() {
+  // Transformation-first order (docs/OFFERS.md) — maintenance deliberately last.
   const services = [
     {
-      icon: Scissors,
-      title: "Lawn Care & Mowing",
-      description: "Regular mowing, edging, and trimming to keep your lawn pristine year-round.",
+      icon: LeafyGreen,
+      title: "Property Refresh & Cleanups",
+      description: "Full-yard cleanups, fresh mulch, defined beds, and haul-away — overgrown to impressive, often in one day.",
+    },
+    {
+      icon: SprayCan,
+      title: "Pressure Washing",
+      description: "Restore driveways, sidewalks, patios, and exterior surfaces to like-new condition.",
     },
     {
       icon: Flower2,
@@ -68,14 +73,9 @@ export default function Home() {
       description: "Efficient sprinkler systems and drainage solutions for optimal water management.",
     },
     {
-      icon: LeafyGreen,
-      title: "Seasonal Cleanup",
-      description: "Spring and fall cleanup, leaf removal, and garden bed preparation.",
-    },
-    {
-      icon: SprayCan,
-      title: "Pressure Washing",
-      description: "Restore driveways, sidewalks, patios, and exterior surfaces to like-new condition.",
+      icon: Scissors,
+      title: "Recurring Maintenance",
+      description: "Weekly and biweekly mowing routes that keep your refresh looking new. No contracts.",
     },
   ]
 
@@ -106,7 +106,7 @@ export default function Home() {
         <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-16">
           <div className="max-w-2xl mx-auto text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-primary-foreground mb-4 text-balance leading-tight">
-              Reliable Lawn Care in{" "}
+              We Transform Properties in{" "}
               <span className="text-primary">Covington & Conyers</span>
             </h1>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-primary-foreground/90 mb-4 text-balance">
@@ -162,8 +162,8 @@ export default function Home() {
               <span className="font-medium">Locally Owned & Operated</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <CalendarIcon className="w-4 h-4 text-primary flex-shrink-0" />
-              <span className="font-medium">Reliable Weekly Scheduling</span>
+              <Shield className="w-4 h-4 text-primary flex-shrink-0" />
+              <span className="font-medium">Walk-Through Guarantee</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MessageCircleIcon className="w-4 h-4 text-primary flex-shrink-0" />
@@ -198,100 +198,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══��════════════ PRICING ════════════════ */}
-      <section id="spring-rush-pricing" className="py-14 sm:py-18 bg-secondary scroll-mt-24">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-14">
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider">Plans</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground mt-2 mb-3">
-              {sr.pricing.headline}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
-            {sr.pricing.plans.map((plan) => (
-              <Card
-                key={plan.name}
-                className={`relative flex flex-col transition-all duration-300 ${
-                  plan.highlighted
-                    ? "border-primary ring-2 ring-primary/20 shadow-lg md:scale-105 md:z-10"
-                    : "border-border hover:border-primary/40 hover:shadow-md"
-                }`}
-              >
-                {plan.highlighted && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full">
-                    Most Popular
-                  </div>
-                )}
-                <CardContent className="p-6 sm:p-8 flex flex-col flex-1">
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-3">
-                    {plan.badge}
-                  </p>
-                  <p className="text-lg font-semibold text-foreground mb-1">{plan.name}</p>
-                  <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-3xl sm:text-4xl font-bold text-foreground">
-                      {plan.price.replace(/\*$/, "")}
-                    </span>
-                    {plan.price.endsWith("*") && (
-                      <span className="text-xs font-normal text-muted-foreground leading-none">*</span>
-                    )}
-                    {plan.period && <span className="text-muted-foreground text-sm">{plan.period}</span>}
-                  </div>
-                  <p className="text-xs text-muted-foreground mb-5">{plan.note}</p>
-
-                  {plan.highlighted && (
-                    <p className="text-xs text-muted-foreground mb-5 italic">
-                      Less than the cost of one dinner out.
-                    </p>
-                  )}
-
-                  <ul className="flex-1 space-y-2.5 mb-6">
-                    {plan.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-sm text-foreground">
-                        <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Button
-                    asChild
-                    className={`w-full ${
-                      plan.highlighted
-                        ? "bg-primary hover:bg-primary/90 text-primary-foreground"
-                        : "bg-foreground hover:bg-foreground/90 text-background"
-                    }`}
-                  >
-                    <a href={BUSINESS.telHref} className="inline-flex items-center justify-center gap-2">
-                      <Phone className="w-4 h-4" />
-                      Lock In My Spot
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════ GUARANTEE ════════════════ */}
-      <section className="py-12 sm:py-16 bg-background">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-5">
-              <Shield className="w-7 h-7 text-primary" />
-            </div>
-            <p className="text-sm text-muted-foreground font-semibold uppercase tracking-wider mb-2">
-              {sr.guarantee.intro}
-            </p>
-            <p className="text-xl sm:text-2xl font-serif text-foreground leading-snug text-balance">
-              {sr.guarantee.text}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════ REVIEWS ════════════════ */}
+      {/* ════════════════ REVIEWS / SOCIAL PROOF ════════════════ */}
       <section className="py-14 sm:py-18 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-14">
@@ -329,6 +236,101 @@ export default function Home() {
             <p className="text-sm text-muted-foreground mt-4">
               Your feedback helps local businesses grow.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════ GUARANTEE ════════════════ */}
+      <section className="py-12 sm:py-16 bg-background">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-5">
+              <Shield className="w-7 h-7 text-primary" />
+            </div>
+            <p className="text-sm text-muted-foreground font-semibold uppercase tracking-wider mb-2">
+              {sr.guarantee.intro}
+            </p>
+            <p className="text-xl sm:text-2xl font-serif text-foreground leading-snug text-balance">
+              {sr.guarantee.text}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════ PRICING — REFRESH TIERS ════════════════ */}
+      <section id="spring-rush-pricing" className="py-14 sm:py-18 bg-secondary scroll-mt-24">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-14">
+            <span className="text-primary font-semibold text-sm uppercase tracking-wider">Transformations</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground mt-2 mb-3">
+              {sr.refreshTiers.headline}
+            </h2>
+            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
+              {sr.refreshTiers.subheadline}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
+            {sr.refreshTiers.tiers.map((tier) => (
+              <Card
+                key={tier.name}
+                className={`relative flex flex-col transition-all duration-300 ${
+                  tier.highlighted
+                    ? "border-primary ring-2 ring-primary/20 shadow-lg md:scale-105 md:z-10"
+                    : "border-border hover:border-primary/40 hover:shadow-md"
+                }`}
+              >
+                {tier.highlighted && (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full">
+                    Most Popular
+                  </div>
+                )}
+                <CardContent className="p-6 sm:p-8 flex flex-col flex-1">
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-3">
+                    {tier.badge}
+                  </p>
+                  <p className="text-lg font-semibold text-foreground mb-1">{tier.name}</p>
+                  <div className="flex items-baseline gap-1 mb-1">
+                    <span className="text-3xl sm:text-4xl font-bold text-foreground">
+                      {tier.price.replace(/\*$/, "")}
+                    </span>
+                    {tier.price.endsWith("*") && (
+                      <span className="text-xs font-normal text-muted-foreground leading-none">*</span>
+                    )}
+                  </div>
+                  <p className="text-sm text-primary italic mb-5">{tier.promise}</p>
+
+                  <ul className="flex-1 space-y-2.5 mb-6">
+                    {tier.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-sm text-foreground">
+                        <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button
+                    asChild
+                    className={`w-full ${
+                      tier.highlighted
+                        ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                        : "bg-foreground hover:bg-foreground/90 text-background"
+                    }`}
+                  >
+                    <Link href="/quote" className="inline-flex items-center justify-center gap-2">
+                      Get My Free Estimate
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="max-w-3xl mx-auto mt-10 text-center">
+            <p className="text-sm text-foreground bg-card border border-border rounded-xl px-6 py-4">
+              {sr.refreshTiers.maintenanceNote}
+            </p>
+            <p className="text-xs text-muted-foreground mt-4">{sr.refreshTiers.disclaimer}</p>
           </div>
         </div>
       </section>

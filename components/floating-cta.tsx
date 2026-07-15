@@ -15,7 +15,7 @@ export function FloatingCTA() {
           Call Now
         </a>
         <a
-          href={smsHref("Hi, I want to lock in the Summer Special weekly plan. My address is ____.")}
+          href={smsHref("Hi, I'd like a free estimate for a property refresh. My address is ____.")}
           className="flex items-center justify-center gap-2 py-3.5 text-primary font-medium text-sm transition-colors active:bg-primary-foreground/10"
         >
           <MessageSquare className="w-4 h-4" />

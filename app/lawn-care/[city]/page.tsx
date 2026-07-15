@@ -28,11 +28,12 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   }
 }
 
+// Transformation-first order — maintenance deliberately last.
 const cityServices = [
-  { icon: Scissors, title: "Weekly & Biweekly Mowing", description: "Professional mowing, precision edging, full cleanup — no clippings left behind." },
-  { icon: Flower2, title: "Landscaping Cleanups", description: "Bed refresh, mulch, weeding, shrub trimming, and debris haul-away." },
-  { icon: SprayCan, title: "Pressure Washing", description: "Driveways, siding, walkways, and fences — from $197." },
+  { icon: Flower2, title: "Property Refresh & Cleanups", description: "Full-yard cleanup, fresh mulch, defined beds, shrub shaping, and haul-away — often in one day." },
+  { icon: SprayCan, title: "Pressure Washing", description: "Driveways, siding, walkways, and fences — the fastest way to make a property read new." },
   { icon: LeafyGreen, title: "Seasonal Cleanup", description: "Spring and fall cleanups, leaf removal, and gutter cleaning." },
+  { icon: Scissors, title: "Recurring Maintenance", description: "Weekly and biweekly mowing routes that keep your refresh looking new. No contracts." },
 ]
 
 export default async function CityPage({ params }: { params: Promise<{ city: string }> }) {
@@ -52,13 +53,16 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
     url: `https://${BUSINESS.domain}/lawn-care/${page.slug}`,
     areaServed: { "@type": "City", name: page.city, containedInPlace: { "@type": "State", name: "Georgia" } },
     provider: { "@id": `https://${BUSINESS.domain}/#business` },
-    offers: springRush.pricing.plans.map((plan) => ({
-      "@type": "Offer",
-      name: plan.name,
-      price: plan.price.replace(/[^0-9–\-]/g, "").split(/[–-]/)[0],
-      priceCurrency: "USD",
-      description: `${plan.name} — ${plan.note}`,
-    })),
+    // Refresh tiers as offers; the custom-quote tier deliberately has no price.
+    offers: springRush.refreshTiers.tiers.map((tier) => {
+      const numeric = tier.price.replace(/[^0-9]/g, "")
+      return {
+        "@type": "Offer",
+        name: tier.name,
+        ...(numeric ? { price: numeric, priceCurrency: "USD" } : {}),
+        description: `${tier.name} — ${tier.promise}`,
+      }
+    }),
   }
 
   const faqJsonLd = {
@@ -147,54 +151,76 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
           </div>
         </section>
 
-        {/* Pricing */}
+        {/* Refresh packages (transformation-first) */}
         <section className="py-14 sm:py-18 bg-background">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center mb-10">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground">
-                {page.city} Mowing Plans
+                {page.city} Property Refresh Packages
               </h2>
-              <p className="text-muted-foreground mt-2">No contracts. Cancel anytime.</p>
+              <p className="text-muted-foreground mt-2">{springRush.refreshTiers.subheadline}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
-              {springRush.pricing.plans.map((plan) => (
+              {springRush.refreshTiers.tiers.map((tier) => (
                 <Card
-                  key={plan.name}
+                  key={tier.name}
                   className={
-                    plan.highlighted
+                    tier.highlighted
                       ? "relative flex flex-col border-primary ring-2 ring-primary/20 shadow-lg"
                       : "relative flex flex-col border-border hover:border-primary/40 hover:shadow-md transition-all"
                   }
                 >
-                  {plan.highlighted && (
+                  {tier.highlighted && (
                     <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full">
                       Most Popular
                     </div>
                   )}
                   <CardContent className="p-6 sm:p-8 flex flex-col flex-1">
-                    <p className="text-lg font-semibold text-foreground mb-1">{plan.name}</p>
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-3">{tier.badge}</p>
+                    <p className="text-lg font-semibold text-foreground mb-1">{tier.name}</p>
                     <div className="flex items-baseline gap-1 mb-1">
-                      <span className="text-3xl font-bold text-foreground">{plan.price}</span>
-                      {plan.period && <span className="text-muted-foreground text-sm">{plan.period}</span>}
+                      <span className="text-3xl font-bold text-foreground">{tier.price.replace(/\*$/, "")}</span>
+                      {tier.price.endsWith("*") && (
+                        <span className="text-xs font-normal text-muted-foreground leading-none">*</span>
+                      )}
                     </div>
-                    <p className="text-xs text-muted-foreground mb-5">{plan.note}</p>
+                    <p className="text-sm text-primary italic mb-5">{tier.promise}</p>
                     <ul className="flex-1 space-y-2.5 mb-6">
-                      {plan.features.map((f) => (
+                      {tier.features.map((f) => (
                         <li key={f} className="flex items-start gap-2 text-sm text-foreground">
                           <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
                           <span>{f}</span>
                         </li>
                       ))}
                     </ul>
-                    <Button asChild className={plan.highlighted ? "w-full bg-primary hover:bg-primary/90 text-primary-foreground" : "w-full bg-foreground hover:bg-foreground/90 text-background"}>
-                      <a href={BUSINESS.telHref} className="inline-flex items-center justify-center gap-2">
-                        <Phone className="w-4 h-4" aria-hidden="true" />
-                        Lock In My Spot
-                      </a>
+                    <Button asChild className={tier.highlighted ? "w-full bg-primary hover:bg-primary/90 text-primary-foreground" : "w-full bg-foreground hover:bg-foreground/90 text-background"}>
+                      <Link href="/quote" className="inline-flex items-center justify-center gap-2">
+                        Get My Free Estimate
+                      </Link>
                     </Button>
                   </CardContent>
                 </Card>
               ))}
+            </div>
+            <div className="max-w-3xl mx-auto mt-10 text-center">
+              <p className="text-sm text-foreground bg-card border border-border rounded-xl px-6 py-4">
+                {springRush.refreshTiers.maintenanceNote}
+              </p>
+              <p className="text-xs text-muted-foreground mt-4">{springRush.refreshTiers.disclaimer}</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Walk-through guarantee */}
+        <section className="py-12 sm:py-16 bg-foreground">
+          <div className="container mx-auto px-4 sm:px-6 text-center">
+            <div className="max-w-2xl mx-auto">
+              <p className="text-sm text-primary font-semibold uppercase tracking-wider mb-3">
+                Every job in {page.city}. Guaranteed.
+              </p>
+              <p className="text-xl sm:text-2xl font-serif text-primary-foreground leading-snug text-balance">
+                {springRush.guarantee.text}
+              </p>
             </div>
           </div>
         </section>

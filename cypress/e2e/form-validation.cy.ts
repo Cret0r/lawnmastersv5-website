@@ -6,8 +6,14 @@
 describe("Quote Quick-Lead Flow Validation", () => {
   beforeEach(() => {
     cy.visit("/quote")
+    // Dev-mode hydration guard (same pattern as admin-auth / GOTCHAS #16):
+    // clicking the instant the button renders can land before React hydrates
+    // the client island, so the click silently does nothing.
+    cy.contains("button", "Lawn Mowing").should("be.visible")
+    cy.wait(800)
     // Advance to the phone step
     cy.contains("button", "Lawn Mowing").click()
+    cy.contains("Step 2 of 2").should("be.visible")
   })
 
   it("blocks submission when the phone is empty", () => {

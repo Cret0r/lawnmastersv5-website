@@ -44,7 +44,7 @@ export function AnnouncementBar() {
       <div className="container mx-auto px-4 py-2.5 flex items-center gap-3 text-sm">
         <div className="flex-1 flex items-center justify-center gap-3">
           <span className="hidden sm:inline font-medium">{text}</span>
-          <span className="sm:hidden font-medium">Summer Special — Now Booking</span>
+          <span className="sm:hidden font-medium">Property Refreshes — Now Booking</span>
           <Link
             href={href}
             className="inline-flex items-center rounded-full bg-primary-foreground text-primary px-4 py-1 text-xs font-bold hover:bg-primary-foreground/90 transition-colors"

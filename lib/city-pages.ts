@@ -3,6 +3,10 @@
 // Local-SEO copy for each target city. Each entry gets unique,
 // city-specific copy (not templated boilerplate) so the pages
 // don't read as doorway pages.
+// Repositioned July 2026: transformation-first (docs/OFFERS.md) —
+// refreshes lead, mowing is the maintenance back end.
+// h1 must keep the exact substring "Lawn Care in <City>, GA"
+// (SEO keyword + asserted by cypress/e2e/city-pages.cy.ts).
 // Neighborhood details sourced from SUMMER_CAMPAIGN_2026.md § 6.
 // ═══════════════════════════════════════════════════
 
@@ -21,7 +25,8 @@ export interface CityPage {
   /**
    * Question-phrased Q&As rendered as headings + emitted as FAQPage schema
    * (featured-snippet / AEO play). Keep answers 40–60 words and UNIQUE per
-   * city. ⚠️ Answers that quote prices are on the repricing list (ROADMAP).
+   * city. ⚠️ Owner rule: NO dollar amounts in answers — point to the free
+   * on-site estimate instead.
    */
   faqs: { question: string; answer: string }[]
 }
@@ -30,68 +35,68 @@ export const cityPages: CityPage[] = [
   {
     slug: "covington",
     city: "Covington",
-    title: "Lawn Care & Mowing in Covington, GA | Lawn Masters V5",
+    title: "Property Refresh & Lawn Care in Covington, GA | Lawn Masters V5",
     description:
-      "Local lawn mowing, landscaping & pressure washing in Covington, GA. Weekly plans from $90/mo, no contracts. Free estimates — Se Habla Español.",
-    h1: "Lawn Care in Covington, GA",
+      "We transform overgrown properties in Covington, GA — cleanups, mulch, pressure washing, shrub care — often in one day. Recurring maintenance available. Free estimates — Se Habla Español.",
+    h1: "Property Transformations & Lawn Care in Covington, GA",
     intro:
-      "Lawn Masters V5 is based right here in Covington — when you call, you're talking to the crew that shows up. We run weekly and biweekly mowing routes across Newton County, plus landscaping cleanups and pressure washing.",
+      "Lawn Masters V5 is based right here in Covington — when you call, you're talking to the owner who shows up and does the work. We take yards that have gotten away from people and make them look new, usually in one day, then keep them that way with weekly and biweekly maintenance routes.",
     localAngle:
-      "Covington's older homes along the Hwy 278 corridor are our home turf. Georgia humidity is hard on driveways and siding here — mildew staining shows up fast — so many of our mowing customers add a driveway pressure wash once a season to keep the whole property sharp.",
+      "Covington's older homes along the Hwy 278 corridor are our home turf. Georgia humidity is hard on driveways and siding here — mildew staining shows up fast — so most Covington refreshes pair the yard cleanup with a driveway pressure wash. One visit, and the whole property reads new from the street.",
     heroImage: "/hero-lawn-care-new.jpg",
     neighborhoodsLine:
       "Serving all of Covington and Newton County, including the Hwy 278 corridor and downtown square area.",
     faqs: [
       {
-        question: "How much does lawn care cost in Covington, GA?",
+        question: "How much does a property refresh cost in Covington, GA?",
         answer:
-          "Most Covington lawns fall in our standard plan range — weekly service around $120 a month, biweekly around $90 — but every property is priced individually after we see it. Larger lots along the Hwy 278 corridor with mature shade trees or long driveways may quote differently. Estimates are always free.",
+          "Every refresh is priced to the property — lot size, how far gone the yard is, and what needs hauling away drive the number, so we never quote flat rates sight-unseen. The estimate is free: we walk the property with you, then text a written quote, usually the same day.",
       },
       {
         question: "Do you offer pressure washing in Covington too?",
         answer:
-          "Yes — driveway pressure washing from $197 is one of our most-booked Covington services. Georgia humidity puts mildew stains on the older concrete around the Hwy 278 corridor fast. Many of our mowing customers add a driveway wash once a season to keep the whole property looking sharp.",
+          "Yes — driveway and exterior pressure washing is one of our most-booked Covington services, and it's built into our refresh packages. Georgia humidity puts mildew stains on the older concrete around the Hwy 278 corridor fast; washing it as part of the refresh makes the whole property read new at once.",
       },
     ],
   },
   {
     slug: "conyers",
     city: "Conyers",
-    title: "Lawn Care & Mowing in Conyers, GA | Lawn Masters V5",
+    title: "Property Refresh & Lawn Care in Conyers, GA | Lawn Masters V5",
     description:
-      "Reliable weekly lawn mowing & landscaping in Conyers, GA. HOA-friendly service from $90/mo, no contracts. Free estimates — Se Habla Español.",
-    h1: "Lawn Care in Conyers, GA",
+      "HOA-notice rescue, yard cleanups, mulch & pressure washing in Conyers, GA — then weekly maintenance to keep you inside the lines. Free estimates — Se Habla Español.",
+    h1: "Property Transformations & Lawn Care in Conyers, GA",
     intro:
-      "Lawn Masters V5 runs regular mowing routes through Conyers every week. Professional mowing, precision edging, and full cleanup — no clippings left behind, and no contracts to sign.",
+      "Conyers is where overgrown yards meet HOA letters — and that's exactly the work Lawn Masters V5 does best. We bring a property back under control in one visit: cleanup, beds, shrubs, pressure washing. Then our weekly routes keep it comfortably inside the lines.",
     localAngle:
-      "Conyers neighborhoods off Hwy 138 mean HOA standards — and an overgrown lawn letter nobody wants. Our weekly plan keeps you comfortably inside the lines, and because we route multiple homes per street, we can hold pricing that one-off services can't match.",
+      "The neighborhoods off Hwy 138 mean HOA standards — and a violation notice nobody wants. When one lands, we prioritize fixing exactly what's cited, fast, with before-and-after photos you can send straight back to the board. Because we route multiple homes per street here, maintenance stays efficient after the rescue.",
     heroImage: "/lawn-care-mowing-stripes.jpg",
     neighborhoodsLine:
       "Serving Conyers and Rockdale County, including the neighborhoods off Hwy 138.",
     faqs: [
       {
-        question: "Can you keep my yard inside HOA standards in Conyers?",
+        question: "Can you fix an HOA violation notice in Conyers fast?",
         answer:
-          "Yes — that's most of our Conyers work. Weekly mowing with clean edges keeps you comfortably inside HOA lines in the neighborhoods off Hwy 138, and if a notice ever does land, we prioritize fixing the cited items fast — with before-and-after photos you can send straight back to the board.",
+          "Yes — HOA rescues are a specialty. We prioritize the cited items — overgrowth, beds, edging, debris — usually within days, and send you before-and-after photos to forward to the board. After the rescue, most Conyers customers move onto a weekly route so a notice never lands again.",
       },
       {
-        question: "How much is weekly lawn mowing in Conyers, GA?",
+        question: "How much is lawn care in Conyers, GA?",
         answer:
-          "Weekly service in Conyers runs about $120 a month on our standard plan, with biweekly around $90 — final pricing depends on lot size and condition. Because we route multiple homes per street in Conyers, we can hold pricing that scattered one-off services can't match. No contracts, cancel anytime.",
+          "It depends on the property — lot size and condition set the number, so we quote after seeing it, never blind. Estimates are free and fast, and because we route multiple homes per street in Conyers, ongoing maintenance stays efficient. No contracts either way — you can cancel anytime.",
       },
     ],
   },
   {
     slug: "oxford",
     city: "Oxford",
-    title: "Lawn Care & Mowing in Oxford, GA | Lawn Masters V5",
+    title: "Property Refresh & Lawn Care in Oxford, GA | Lawn Masters V5",
     description:
-      "Lawn mowing, bed cleanups & tree-lined lot care in Oxford, GA. Weekly plans from $90/mo, no contracts. Free estimates — Se Habla Español.",
-    h1: "Lawn Care in Oxford, GA",
+      "Bed rebuilds, overgrowth cleanups & tree-lined lot care in Oxford, GA — transformations first, weekly maintenance after. Free estimates — Se Habla Español.",
+    h1: "Property Transformations & Lawn Care in Oxford, GA",
     intro:
-      "Just up the road from our Covington base, Oxford is on our core weekly route. We handle mowing, edging, shrub trimming, and the seasonal cleanups that Oxford's mature lots demand.",
+      "Just up the road from our Covington base, Oxford's mature, tree-lined lots are beautiful — until the beds and borders get away from you. We rebuild them: weeding, edging, fresh mulch, shrub shaping, haul-away. Then weekly maintenance keeps the whole lot sharp.",
     localAngle:
-      "Oxford's tree-lined lots near Oxford College are beautiful — and by June, the beds are usually fighting back. Leaf litter, shade-driven weeds, and overgrown borders are the jobs we see most here, which is why our Full Bed Refresh pairs so well with a weekly mowing plan in this area.",
+      "Oxford's tree-lined lots near Oxford College fight back by June — leaf litter, shade-driven weeds, and overgrown borders are the jobs we see most here. A full bed refresh transforms these properties more than anything else, which is why it anchors most of our Oxford work before a mowing route takes over.",
     heroImage: "/hero-landscaping-lush-garden.jpg",
     neighborhoodsLine:
       "Serving Oxford and northern Newton County, including the streets around Oxford College.",
@@ -99,7 +104,7 @@ export const cityPages: CityPage[] = [
       {
         question: "Do you clean up overgrown flower beds in Oxford, GA?",
         answer:
-          "All the time — Oxford's tree-lined lots near the college fill beds with leaf litter and shade weeds by June. Our Full Bed Refresh (weeding, edging, fresh mulch, defined borders) starts at $300, and most Oxford customers pair it with a weekly mowing plan so the yard never gets away from them again.",
+          "All the time — Oxford's tree-lined lots near the college fill beds with leaf litter and shade weeds by June. Our bed refreshes (weeding, edging, fresh mulch, defined borders) transform these properties in a single visit, and most Oxford customers pair one with a weekly plan so it never gets away again.",
       },
       {
         question: "How often should Oxford lawns be mowed in summer?",

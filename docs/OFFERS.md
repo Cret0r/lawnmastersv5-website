@@ -2,8 +2,10 @@
 
 > Built with the Grand Slam Offer framework against real prices and the cold-start reality.
 > Identity: **"We make neglected properties look amazing."** Services are methods, not the product.
-> Status: STRATEGY APPROVED BY OWNER (repositioning, July 2026) — exact tier prices below are
-> proposals pending owner confirmation before they go on the website.
+> Status: **LIVE ON THE SITE (7/14/2026)** — owner confirmed the tiers: Curb Appeal from $349,
+> Full Property Refresh from $749, and **Total Transformation shows "Custom Quote" on the site**
+> (the ~$1,499 anchor below stays as the internal quoting floor for the field notebook).
+> Homepage + city pages now lead with these tiers; mowing is a small maintenance line below.
 
 ---
 
@@ -97,7 +99,7 @@ One customer. One estimate. Four revenue events.
 | Lead with $120/mo weekly | Lead with Refresh tiers; maintenance at the close |
 | Track hangers/recurring count | Track leads, estimates, jobs sold, **average job value**, maintenance conversions |
 | $28/cut in the pitch | Relief in the pitch, math at the close |
-| Homepage sells lawn care | Homepage sells the transformation (roadmap — pending price sign-off) |
+| Homepage sells lawn care | ✅ Homepage + city pages sell the transformation (shipped 7/14/2026) |
 
 Unchanged: guarantees, no-contracts, bilingual moat, route-density filter
 (refreshes cluster by neighborhood too — same rule), never fake scarcity, review/referral separation.

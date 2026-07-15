@@ -1,7 +1,12 @@
 // ═══════════════════════════════════════════════════
-// SPRING RUSH LAWN PLAN — Central content config
-// Update copy here; components will pull from this file.
+// HOMEPAGE CAMPAIGN CONTENT — Central content config
+// Repositioned July 2026: transformation-first (docs/OFFERS.md).
+// Refresh tiers are the front end; recurring mowing is the back end,
+// mentioned small below the tiers and pitched at the walk-through.
+// The legacy `pricing.plans` (mowing) stays exported — /summer's
+// conversion bridge still renders it as the back-end upsell.
 // Phone/cities come from lib/business-info.ts — edit them THERE.
+// File keeps its legacy name (see docs/DECISIONS.md — rename = churn).
 // ═══════════════════════════════════════════════════
 
 import { BUSINESS, CITIES_LINE, smsHref } from "./business-info"
@@ -9,21 +14,21 @@ import { BUSINESS, CITIES_LINE, smsHref } from "./business-info"
 export const springRush = {
   // — Announcement Bar
   announcement: {
-    text: "Summer Special — Now booking weekly routes",
-    cta: "Lock In My Spot",
-    href: "/",
+    text: "Now booking property refreshes in Newton County",
+    cta: "Get My Free Estimate",
+    href: "/quote",
   },
 
-  // — Hero
+  // — Hero (transformation-first)
   hero: {
-    headline: "Secure Your Spot — Limited Availability",
+    headline: "From Overgrown to Impressive — Often in One Day",
     subheadline:
-      "Recurring lawn service starting at $120/month*. Se Habla Español.",
-    noContract: "No contracts. Cancel anytime.",
+      "Cleanups, mulch, pressure washing & shrub care in Covington & Conyers, GA. Recurring maintenance available to keep it looking new.",
+    noContract: "Free on-site estimates · Walk-through guarantee · Se Habla Español",
     ctaCall: { label: "Call Now", href: BUSINESS.telHref },
     ctaText: {
       label: "Text Now",
-      href: smsHref("Hi, I want to lock in the Summer Special weekly plan. My address is ____."),
+      href: smsHref("Hi, I'd like a free estimate for a property refresh. My address is ____."),
     },
     secondaryLink: {
       label: "Get a Fast Estimate",
@@ -35,7 +40,7 @@ export const springRush = {
   trust: {
     badges: [
       { label: "Locally Owned & Operated", show: true },
-      { label: "Reliable Weekly Scheduling", show: true },
+      { label: "Walk-Through Guarantee", show: true },
       { label: "Se Habla Español", show: true },
     ],
   },
@@ -62,7 +67,61 @@ export const springRush = {
     ],
   },
 
-  // — Pricing
+  // — THE FRONT END: Refresh tiers (owner-confirmed prices, 7/14/2026;
+  //   Total Transformation deliberately shows Custom Quote on the site)
+  refreshTiers: {
+    headline: "Property Refresh Packages",
+    subheadline:
+      "Every package is quoted free, in person, to your property — these are starting points, not flat rates.",
+    tiers: [
+      {
+        name: "Curb Appeal Refresh",
+        badge: "Front of House",
+        price: "from $349*",
+        promise: "The front of your house looks new by dinner.",
+        features: [
+          "Front beds weeded, edged & mulched",
+          "Shrubs shaped",
+          "Walkway & porch pressure washed",
+        ],
+        highlighted: false,
+      },
+      {
+        name: "Full Property Refresh",
+        badge: "Most Popular",
+        price: "from $749*",
+        promise: "Your whole property, back under control, in one day.",
+        features: [
+          "Full yard cleanup & haul-away",
+          "Every bed weeded, edged & mulched",
+          "All shrubs shaped",
+          "Driveway pressure washed",
+        ],
+        highlighted: true,
+      },
+      {
+        name: "Total Transformation",
+        badge: "Overgrown & Pre-Sale",
+        price: "Custom Quote",
+        promise: "Neglected to knockout — usually within 48 hours.",
+        features: [
+          "Lot-level clearing & haul-away",
+          "Beds rebuilt with fabric & fresh mulch",
+          "Full pressure wash — driveway, house, walkways",
+          "Gutters cleaned",
+        ],
+        highlighted: false,
+      },
+    ],
+    maintenanceNote:
+      "Want it to stay this way? Recurring maintenance routes are available after your refresh — priced to your property at your free estimate. No contracts, and if we ever miss a scheduled visit without notice, the next one's free.",
+    disclaimer:
+      "*Starting prices. Final quote is always given after we see the property — never a surprise, always before we start.",
+  },
+
+  // — LEGACY: mowing plans (back end). Still rendered on /summer's
+  //   conversion bridge. ⚠️ Florida-era prices — GA repricing pending
+  //   (docs/ROADMAP.md). Not shown on the homepage anymore.
   pricing: {
     headline: "Simple, Transparent Pricing",
     plans: [
@@ -109,10 +168,14 @@ export const springRush = {
     ],
   },
 
-  // — Guarantee
+  // — Guarantees
   guarantee: {
+    // The transformation guarantee — said BEFORE the price, always.
     intro: "Our promise to you:",
-    text: "If we ever miss a scheduled service without notice, your next cut is 100% free.*",
+    text: "When we finish, we walk the property with you. Anything you don't love, we fix on the spot — free.",
+    // The maintenance guarantee — lives with the maintenance mention.
+    missedCut:
+      "If we ever miss a scheduled service without notice, your next visit is 100% free.*",
   },
 
   // — Referral
@@ -123,7 +186,7 @@ export const springRush = {
 
   // — Service area (homepage compact version)
   serviceArea: {
-    text: `Now booking weekly lawn service in ${CITIES_LINE}, GA, and surrounding neighborhoods.`,
+    text: `Now booking property refreshes and maintenance routes in ${CITIES_LINE}, GA, and surrounding neighborhoods.`,
     cta: { label: "See If We Service Your Area", href: "/contact" },
   },
 
