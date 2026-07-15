@@ -82,7 +82,7 @@ export default function AboutPage() {
                     The business was built in Florida, where a small mowing operation grew job by job into a trusted local service. In 2026 we relocated to Covington, Georgia, and we&apos;re earning that same trust here in Newton County — one property at a time.
                   </p>
                   <p>
-                    Lawn Masters V5 is owner-operated: the person who quotes your property is the person who shows up and does the work. With 3+ years of hands-on experience in lawn and property care, we understand what it takes to keep a yard looking its best through every season.
+                    Lawn Masters V5 is owner-operated by Angel: the person who quotes your property is the person who shows up and does the work. With 3+ years of hands-on experience in lawn and property care, we understand what it takes to keep a yard looking its best through every season.
                   </p>
                   <p>
                     From routine mowing and edging to driveway pressure washing and exterior cleaning, every job is completed with the same focus on detail, reliability, and customer satisfaction.

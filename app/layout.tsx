@@ -12,15 +12,15 @@ const _dmSerif = DM_Serif_Display({ weight: "400", subsets: ["latin"], variable:
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${BUSINESS.domain}`),
-  title: "Lawn Masters V5 — Lawn Care & Landscaping in Covington & Conyers, GA",
+  title: "Lawn Masters V5 — Property Transformations & Lawn Care in Covington, GA",
   description:
-    "Professional lawn care and landscaping in Covington, Conyers, and the greater Georgia area. Weekly mowing from $120/mo. Landscape design, hardscaping, pressure washing, and more. Se Habla Espanol.",
+    "We transform overgrown, neglected properties in Covington, Conyers, and Newton County, GA — cleanups, mulch, pressure washing, shrub care, and recurring maintenance. Free estimates. Se Habla Espanol.",
   openGraph: {
     type: "website",
     siteName: BUSINESS.shortName,
-    title: "Lawn Masters V5 — Lawn Care & Landscaping in Covington & Conyers, GA",
+    title: "Lawn Masters V5 — Property Transformations & Lawn Care in Covington, GA",
     description:
-      "Professional lawn care, landscaping, and pressure washing in Covington, Conyers, and Newton County, GA. Free estimates. Se Habla Español.",
+      "Overgrown to impressive, often in one day — cleanups, mulch, pressure washing, and shrub care in Covington and Newton County, GA. Free estimates. Se Habla Español.",
     url: `https://${BUSINESS.domain}`,
     locale: "en_US",
     images: [
@@ -60,7 +60,7 @@ const jsonLd = {
   logo: `https://${BUSINESS.domain}/logo-color.png`,
   name: BUSINESS.shortName,
   description:
-    "Professional landscaping services including lawn care, landscape design, hardscaping, tree care, irrigation, pressure washing, and seasonal cleanup.",
+    "Property transformation and lawn care company: full-yard cleanups, mulch and bed refreshes, pressure washing, tree and shrub care, landscape design, hardscaping, irrigation, and recurring maintenance.",
   url: `https://${BUSINESS.domain}`,
   telephone: BUSINESS.phoneE164,
   email: BUSINESS.email,
@@ -97,19 +97,14 @@ const jsonLd = {
     "Pressure Washing",
     "Seasonal Cleanup",
   ],
-  priceRange: "$45–$120/mo",
+  priceRange: "$349+",
   sameAs: [BUSINESS.instagramUrl, BUSINESS.facebookUrl],
-  // Founder markup (E-E-A-T) switches on when the owner supplies his first
-  // name in lib/business-info.ts — never ship a made-up name.
-  ...((BUSINESS.ownerFirstName as string)
-    ? {
-        founder: {
-          "@type": "Person",
-          name: BUSINESS.ownerFirstName,
-          jobTitle: "Owner-Operator",
-        },
-      }
-    : {}),
+  // Founder markup (E-E-A-T) — first name only, by owner instruction.
+  founder: {
+    "@type": "Person",
+    name: BUSINESS.ownerFirstName,
+    jobTitle: "Owner-Operator",
+  },
 }
 
 export default function RootLayout({
