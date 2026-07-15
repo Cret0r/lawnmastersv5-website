@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 
 // Single source of truth for the page AND the FAQPage schema below.
 // Answers are deliberately 40–60 words — the length featured snippets pull.
-// ⚠️ The pricing answer quotes the LIVE site prices — when the Georgia
-// repricing pass happens (docs/ROADMAP.md), update it here too.
+// ⚠️ Owner rule (7/14/2026): NO dollar amounts anywhere in these answers —
+// point to the free on-site estimate instead. Do not add prices back.
 const faqs: { question: string; answer: string }[] = [
   {
     question: "How much does lawn care cost in Covington, GA?",
     answer:
-      "Every property is priced individually — lot size and condition drive the number. Recurring mowing plans start around $90–$120 per month, one-time cuts from $45, and driveway pressure washing from $197. The estimate is always free: we look at the property first, then text you an exact quote.",
+      "It depends on your property — lot size, condition, and what needs doing drive the number, so we don't quote flat rates sight-unseen. Every estimate is free: we look at the property in person, then text you an exact written quote with no obligation. Most quotes go out the same day.",
   },
   {
     question: "Do you require contracts for lawn service?",
@@ -71,12 +71,12 @@ const faqs: { question: string; answer: string }[] = [
   {
     question: "When should I pressure wash a driveway in Georgia?",
     answer:
-      "Once a year keeps Georgia's humidity from winning. Algae, mold, and mildew build up fast on concrete here — most driveways show green or black staining by early summer. Late spring is the ideal slot, but if you can already see the staining, it's overdue. Driveway washes start at $197.",
+      "Once a year keeps Georgia's humidity from winning. Algae, mold, and mildew build up fast on concrete here — most driveways show green or black staining by early summer. Late spring is the ideal slot, but if you can already see the staining, it's overdue. Estimates are free and take minutes.",
   },
   {
     question: "How does the referral program work?",
     answer:
-      "Send us a neighbor and you get $30 off your next service — and they get $30 off their first one. The credit applies after their first paid service is completed, once per unique referral. Just text us their name; there's no form and no limit on referrals.",
+      "Send us a neighbor and you both get money off — a credit toward your next service for you, and a discount on their first service for them. It applies after their first paid service is completed, once per unique referral. Just text us their name; no forms, no limit.",
   },
 ]
 
