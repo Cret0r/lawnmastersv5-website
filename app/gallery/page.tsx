@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { GalleryItemCard } from "@/components/gallery-item-card"
+import { GalleryPortfolioGrid } from "@/components/gallery-portfolio-grid"
 import { getPublishedGalleryItems } from "@/lib/gallery"
 import Image from "next/image"
 import Link from "next/link"
@@ -20,6 +20,7 @@ export default async function ProjectsPage() {
   // editable. Falls back to an empty array (not an error) if scripts/007
   // hasn't been run yet.
   const allTransformations = (await getPublishedGalleryItems()).map((item) => ({
+    id: item.id,
     title: item.title,
     description: item.description ?? "",
     itemType: item.item_type,
@@ -54,12 +55,12 @@ export default async function ProjectsPage() {
             Our Gallery
           </h1>
           <p className="text-lg text-primary-foreground/80 max-w-3xl mx-auto text-balance leading-relaxed">
-            Drag the slider to see the dramatic before and after transformations we deliver for our clients.
+            Tap a project to see the full before and after transformation.
           </p>
         </div>
       </section>
 
-      {/* Before / After Comparisons */}
+      {/* Portfolio grid */}
       <section className="py-16 sm:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 sm:mb-16">
@@ -70,29 +71,11 @@ export default async function ProjectsPage() {
               Before & After
             </h2>
             <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
-              Slide to reveal the transformation. Every project showcases our commitment to quality craftsmanship.
+              Every project showcases our commitment to quality craftsmanship. Tap any card for the full slider.
             </p>
           </div>
 
-          {allTransformations.length === 0 ? (
-            <p className="text-center text-muted-foreground max-w-2xl mx-auto">
-              New before-and-after photos are on the way — check back soon.
-            </p>
-          ) : (
-          <div className="flex flex-col gap-16 sm:gap-20 max-w-5xl mx-auto">
-            {allTransformations.map((project, index) => (
-              <GalleryItemCard
-                key={index}
-                itemType={project.itemType}
-                beforeImage={project.beforeImage}
-                afterImage={project.afterImage}
-                title={project.title}
-                description={project.description}
-                services={project.services}
-              />
-            ))}
-          </div>
-          )}
+          <GalleryPortfolioGrid items={allTransformations} />
         </div>
       </section>
 

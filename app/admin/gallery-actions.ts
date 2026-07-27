@@ -294,20 +294,27 @@ export async function setGalleryItemPublished(id: string, published: boolean) {
   return { success: true }
 }
 
-// Re-orders the full admin list (which is also the /gallery display order).
-// Normalizes the whole list to sequential sort_order values matching
-// current display order first, then swaps the target item with its
-// neighbor — robust even when many rows share the same sort_order.
-export async function moveGalleryItem(id: string, direction: "up" | "down") {
-  if (!(await isAdminAuthenticated())) {
-    return { success: false, error: "Unauthorized" }
-  }
-  const supabase = createAdminClient()
-
+// Shared reorder engine. Fetches ONLY the rows matching `filterColumn = true`
+// (the subset that actually renders wherever `orderColumn` is used — the
+// featured items on the homepage, or the published items on /gallery),
+// normalizes that subset to sequential order values matching its current
+// display order, then swaps the target item with its neighbor WITHIN that
+// subset. Operating on the filtered subset (not the whole table) matters:
+// swapping with an invisible neighbor (e.g. an unfeatured item) would move
+// data around with no visible effect, which is exactly the "button doesn't
+// do anything" bug from the previous attempt at this feature.
+async function moveWithinSubset(
+  supabase: ReturnType<typeof createAdminClient>,
+  id: string,
+  direction: "up" | "down",
+  filterColumn: "featured" | "published",
+  orderColumn: "sort_order" | "gallery_order",
+) {
   const { data, error } = await supabase
     .from("gallery_items")
-    .select("id, sort_order, created_at")
-    .order("sort_order", { ascending: true })
+    .select("id, created_at")
+    .eq(filterColumn, true)
+    .order(orderColumn, { ascending: true })
     .order("created_at", { ascending: false })
 
   if (error || !data) {
@@ -315,26 +322,50 @@ export async function moveGalleryItem(id: string, direction: "up" | "down") {
   }
 
   const index = data.findIndex((row) => row.id === id)
-  if (index === -1) return { success: false, error: "Item not found." }
+  if (index === -1) return { success: true } // not in this subset — nothing to do
 
   const swapIndex = direction === "up" ? index - 1 : index + 1
   if (swapIndex < 0 || swapIndex >= data.length) {
     return { success: true } // already at the edge, nothing to do
   }
 
-  const updates = data.map((row, i) => ({ id: row.id, sort_order: i }))
-  const tmp = updates[index].sort_order
-  updates[index].sort_order = updates[swapIndex].sort_order
-  updates[swapIndex].sort_order = tmp
+  const updates = data.map((row, i) => ({ id: row.id, value: i }))
+  const tmp = updates[index].value
+  updates[index].value = updates[swapIndex].value
+  updates[swapIndex].value = tmp
 
   const results = await Promise.all(
-    updates.map((u) => supabase.from("gallery_items").update({ sort_order: u.sort_order }).eq("id", u.id)),
+    updates.map((u) => supabase.from("gallery_items").update({ [orderColumn]: u.value }).eq("id", u.id)),
   )
   const failed = results.find((r) => r.error)
   if (failed?.error) {
     return { success: false, error: friendlyError(failed.error.message) }
   }
 
-  revalidateGalleryPaths()
   return { success: true }
+}
+
+// Reorders the /gallery page — independent of the homepage order (session
+// 18). Only meaningful among published items (unpublished ones don't
+// render on /gallery at all).
+export async function moveItemInGalleryOrder(id: string, direction: "up" | "down") {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
+  const supabase = createAdminClient()
+  const result = await moveWithinSubset(supabase, id, direction, "published", "gallery_order")
+  if (result.success) revalidateGalleryPaths()
+  return result
+}
+
+// Reorders the homepage's featured section — independent of the /gallery
+// order. Only meaningful among featured items.
+export async function moveItemInHomepageOrder(id: string, direction: "up" | "down") {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
+  const supabase = createAdminClient()
+  const result = await moveWithinSubset(supabase, id, direction, "featured", "sort_order")
+  if (result.success) revalidateGalleryPaths()
+  return result
 }

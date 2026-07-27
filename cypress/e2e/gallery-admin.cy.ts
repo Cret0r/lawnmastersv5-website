@@ -47,6 +47,8 @@ describe("Gallery — public/admin isolation", () => {
     cy.contains("Add a Gallery Item").should("not.exist")
     cy.get('input[type="file"]').should("not.exist")
     cy.contains("button", "Feature").should("not.exist")
+    cy.get('[aria-label*="gallery order" i]').should("not.exist")
+    cy.get('[aria-label*="homepage order" i]').should("not.exist")
   })
 
   it("homepage renders with no admin controls", () => {
@@ -64,6 +66,37 @@ describe("Gallery — public/admin isolation", () => {
     cy.setCookie("admin_session", "forged-token-value")
     cy.visit("/admin")
     cy.url().should("include", "/admin/login")
+  })
+})
+
+describe("Gallery — portfolio grid & lightbox (public, no login needed)", () => {
+  it("renders a multi-card grid when items exist, or a graceful empty state otherwise", () => {
+    cy.visit("/gallery")
+    cy.get("body").then(($body) => {
+      if ($body.find('[data-testid="gallery-grid"]').length > 0) {
+        cy.get('[data-gallery-card]').should("have.length.greaterThan", 1)
+      } else {
+        cy.contains("check back soon").should("exist")
+      }
+    })
+  })
+
+  it("opens the full interactive slider + description in a lightbox when a card is clicked, and Escape closes it", () => {
+    cy.visit("/gallery")
+    cy.get("body").then(($body) => {
+      if ($body.find("[data-gallery-card]").length === 0) {
+        cy.log("No gallery items available in this environment — skipping lightbox interaction.")
+        return
+      }
+      cy.get("[data-gallery-card]").first().click()
+      cy.get('[data-testid="gallery-lightbox"]').should("be.visible")
+      // Full card content (title + description + services) renders inside.
+      cy.get('[data-testid="gallery-lightbox"]').within(() => {
+        cy.get("h3").should("be.visible")
+      })
+      cy.get("body").type("{esc}")
+      cy.get('[data-testid="gallery-lightbox"]').should("not.exist")
+    })
   })
 })
 
@@ -215,6 +248,55 @@ describe("Gallery Admin — manageable feature (logged in)", () => {
     })
     cy.visit("/gallery")
     cy.contains(title, { timeout: 10000 }).should("exist")
+
+    deleteIfPresent(title)
+  })
+
+  it("gallery order and homepage order move independently of each other", () => {
+    const title = `Cypress Test — Order ${Date.now()}`
+
+    openGalleryTab()
+    cy.get("#gallery-title").type(title)
+    cy.get('input[name="before"]').selectFile("cypress/fixtures/gallery-test-before.jpg", { force: true })
+    cy.get('input[name="after"]').selectFile("cypress/fixtures/gallery-test-after.jpg", { force: true })
+    cy.contains("button", "Add to Gallery").click()
+    cy.get(`[data-gallery-item="${title}"]`, { timeout: 15000 }).should("exist")
+
+    // Feature it so it also has a homepage position to test independently.
+    cy.get(`[data-gallery-item="${title}"]`).within(() => {
+      cy.get('button[title="Feature on homepage"]').click()
+    })
+    cy.get(`[data-gallery-item="${title}"]`, { timeout: 10000 }).contains("Featured")
+
+    // Move it to the top of the GALLERY order (bounded loop — stops once
+    // the Up button is disabled, i.e. already first in that subset).
+    const moveToGalleryTop = (attemptsLeft: number) => {
+      if (attemptsLeft <= 0) return
+      cy.get(`[data-gallery-item="${title}"]`).within(() => {
+        cy.get('button[aria-label="Move up in gallery order"]').then(($btn) => {
+          if (!$btn.is(":disabled")) {
+            cy.wrap($btn).click()
+            cy.wait(300)
+          }
+        })
+      })
+      moveToGalleryTop(attemptsLeft - 1)
+    }
+    moveToGalleryTop(20)
+
+    cy.visit("/gallery")
+    cy.get('[data-gallery-card]', { timeout: 10000 }).first().should("have.attr", "data-gallery-card", title)
+
+    // Now move it DOWN in HOMEPAGE order only — the /gallery position must
+    // stay first, proving the two orders don't affect each other.
+    openGalleryTab()
+    cy.get(`[data-gallery-item="${title}"]`).within(() => {
+      cy.get('button[aria-label="Move down in homepage order"]').click()
+    })
+    cy.wait(500)
+
+    cy.visit("/gallery")
+    cy.get('[data-gallery-card]', { timeout: 10000 }).first().should("have.attr", "data-gallery-card", title)
 
     deleteIfPresent(title)
   })

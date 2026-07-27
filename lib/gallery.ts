@@ -19,7 +19,8 @@ export interface GalleryItem {
   after_url: string | null
   published: boolean
   featured: boolean
-  sort_order: number
+  sort_order: number // homepage/featured order (session 17)
+  gallery_order: number // /gallery page order, independent (session 18)
 }
 
 // item_type is missing (undefined, via the DB default 'before_after' — but
@@ -32,6 +33,9 @@ export function getEffectiveItemType(item: Pick<GalleryItem, "item_type" | "afte
   return item.after_url ? "before_after" : "single"
 }
 
+// /gallery page — ordered by gallery_order, which is independent of the
+// homepage's sort_order (session 18; see docs/DECISIONS.md). Admin
+// controls it via the Gallery-order Move Up/Down buttons.
 export async function getPublishedGalleryItems(): Promise<GalleryItem[]> {
   try {
     const supabase = createAdminClient()
@@ -39,11 +43,11 @@ export async function getPublishedGalleryItems(): Promise<GalleryItem[]> {
       .from("gallery_items")
       .select("*")
       .eq("published", true)
-      .order("sort_order", { ascending: true })
+      .order("gallery_order", { ascending: true })
       .order("created_at", { ascending: false })
 
     if (error) {
-      console.error("Gallery fetch failed (run scripts/007?):", error.message)
+      console.error("Gallery fetch failed (run scripts/008?):", error.message)
       return []
     }
     return (data as GalleryItem[]) ?? []
@@ -53,10 +57,10 @@ export async function getPublishedGalleryItems(): Promise<GalleryItem[]> {
 }
 
 // Homepage "Real Before & After Transformations" section — admin-controlled
-// via the Feature star in /admin's Gallery tab. Ordered by the same
-// sort_order the Move Up/Down buttons write. Empty on purpose if nothing is
-// featured yet — the caller hides the section rather than showing
-// placeholder content.
+// via the Feature star in /admin's Gallery tab. Ordered by sort_order,
+// which the Homepage-order Move Up/Down buttons write — independent of
+// gallery_order (session 18). Empty on purpose if nothing is featured yet
+// — the caller hides the section rather than showing placeholder content.
 export async function getFeaturedGalleryItems(): Promise<GalleryItem[]> {
   try {
     const supabase = createAdminClient()

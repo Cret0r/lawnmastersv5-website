@@ -20,6 +20,8 @@ import {
   EyeOff,
   ChevronUp,
   ChevronDown,
+  ArrowUp,
+  ArrowDown,
   Images,
   Image as ImageIcon,
 } from "lucide-react"
@@ -30,7 +32,8 @@ import {
   deleteGalleryItem,
   setGalleryItemFeatured,
   setGalleryItemPublished,
-  moveGalleryItem,
+  moveItemInGalleryOrder,
+  moveItemInHomepageOrder,
 } from "./gallery-actions"
 import { getEffectiveItemType, type GalleryItem, type GalleryItemType } from "@/lib/gallery"
 
@@ -216,13 +219,33 @@ export function GalleryTab() {
     })
   }
 
-  const handleMove = (id: string, direction: "up" | "down") => {
+  const handleMoveInGallery = (id: string, direction: "up" | "down") => {
     startTransition(async () => {
-      const result = await moveGalleryItem(id, direction)
+      const result = await moveItemInGalleryOrder(id, direction)
       if (!result.success) toast.error(result.error ?? "Could not reorder.")
       await refresh()
     })
   }
+
+  const handleMoveOnHomepage = (id: string, direction: "up" | "down") => {
+    startTransition(async () => {
+      const result = await moveItemInHomepageOrder(id, direction)
+      if (!result.success) toast.error(result.error ?? "Could not reorder.")
+      await refresh()
+    })
+  }
+
+  // Gallery-order and Homepage-order are independent (session 18) — each
+  // reorder control only makes sense, and only moves, within the subset
+  // that actually uses that order column (published items for /gallery,
+  // featured items for the homepage). Compute each item's position within
+  // its own subset so the Up/Down buttons disable at the right boundary.
+  const galleryOrderList = items
+    .filter((i) => i.published)
+    .sort((a, b) => a.gallery_order - b.gallery_order || b.created_at.localeCompare(a.created_at))
+  const homepageOrderList = items
+    .filter((i) => i.featured)
+    .sort((a, b) => a.sort_order - b.sort_order || b.created_at.localeCompare(a.created_at))
 
   return (
     <div className="space-y-6">
@@ -351,7 +374,7 @@ export function GalleryTab() {
             </CardContent>
           </Card>
         ) : (
-          items.map((item, index) => (
+          items.map((item) => (
             <Card
               key={item.id}
               data-gallery-item={item.title}
@@ -391,26 +414,70 @@ export function GalleryTab() {
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-1.5 flex-shrink-0">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    disabled={isPending || index === 0}
-                    onClick={() => handleMove(item.id, "up")}
-                    title="Move up"
-                    aria-label="Move up"
-                  >
-                    <ChevronUp className="w-4 h-4" aria-hidden="true" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    disabled={isPending || index === items.length - 1}
-                    onClick={() => handleMove(item.id, "down")}
-                    title="Move down"
-                    aria-label="Move down"
-                  >
-                    <ChevronDown className="w-4 h-4" aria-hidden="true" />
-                  </Button>
+                  {/* Gallery order — independent of homepage order (session 18).
+                      Position/boundaries computed within the published-only subset. */}
+                  <div className="flex items-center gap-0.5">
+                    <span className="hidden lg:inline text-[10px] uppercase tracking-wider text-muted-foreground mr-0.5">
+                      Gallery
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={isPending || !item.published || galleryOrderList.findIndex((i) => i.id === item.id) <= 0}
+                      onClick={() => handleMoveInGallery(item.id, "up")}
+                      title="Move up in /gallery order"
+                      aria-label="Move up in gallery order"
+                    >
+                      <ChevronUp className="w-4 h-4" aria-hidden="true" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={
+                        isPending ||
+                        !item.published ||
+                        galleryOrderList.findIndex((i) => i.id === item.id) >= galleryOrderList.length - 1
+                      }
+                      onClick={() => handleMoveInGallery(item.id, "down")}
+                      title="Move down in /gallery order"
+                      aria-label="Move down in gallery order"
+                    >
+                      <ChevronDown className="w-4 h-4" aria-hidden="true" />
+                    </Button>
+                  </div>
+
+                  {/* Homepage order — only meaningful (and shown) for featured
+                      items, since only those render on the homepage. */}
+                  {item.featured && (
+                    <div className="flex items-center gap-0.5 border-l border-border pl-1.5">
+                      <span className="hidden lg:inline text-[10px] uppercase tracking-wider text-muted-foreground mr-0.5">
+                        Home
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={isPending || homepageOrderList.findIndex((i) => i.id === item.id) <= 0}
+                        onClick={() => handleMoveOnHomepage(item.id, "up")}
+                        title="Move up in homepage order"
+                        aria-label="Move up in homepage order"
+                      >
+                        <ArrowUp className="w-4 h-4" aria-hidden="true" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={
+                          isPending ||
+                          homepageOrderList.findIndex((i) => i.id === item.id) >= homepageOrderList.length - 1
+                        }
+                        onClick={() => handleMoveOnHomepage(item.id, "down")}
+                        title="Move down in homepage order"
+                        aria-label="Move down in homepage order"
+                      >
+                        <ArrowDown className="w-4 h-4" aria-hidden="true" />
+                      </Button>
+                    </div>
+                  )}
                   <Button
                     variant={item.featured ? "default" : "outline"}
                     size="sm"
