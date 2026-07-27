@@ -3,7 +3,7 @@
 import { createAdminClient } from "@/lib/supabase/admin"
 import { isAdminAuthenticated } from "@/lib/admin-auth"
 import { revalidatePath } from "next/cache"
-import type { GalleryItem, GalleryItemType } from "@/lib/gallery"
+import { getEffectiveItemType, type GalleryItem, type GalleryItemType } from "@/lib/gallery"
 
 const MAX_FILE_BYTES = 8 * 1024 * 1024 // 8 MB per photo
 const ALLOWED_TYPES: Record<string, string> = {
@@ -66,6 +66,16 @@ async function deleteStorageObjects(supabase: ReturnType<typeof createAdminClien
   if (paths.length > 0) {
     await supabase.storage.from("gallery").remove(paths)
   }
+}
+
+// Postgrest surfaces a missing column as e.g. `column "featured" does not
+// exist` — translate that into an actionable message instead of a raw DB
+// error, since the fix (run the migration) is the same every time.
+function friendlyError(message: string): string {
+  if (/column .* does not exist/i.test(message)) {
+    return "This needs scripts/007_gallery_enhancements.sql run in Supabase first (see docs/sops/gallery-migration.md), then try again."
+  }
+  return message
 }
 
 function parseServices(raw: string | null): string[] {
@@ -178,7 +188,7 @@ export async function updateGalleryItem(id: string, formData: FormData) {
   }
   const orphanedUrls: (string | null)[] = []
 
-  if (item.item_type === "single") {
+  if (getEffectiveItemType(item) === "single") {
     const photo = formData.get("photo") as File | null
     if (photo && photo.size > 0) {
       const upload = await uploadPhoto(supabase, photo, `${id}-single`)
@@ -207,7 +217,7 @@ export async function updateGalleryItem(id: string, formData: FormData) {
   const { error } = await supabase.from("gallery_items").update(update).eq("id", id)
   if (error) {
     console.error("Gallery update failed:", error.message)
-    return { success: false, error: error.message }
+    return { success: false, error: friendlyError(error.message) }
   }
 
   // Clean up the old file only after the row update succeeds, and only when
@@ -256,7 +266,7 @@ export async function setGalleryItemFeatured(id: string, featured: boolean) {
   const supabase = createAdminClient()
   const { error } = await supabase.from("gallery_items").update({ featured }).eq("id", id)
   if (error) {
-    return { success: false, error: error.message }
+    return { success: false, error: friendlyError(error.message) }
   }
   revalidateGalleryPaths()
   return { success: true }
@@ -273,7 +283,7 @@ export async function setGalleryItemPublished(id: string, published: boolean) {
   if (!published) update.featured = false
   const { error } = await supabase.from("gallery_items").update(update).eq("id", id)
   if (error) {
-    return { success: false, error: error.message }
+    return { success: false, error: friendlyError(error.message) }
   }
   revalidateGalleryPaths()
   return { success: true }

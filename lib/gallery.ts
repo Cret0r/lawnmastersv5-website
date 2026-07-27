@@ -46,6 +46,15 @@ export async function getPublishedGalleryItems(): Promise<GalleryItem[]> {
 // same sort_order the Move Up/Down buttons write. Empty on purpose if
 // nothing is featured yet — the caller hides the section rather than
 // showing placeholder content.
+// item_type is missing (undefined) on any row created before scripts/007 was
+// run, or before the column existed at all — after_url presence is a fully
+// reliable signal regardless of migration state (single-image items never
+// have one; before/after pairs always do), so every place that needs to
+// branch on item shape should use this instead of trusting item_type alone.
+export function getEffectiveItemType(item: Pick<GalleryItem, "item_type" | "after_url">): GalleryItemType {
+  return item.after_url ? "before_after" : "single"
+}
+
 export async function getFeaturedGalleryItems(): Promise<GalleryItem[]> {
   try {
     const supabase = createAdminClient()

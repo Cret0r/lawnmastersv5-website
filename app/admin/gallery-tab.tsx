@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useTransition } from "react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -31,7 +32,7 @@ import {
   setGalleryItemPublished,
   moveGalleryItem,
 } from "./gallery-actions"
-import type { GalleryItem, GalleryItemType } from "@/lib/gallery"
+import { getEffectiveItemType, type GalleryItem, type GalleryItemType } from "@/lib/gallery"
 
 const fileInputClasses =
   "w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-2 file:text-sm file:font-medium file:text-primary-foreground hover:file:bg-primary/90"
@@ -135,9 +136,12 @@ export function GalleryTab() {
       if (result.success) {
         form.reset()
         setFormKey((k) => k + 1)
+        toast.success("Added to gallery.")
         await refresh()
       } else {
-        setError(result.error ?? "Something went wrong.")
+        const message = result.error ?? "Something went wrong."
+        setError(message)
+        toast.error(message)
       }
     })
   }
@@ -152,9 +156,12 @@ export function GalleryTab() {
       const result = await updateGalleryItem(editingItem.id, formData)
       if (result.success) {
         setEditingItem(null)
+        toast.success("Saved.")
         await refresh()
       } else {
-        setEditError(result.error ?? "Something went wrong.")
+        const message = result.error ?? "Something went wrong."
+        setEditError(message)
+        toast.error(message)
       }
     })
   }
@@ -167,23 +174,37 @@ export function GalleryTab() {
     setConfirmDeleteId(null)
     startTransition(async () => {
       const result = await deleteGalleryItem(id)
-      if (!result.success) setError(result.error ?? "Delete failed.")
+      if (result.success) {
+        toast.success("Deleted.")
+      } else {
+        toast.error(result.error ?? "Delete failed.")
+      }
       await refresh()
     })
   }
 
   const handleToggleFeatured = (item: GalleryItem) => {
+    const next = !item.featured
     startTransition(async () => {
-      const result = await setGalleryItemFeatured(item.id, !item.featured)
-      if (!result.success) setError(result.error ?? "Could not update featured status.")
+      const result = await setGalleryItemFeatured(item.id, next)
+      if (result.success) {
+        toast.success(next ? "Featured on homepage." : "Removed from homepage.")
+      } else {
+        toast.error(result.error ?? "Could not update featured status.")
+      }
       await refresh()
     })
   }
 
   const handleTogglePublished = (item: GalleryItem) => {
+    const next = !item.published
     startTransition(async () => {
-      const result = await setGalleryItemPublished(item.id, !item.published)
-      if (!result.success) setError(result.error ?? "Could not update published status.")
+      const result = await setGalleryItemPublished(item.id, next)
+      if (result.success) {
+        toast.success(next ? "Published to /gallery." : "Hidden from /gallery.")
+      } else {
+        toast.error(result.error ?? "Could not update published status.")
+      }
       await refresh()
     })
   }
@@ -191,7 +212,7 @@ export function GalleryTab() {
   const handleMove = (id: string, direction: "up" | "down") => {
     startTransition(async () => {
       const result = await moveGalleryItem(id, direction)
-      if (!result.success) setError(result.error ?? "Could not reorder.")
+      if (!result.success) toast.error(result.error ?? "Could not reorder.")
       await refresh()
     })
   }
@@ -328,8 +349,8 @@ export function GalleryTab() {
               <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center gap-4">
                 <div className="flex items-center gap-2 flex-shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={item.before_url} alt={`${item.title} — ${item.item_type === "single" ? "photo" : "before"}`} loading="lazy" className="w-20 h-14 object-cover rounded" />
-                  {item.item_type === "before_after" && item.after_url && (
+                  <img src={item.before_url} alt={`${item.title} — ${getEffectiveItemType(item) === "single" ? "photo" : "before"}`} loading="lazy" className="w-20 h-14 object-cover rounded" />
+                  {getEffectiveItemType(item) === "before_after" && item.after_url && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={item.after_url} alt={`${item.title} — after`} loading="lazy" className="w-20 h-14 object-cover rounded" />
                   )}
@@ -473,7 +494,7 @@ export function GalleryTab() {
                 />
               </div>
 
-              {editingItem.item_type === "before_after" ? (
+              {getEffectiveItemType(editingItem) === "before_after" ? (
                 <div className="grid sm:grid-cols-2 gap-4">
                   <PhotoInput id="edit-before" name="before" label="Before photo" currentUrl={editingItem.before_url} />
                   <PhotoInput id="edit-after" name="after" label="After photo" currentUrl={editingItem.after_url} />
