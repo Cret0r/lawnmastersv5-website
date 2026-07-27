@@ -3,13 +3,19 @@
 import { createAdminClient } from "@/lib/supabase/admin"
 import { isAdminAuthenticated } from "@/lib/admin-auth"
 import { revalidatePath } from "next/cache"
-import type { GalleryItem } from "@/lib/gallery"
+import type { GalleryItem, GalleryItemType } from "@/lib/gallery"
 
 const MAX_FILE_BYTES = 8 * 1024 * 1024 // 8 MB per photo
 const ALLOWED_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
+}
+
+function revalidateGalleryPaths() {
+  revalidatePath("/gallery")
+  revalidatePath("/")
+  revalidatePath("/admin")
 }
 
 export async function getGalleryItemsAdmin(): Promise<GalleryItem[]> {
@@ -43,7 +49,7 @@ async function uploadPhoto(
   const { error } = await supabase.storage.from("gallery").upload(fullPath, file, {
     contentType: file.type,
     cacheControl: "31536000",
-    upsert: false,
+    upsert: true,
   })
   if (error) {
     console.error("Gallery upload failed:", error.message)
@@ -53,6 +59,20 @@ async function uploadPhoto(
   return { url: data.publicUrl }
 }
 
+async function deleteStorageObjects(supabase: ReturnType<typeof createAdminClient>, urls: (string | null)[]) {
+  const paths = urls
+    .map((url) => (url ? url.split("/gallery/").pop() : undefined))
+    .filter((p): p is string => Boolean(p))
+  if (paths.length > 0) {
+    await supabase.storage.from("gallery").remove(paths)
+  }
+}
+
+function parseServices(raw: string | null): string[] {
+  const trimmed = (raw || "").trim()
+  return trimmed ? trimmed.split(",").map((s) => s.trim()).filter(Boolean) : []
+}
+
 export async function addGalleryItem(formData: FormData) {
   if (!(await isAdminAuthenticated())) {
     return { success: false, error: "Unauthorized" }
@@ -60,44 +80,144 @@ export async function addGalleryItem(formData: FormData) {
 
   const title = ((formData.get("title") as string) || "").trim()
   const description = ((formData.get("description") as string) || "").trim()
-  const servicesRaw = ((formData.get("services") as string) || "").trim()
-  const before = formData.get("before") as File | null
-  const after = formData.get("after") as File | null
+  const services = parseServices(formData.get("services") as string)
+  const itemType = ((formData.get("item_type") as string) || "before_after") as GalleryItemType
 
   if (!title) return { success: false, error: "Title is required." }
-  if (!before || before.size === 0 || !after || after.size === 0) {
-    return { success: false, error: "Both a before photo and an after photo are required." }
+  if (itemType !== "before_after" && itemType !== "single") {
+    return { success: false, error: "Invalid item type." }
   }
-
-  const services = servicesRaw
-    ? servicesRaw.split(",").map((s) => s.trim()).filter(Boolean)
-    : []
 
   const supabase = createAdminClient()
   const id = crypto.randomUUID()
 
-  const beforeUpload = await uploadPhoto(supabase, before, `${id}-before`)
-  if (!beforeUpload.url) return { success: false, error: beforeUpload.error }
-  const afterUpload = await uploadPhoto(supabase, after, `${id}-after`)
-  if (!afterUpload.url) return { success: false, error: afterUpload.error }
+  if (itemType === "single") {
+    const photo = formData.get("photo") as File | null
+    if (!photo || photo.size === 0) {
+      return { success: false, error: "A photo is required." }
+    }
+    const upload = await uploadPhoto(supabase, photo, `${id}-single`)
+    if (!upload.url) return { success: false, error: upload.error }
 
-  const { error } = await supabase.from("gallery_items").insert({
-    id,
+    const { error } = await supabase.from("gallery_items").insert({
+      id,
+      title,
+      description: description || null,
+      services,
+      item_type: "single",
+      before_url: upload.url,
+      after_url: null,
+      published: true,
+      featured: false,
+    })
+    if (error) {
+      console.error("Gallery insert failed:", error.message)
+      return { success: false, error: "Save failed. Has scripts/007 been run (item_type column)?" }
+    }
+  } else {
+    const before = formData.get("before") as File | null
+    const after = formData.get("after") as File | null
+    if (!before || before.size === 0 || !after || after.size === 0) {
+      return { success: false, error: "Both a before photo and an after photo are required." }
+    }
+
+    const beforeUpload = await uploadPhoto(supabase, before, `${id}-before`)
+    if (!beforeUpload.url) return { success: false, error: beforeUpload.error }
+    const afterUpload = await uploadPhoto(supabase, after, `${id}-after`)
+    if (!afterUpload.url) return { success: false, error: afterUpload.error }
+
+    const { error } = await supabase.from("gallery_items").insert({
+      id,
+      title,
+      description: description || null,
+      services,
+      item_type: "before_after",
+      before_url: beforeUpload.url,
+      after_url: afterUpload.url,
+      published: true,
+      featured: false,
+    })
+    if (error) {
+      console.error("Gallery insert failed:", error.message)
+      return { success: false, error: "Save failed. Has scripts/006 been run (gallery_items table)?" }
+    }
+  }
+
+  revalidateGalleryPaths()
+  return { success: true }
+}
+
+export async function updateGalleryItem(id: string, formData: FormData) {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
+
+  const title = ((formData.get("title") as string) || "").trim()
+  const description = ((formData.get("description") as string) || "").trim()
+  const services = parseServices(formData.get("services") as string)
+
+  if (!title) return { success: false, error: "Title is required." }
+
+  const supabase = createAdminClient()
+
+  const { data: existing, error: fetchError } = await supabase
+    .from("gallery_items")
+    .select("*")
+    .eq("id", id)
+    .single()
+
+  if (fetchError || !existing) {
+    return { success: false, error: "Item not found." }
+  }
+
+  const item = existing as GalleryItem
+  const update: Record<string, unknown> = {
     title,
     description: description || null,
     services,
-    before_url: beforeUpload.url,
-    after_url: afterUpload.url,
-    published: true,
-  })
+  }
+  const orphanedUrls: (string | null)[] = []
 
-  if (error) {
-    console.error("Gallery insert failed:", error.message)
-    return { success: false, error: "Save failed. Has scripts/006 been run (gallery_items table)?" }
+  if (item.item_type === "single") {
+    const photo = formData.get("photo") as File | null
+    if (photo && photo.size > 0) {
+      const upload = await uploadPhoto(supabase, photo, `${id}-single`)
+      if (!upload.url) return { success: false, error: upload.error }
+      if (upload.url !== item.before_url) orphanedUrls.push(item.before_url)
+      update.before_url = upload.url
+    }
+  } else {
+    const before = formData.get("before") as File | null
+    const after = formData.get("after") as File | null
+
+    if (before && before.size > 0) {
+      const upload = await uploadPhoto(supabase, before, `${id}-before`)
+      if (!upload.url) return { success: false, error: upload.error }
+      if (upload.url !== item.before_url) orphanedUrls.push(item.before_url)
+      update.before_url = upload.url
+    }
+    if (after && after.size > 0) {
+      const upload = await uploadPhoto(supabase, after, `${id}-after`)
+      if (!upload.url) return { success: false, error: upload.error }
+      if (upload.url !== item.after_url) orphanedUrls.push(item.after_url)
+      update.after_url = upload.url
+    }
   }
 
-  revalidatePath("/gallery")
-  revalidatePath("/admin")
+  const { error } = await supabase.from("gallery_items").update(update).eq("id", id)
+  if (error) {
+    console.error("Gallery update failed:", error.message)
+    return { success: false, error: error.message }
+  }
+
+  // Clean up the old file only after the row update succeeds, and only when
+  // the replacement got a different extension (upsert already overwrote it
+  // in place otherwise) — matches how deleteGalleryItem cleans up storage.
+  if (orphanedUrls.length > 0) {
+    await deleteStorageObjects(supabase, orphanedUrls)
+  }
+
+  revalidateGalleryPaths()
   return { success: true }
 }
 
@@ -117,12 +237,7 @@ export async function deleteGalleryItem(id: string) {
     .single()
 
   if (item) {
-    const paths = [item.before_url, item.after_url]
-      .map((url: string) => url.split("/gallery/").pop())
-      .filter((p): p is string => Boolean(p))
-    if (paths.length > 0) {
-      await supabase.storage.from("gallery").remove(paths)
-    }
+    await deleteStorageObjects(supabase, [item.before_url, item.after_url])
   }
 
   const { error } = await supabase.from("gallery_items").delete().eq("id", id)
@@ -130,7 +245,81 @@ export async function deleteGalleryItem(id: string) {
     return { success: false, error: error.message }
   }
 
-  revalidatePath("/gallery")
-  revalidatePath("/admin")
+  revalidateGalleryPaths()
+  return { success: true }
+}
+
+export async function setGalleryItemFeatured(id: string, featured: boolean) {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
+  const supabase = createAdminClient()
+  const { error } = await supabase.from("gallery_items").update({ featured }).eq("id", id)
+  if (error) {
+    return { success: false, error: error.message }
+  }
+  revalidateGalleryPaths()
+  return { success: true }
+}
+
+export async function setGalleryItemPublished(id: string, published: boolean) {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
+  const supabase = createAdminClient()
+  // Unpublishing also un-features — an unpublished item has no business
+  // showing up on the homepage.
+  const update: Record<string, unknown> = { published }
+  if (!published) update.featured = false
+  const { error } = await supabase.from("gallery_items").update(update).eq("id", id)
+  if (error) {
+    return { success: false, error: error.message }
+  }
+  revalidateGalleryPaths()
+  return { success: true }
+}
+
+// Re-orders the full admin list (which is also the /gallery display order).
+// Existing rows mostly share sort_order = 0, so every move first normalizes
+// the whole list to sequential values matching current display order, then
+// swaps the target item with its neighbor.
+export async function moveGalleryItem(id: string, direction: "up" | "down") {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
+  const supabase = createAdminClient()
+
+  const { data, error } = await supabase
+    .from("gallery_items")
+    .select("id, sort_order, created_at")
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: false })
+
+  if (error || !data) {
+    return { success: false, error: error?.message || "Could not load items." }
+  }
+
+  const index = data.findIndex((row) => row.id === id)
+  if (index === -1) return { success: false, error: "Item not found." }
+
+  const swapIndex = direction === "up" ? index - 1 : index + 1
+  if (swapIndex < 0 || swapIndex >= data.length) {
+    return { success: true } // already at the edge, nothing to do
+  }
+
+  const updates = data.map((row, i) => ({ id: row.id, sort_order: i }))
+  const tmp = updates[index].sort_order
+  updates[index].sort_order = updates[swapIndex].sort_order
+  updates[swapIndex].sort_order = tmp
+
+  const results = await Promise.all(
+    updates.map((u) => supabase.from("gallery_items").update({ sort_order: u.sort_order }).eq("id", u.id)),
+  )
+  const failed = results.find((r) => r.error)
+  if (failed?.error) {
+    return { success: false, error: failed.error.message }
+  }
+
+  revalidateGalleryPaths()
   return { success: true }
 }
