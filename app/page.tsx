@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { AnnouncementBar } from "@/components/announcement-bar"
-import { GalleryMedia } from "@/components/gallery-media"
+import { GalleryItemCard } from "@/components/gallery-item-card"
 import { ReviewCard } from "@/components/review-card"
 import { springRush } from "@/lib/spring-rush-content"
 import { reviews, googleReviewLink } from "@/lib/reviews-data"
@@ -193,24 +193,15 @@ export default async function Home() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {featured.map((item) => (
-                <div key={item.id} className="flex flex-col gap-3">
-                  {item.item_type === "before_after" && (
-                    <div className="flex items-center gap-2 mb-2">
-                      <p className="text-sm font-medium text-foreground">Slide to see the difference</p>
-                      <ArrowRight className="w-4 h-4 text-primary" />
-                    </div>
-                  )}
-                  <GalleryMedia
-                    itemType={item.item_type}
-                    beforeImage={item.before_url}
-                    afterImage={item.after_url}
-                    alt={item.title}
-                  />
-                  <p className="text-sm text-muted-foreground text-center">
-                    {item.title}
-                    {item.description ? ` — ${item.description}` : ""}
-                  </p>
-                </div>
+                <GalleryItemCard
+                  key={item.id}
+                  itemType={item.item_type}
+                  beforeImage={item.before_url}
+                  afterImage={item.after_url}
+                  title={item.title}
+                  description={item.description}
+                  services={item.services}
+                />
               ))}
             </div>
           </div>

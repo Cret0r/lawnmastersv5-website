@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { GalleryMedia } from "@/components/gallery-media"
+import { GalleryItemCard } from "@/components/gallery-item-card"
 import { getPublishedGalleryItems } from "@/lib/gallery"
 import Image from "next/image"
 import Link from "next/link"
@@ -81,37 +81,15 @@ export default async function ProjectsPage() {
           ) : (
           <div className="flex flex-col gap-16 sm:gap-20 max-w-5xl mx-auto">
             {allTransformations.map((project, index) => (
-              <div key={index} className="flex flex-col gap-6">
-                <GalleryMedia
-                  itemType={project.itemType}
-                  beforeImage={project.beforeImage}
-                  afterImage={project.afterImage}
-                  alt={project.title}
-                />
-                <div className="px-1">
-                  <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-3 font-serif">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed max-w-3xl">
-                    {project.description}
-                  </p>
-                  <div>
-                    <h4 className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wider">
-                      Services performed:
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.services.map((service, idx) => (
-                        <span
-                          key={idx}
-                          className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium"
-                        >
-                          {service}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <GalleryItemCard
+                key={index}
+                itemType={project.itemType}
+                beforeImage={project.beforeImage}
+                afterImage={project.afterImage}
+                title={project.title}
+                description={project.description}
+                services={project.services}
+              />
             ))}
           </div>
           )}
