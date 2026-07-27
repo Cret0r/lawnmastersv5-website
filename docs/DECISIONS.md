@@ -134,3 +134,9 @@
 
 ### Review collection is never incentivized; referrals are
 **Why:** Google prohibits incentivized reviews (profile-nuke risk). The incentive budget goes to the two-sided referral program instead, which is allowed and reinforces route density.
+
+### Homepage before/after section is 100% admin-controlled, with no hardcoded fallback (session 16)
+**Decision:** The homepage's "Real Before & After Transformations" section now renders only items the owner has explicitly starred as "Featured" in /admin's Gallery tab (`getFeaturedGalleryItems()`). The old hardcoded 3-item array was deleted, not just superseded — when zero items are featured, the section doesn't render at all (no placeholder, no old photos).
+**Why:** the hardcoded set were Florida-era photos captioned as Covington/Conyers — exactly the FL-presented-as-GA problem the session-13 correction pass exists to prevent. Falling back to them "gracefully" would silently reintroduce that problem the moment the featured list is ever empty. An empty section is honest; mislabeled photos are not.
+**Don't:** re-add a hardcoded fallback array to "fill the gap" if the section looks sparse before the owner features real photos — feature real photos instead, or leave it empty.
+**Also settled:** the gallery table's RLS stays service-role-only (no anon SELECT policy was added for the new `featured`/`item_type` columns) — the app never reads this table with the anon key, only through the server-side service-role client in `lib/gallery.ts`, so there's nothing for a public read policy to grant that's actually used.
