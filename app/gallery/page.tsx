@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { BeforeAfterSlider } from "@/components/before-after-slider"
+import { GalleryMedia } from "@/components/gallery-media"
 import { getPublishedGalleryItems } from "@/lib/gallery"
 import Image from "next/image"
 import Link from "next/link"
@@ -14,116 +14,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "/gallery" },
 }
 
-const transformations = [
-  {
-    title: "Complete Backyard Cleanup & Clearing",
-    description:
-      "This overgrown, neglected backyard was completely cleared of weeds, debris, and dead vegetation. We restored the entire yard to a clean, maintained state ready for the homeowner to enjoy their outdoor space again.",
-    beforeImage: "/real-before-backyard.jpg",
-    afterImage: "/real-after-backyard.jpg",
-    services: ["Lawn Care", "Weed Removal", "Debris Cleanup", "Mowing"],
-  },
-  {
-    title: "Side Yard Overgrowth Removal",
-    description:
-      "Waist-high grass and dense weeds had completely taken over this side yard. Our crew cleared all the overgrowth, cut everything down to ground level, and restored full access to the property.",
-    beforeImage: "/real-before-sideyard.jpg",
-    afterImage: "/real-after-sideyard.jpg",
-    services: ["Weed Removal", "Mowing", "Brush Clearing", "Cleanup"],
-  },
-  {
-    title: "Front Yard Lawn Restoration",
-    description:
-      "Overgrown front lawn with tall grass and weeds growing into the sidewalk transformed into a neatly mowed, clean-edged property. Professional mowing and edging restored the curb appeal.",
-    beforeImage: "/gallery/front-yard-before.jpg",
-    afterImage: "/gallery/front-yard-after.jpg",
-    services: ["Professional Mowing", "Edging", "Cleanup", "Lawn Care"],
-  },
-  {
-    title: "Brick Paver Walkway Pressure Washing",
-    description:
-      "Years of moss and algae buildup had darkened this brick paver walkway. Our pressure washing service restored the bright red color and removed all organic growth from between the pavers.",
-    beforeImage: "/gallery/brick-paver-before.jpg",
-    afterImage: "/gallery/brick-paver-after.jpg",
-    services: ["Pressure Washing", "Paver Cleaning", "Moss Removal"],
-  },
-  {
-    title: "Mailbox Lawn Strip Maintenance",
-    description:
-      "Overgrown grass around the mailbox area was professionally mowed and edged. Clean lines along the sidewalk and curb restored the neat appearance of the property entrance.",
-    beforeImage: "/gallery/mailbox-before.jpg",
-    afterImage: "/gallery/mailbox-after.jpg",
-    services: ["Professional Mowing", "Edging", "Lawn Care"],
-  },
-  {
-    title: "Driveway Pressure Washing",
-    description:
-      "Heavy moss and algae staining had turned this concrete driveway dark and slippery. Professional pressure washing removed all buildup and restored the clean gray concrete surface.",
-    beforeImage: "/gallery/driveway-before.jpg",
-    afterImage: "/gallery/driveway-after.jpg",
-    services: ["Pressure Washing", "Driveway Cleaning", "Surface Restoration"],
-  },
-  {
-    title: "Side Yard Lawn Restoration",
-    description:
-      "Weeds and overgrown grass had taken over this narrow side yard between properties. Professional mowing and cleanup restored the space to a well-maintained condition.",
-    beforeImage: "/gallery/sideyard2-before.jpg",
-    afterImage: "/gallery/sideyard2-after.jpg",
-    services: ["Mowing", "Weed Removal", "Cleanup", "Edging"],
-  },
-  {
-    title: "Large Backyard Mowing",
-    description:
-      "This spacious fenced backyard had tall, uneven grass with debris scattered throughout. Our team mowed the entire area to a uniform height and cleaned up all debris.",
-    beforeImage: "/gallery/backyard2-before.jpg",
-    afterImage: "/gallery/backyard2-after.jpg",
-    services: ["Professional Mowing", "Debris Cleanup", "Lawn Care"],
-  },
-  {
-    title: "AC Unit Side Yard Cleanup",
-    description:
-      "Tall overgrown grass along the white vinyl fence near the AC unit was professionally mowed and trimmed. The area is now neat and accessible for maintenance.",
-    beforeImage: "/gallery/ac-unit-before.jpg",
-    afterImage: "/gallery/ac-unit-after.jpg",
-    services: ["Mowing", "Trimming", "Side Yard Cleanup"],
-  },
-  {
-    title: "Mulch Bed Refresh & Edging",
-    description:
-      "Sparse, weedy mulch bed around the agave and sago palms was refreshed with fresh mulch and clean edging along the driveway for a polished look.",
-    beforeImage: "/gallery/mulch-before.jpg",
-    afterImage: "/gallery/mulch-after.jpg",
-    services: ["Mulching", "Bed Edging", "Weed Removal", "Landscaping"],
-  },
-  {
-    title: "Fenced Backyard Restoration",
-    description:
-      "Overgrown and uneven grass in this spacious fenced backyard was professionally mowed to a uniform height with clean lines along the paver walkway.",
-    beforeImage: "/gallery/fenced-backyard-before.jpg",
-    afterImage: "/gallery/fenced-backyard-after.jpg",
-    services: ["Professional Mowing", "Lawn Care", "Edging"],
-  },
-  {
-    title: "Overgrown Lot Clearing",
-    description:
-      "Severely overgrown lot with waist-high weeds and debris was completely cleared down to bare ground. Brush was piled and removed to prepare the property for future use.",
-    beforeImage: "/gallery/lot-clearing-before.jpg",
-    afterImage: "/gallery/lot-clearing-after.jpg",
-    services: ["Lot Clearing", "Brush Removal", "Weed Removal", "Debris Cleanup"],
-  },
-]
-
 export default async function ProjectsPage() {
-  // Admin-uploaded items (Supabase) render first; the hardcoded list below
-  // stays as the permanent base set. Falls back silently if 006 hasn't run.
-  const uploaded = (await getPublishedGalleryItems()).map((item) => ({
+  // gallery_items is the single source of truth (session 17) — every item,
+  // including the original set, lives in Supabase and is fully admin-
+  // editable. Falls back to an empty array (not an error) if scripts/007
+  // hasn't been run yet.
+  const allTransformations = (await getPublishedGalleryItems()).map((item) => ({
     title: item.title,
     description: item.description ?? "",
+    itemType: item.item_type,
     beforeImage: item.before_url,
     afterImage: item.after_url,
     services: item.services,
   }))
-  const allTransformations = [...uploaded, ...transformations]
 
   return (
     <div className="min-h-screen bg-background">
@@ -171,12 +74,19 @@ export default async function ProjectsPage() {
             </p>
           </div>
 
+          {allTransformations.length === 0 ? (
+            <p className="text-center text-muted-foreground max-w-2xl mx-auto">
+              New before-and-after photos are on the way — check back soon.
+            </p>
+          ) : (
           <div className="flex flex-col gap-16 sm:gap-20 max-w-5xl mx-auto">
             {allTransformations.map((project, index) => (
               <div key={index} className="flex flex-col gap-6">
-                <BeforeAfterSlider
+                <GalleryMedia
+                  itemType={project.itemType}
                   beforeImage={project.beforeImage}
                   afterImage={project.afterImage}
+                  alt={project.title}
                 />
                 <div className="px-1">
                   <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-3 font-serif">
@@ -204,6 +114,7 @@ export default async function ProjectsPage() {
               </div>
             ))}
           </div>
+          )}
         </div>
       </section>
 

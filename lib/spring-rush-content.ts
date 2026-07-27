@@ -45,33 +45,12 @@ export const springRush = {
     ],
   },
 
-  // — Proof section
+  // — Proof section. Images come from admin-featured gallery_items
+  // (lib/gallery.ts → getFeaturedGalleryItems), not a hardcoded list —
+  // gallery_items is the single source of truth (session 17). Only the
+  // section headline is still sourced from this file.
   proof: {
     headline: "Real Before & After Transformations",
-    transformations: [
-      {
-        beforeImage: "/real-before-backyard.jpg",
-        afterImage: "/real-after-backyard.jpg",
-        caption: "Backyard cleanup — Covington, GA",
-      },
-      {
-        beforeImage: "/real-before-sideyard.jpg",
-        afterImage: "/real-after-sideyard.jpg",
-        caption: "Side yard overgrowth cleared — Conyers, GA",
-      },
-      {
-        beforeImage: "/gallery/front-yard-before.jpg",
-        afterImage: "/gallery/front-yard-after.jpg",
-        caption: "Front yard lawn restoration — Covington, GA",
-      },
-      {
-        beforeImage:
-          "https://gflxgupnvjimftlznrqp.supabase.co/storage/v1/object/public/gallery/fa9c8a7c-4368-440d-afcd-2b14fc0f465d-before.jpg",
-        afterImage:
-          "https://gflxgupnvjimftlznrqp.supabase.co/storage/v1/object/public/gallery/fa9c8a7c-4368-440d-afcd-2b14fc0f465d-after.jpg",
-        caption: "Fence Line Cleanup & Property Refresh — Covington, GA",
-      },
-    ],
   },
 
   // — THE FRONT END: Refresh tiers (owner-confirmed prices, 7/14/2026;
