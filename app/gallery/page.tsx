@@ -27,6 +27,7 @@ export default async function ProjectsPage() {
     beforeImage: item.before_url,
     afterImage: item.after_url,
     services: item.services,
+    category: item.category,
   }))
 
   return (
@@ -55,7 +56,7 @@ export default async function ProjectsPage() {
             Our Gallery
           </h1>
           <p className="text-lg text-primary-foreground/80 max-w-3xl mx-auto text-balance leading-relaxed">
-            Tap a project to see the full before and after transformation.
+            Drag any slider to see the before and after transformation.
           </p>
         </div>
       </section>
@@ -71,7 +72,7 @@ export default async function ProjectsPage() {
               Before & After
             </h2>
             <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
-              Every project showcases our commitment to quality craftsmanship. Tap any card for the full slider.
+              Every project showcases our commitment to quality craftsmanship. Drag a slider to reveal the transformation.
             </p>
           </div>
 

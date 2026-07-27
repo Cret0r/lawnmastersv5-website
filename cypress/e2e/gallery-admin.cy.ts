@@ -49,6 +49,7 @@ describe("Gallery — public/admin isolation", () => {
     cy.contains("button", "Feature").should("not.exist")
     cy.get('[aria-label*="gallery order" i]').should("not.exist")
     cy.get('[aria-label*="homepage order" i]').should("not.exist")
+    cy.get('select[aria-label*="Category for" i]').should("not.exist")
   })
 
   it("homepage renders with no admin controls", () => {
@@ -69,7 +70,7 @@ describe("Gallery — public/admin isolation", () => {
   })
 })
 
-describe("Gallery — portfolio grid & lightbox (public, no login needed)", () => {
+describe("Gallery — portfolio grid, inline sliders (public, no login needed)", () => {
   it("renders a multi-card grid when items exist, or a graceful empty state otherwise", () => {
     cy.visit("/gallery")
     cy.get("body").then(($body) => {
@@ -81,21 +82,24 @@ describe("Gallery — portfolio grid & lightbox (public, no login needed)", () =
     })
   })
 
-  it("opens the full interactive slider + description in a lightbox when a card is clicked, and Escape closes it", () => {
+  it("shows the full interactive slider (or enlarged photo) directly in the grid — no click, no modal", () => {
     cy.visit("/gallery")
     cy.get("body").then(($body) => {
       if ($body.find("[data-gallery-card]").length === 0) {
-        cy.log("No gallery items available in this environment — skipping lightbox interaction.")
+        cy.log("No gallery items available in this environment — skipping.")
         return
       }
-      cy.get("[data-gallery-card]").first().click()
-      cy.get('[data-testid="gallery-lightbox"]').should("be.visible")
-      // Full card content (title + description + services) renders inside.
-      cy.get('[data-testid="gallery-lightbox"]').within(() => {
+      // Before/after items show a real draggable slider immediately, with
+      // no interaction needed to reveal it.
+      cy.get('[role="slider"]').should("have.length.greaterThan", 0)
+      // Title + description render right under the card, same as before.
+      cy.get("[data-gallery-card]").first().within(() => {
         cy.get("h3").should("be.visible")
       })
-      cy.get("body").type("{esc}")
+      // The old click-to-expand modal no longer exists anywhere on the page.
       cy.get('[data-testid="gallery-lightbox"]').should("not.exist")
+      cy.contains("View slider").should("not.exist")
+      cy.contains("View photo").should("not.exist")
     })
   })
 })
@@ -248,6 +252,37 @@ describe("Gallery Admin — manageable feature (logged in)", () => {
     })
     cy.visit("/gallery")
     cy.contains(title, { timeout: 10000 }).should("exist")
+
+    deleteIfPresent(title)
+  })
+
+  it("assigns a category from the admin dropdown, persists, and drives the /gallery filter tabs", () => {
+    const title = `Cypress Test — Category ${Date.now()}`
+    const category = "Landscaping"
+
+    openGalleryTab()
+    cy.get("#gallery-title").type(title)
+    cy.get('input[name="before"]').selectFile("cypress/fixtures/gallery-test-before.jpg", { force: true })
+    cy.get('input[name="after"]').selectFile("cypress/fixtures/gallery-test-after.jpg", { force: true })
+    cy.contains("button", "Add to Gallery").click()
+    cy.get(`[data-gallery-item="${title}"]`, { timeout: 15000 }).should("exist")
+
+    // Row-level dropdown — no need to open Edit.
+    cy.get(`[data-gallery-item="${title}"]`).within(() => {
+      cy.get(`select[aria-label="Category for ${title}"]`).select(category)
+    })
+    cy.contains(`Category set to ${category}`)
+
+    // Persists across a fresh load of the admin list.
+    openGalleryTab()
+    cy.get(`[data-gallery-item="${title}"]`).within(() => {
+      cy.get(`select[aria-label="Category for ${title}"]`).should("have.value", category)
+    })
+
+    // Drives the /gallery filter tabs — clicking the tab shows this item.
+    cy.visit("/gallery")
+    cy.contains('[role="tab"]', category).click()
+    cy.get(`[data-gallery-card="${title}"]`, { timeout: 10000 }).should("exist")
 
     deleteIfPresent(title)
   })

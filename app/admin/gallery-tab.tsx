@@ -32,10 +32,15 @@ import {
   deleteGalleryItem,
   setGalleryItemFeatured,
   setGalleryItemPublished,
+  setGalleryItemCategory,
   moveItemInGalleryOrder,
   moveItemInHomepageOrder,
 } from "./gallery-actions"
 import { getEffectiveItemType, type GalleryItem, type GalleryItemType } from "@/lib/gallery"
+import { GALLERY_CATEGORIES, DEFAULT_GALLERY_CATEGORY } from "@/lib/gallery-categories"
+
+const selectClasses =
+  "px-2.5 py-1.5 rounded-lg border border-input bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-ring"
 
 const fileInputClasses =
   "w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-2 file:text-sm file:font-medium file:text-primary-foreground hover:file:bg-primary/90"
@@ -219,6 +224,18 @@ export function GalleryTab() {
     })
   }
 
+  const handleSetCategory = (id: string, category: string) => {
+    startTransition(async () => {
+      const result = await setGalleryItemCategory(id, category)
+      if (result.success) {
+        toast.success(`Category set to ${category}.`)
+      } else {
+        toast.error(result.error ?? "Could not update category.")
+      }
+      await refresh()
+    })
+  }
+
   const handleMoveInGallery = (id: string, direction: "up" | "down") => {
     startTransition(async () => {
       const result = await moveItemInGalleryOrder(id, direction)
@@ -332,6 +349,23 @@ export function GalleryTab() {
                   className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 />
               </div>
+              <div className="sm:col-span-2">
+                <label htmlFor="gallery-category" className="block text-sm font-medium text-foreground mb-1.5">
+                  Category
+                </label>
+                <select
+                  id="gallery-category"
+                  name="category"
+                  defaultValue={DEFAULT_GALLERY_CATEGORY}
+                  className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                >
+                  {GALLERY_CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               {itemType === "before_after" ? (
                 <>
@@ -412,6 +446,19 @@ export function GalleryTab() {
                   <p className="text-xs text-muted-foreground truncate">
                     {item.services.join(", ") || "No services tagged"}
                   </p>
+                  <select
+                    value={item.category || DEFAULT_GALLERY_CATEGORY}
+                    onChange={(e) => handleSetCategory(item.id, e.target.value)}
+                    disabled={isPending}
+                    aria-label={`Category for ${item.title}`}
+                    className={`${selectClasses} mt-1.5`}
+                  >
+                    {GALLERY_CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="flex flex-wrap items-center gap-1.5 flex-shrink-0">
                   {/* Gallery order — independent of homepage order (session 18).

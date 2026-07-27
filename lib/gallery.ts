@@ -5,6 +5,7 @@
 // callers get [] rather than throwing.
 
 import { createAdminClient } from "@/lib/supabase/admin"
+import type { GalleryCategory } from "@/lib/gallery-categories"
 
 export type GalleryItemType = "before_after" | "single"
 
@@ -21,6 +22,7 @@ export interface GalleryItem {
   featured: boolean
   sort_order: number // homepage/featured order (session 17)
   gallery_order: number // /gallery page order, independent (session 18)
+  category: GalleryCategory // admin-assigned, drives /gallery filter tabs (session 19)
 }
 
 // item_type is missing (undefined, via the DB default 'before_after' — but

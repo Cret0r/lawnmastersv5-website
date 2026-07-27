@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin"
 import { isAdminAuthenticated } from "@/lib/admin-auth"
 import { revalidatePath } from "next/cache"
 import { getEffectiveItemType, type GalleryItem, type GalleryItemType } from "@/lib/gallery"
+import { DEFAULT_GALLERY_CATEGORY, isGalleryCategory } from "@/lib/gallery-categories"
 
 const MAX_FILE_BYTES = 8 * 1024 * 1024 // 8 MB per photo
 const ALLOWED_TYPES: Record<string, string> = {
@@ -88,6 +89,11 @@ function parseServices(raw: string | null): string[] {
   return trimmed ? trimmed.split(",").map((s) => s.trim()).filter(Boolean) : []
 }
 
+function parseCategory(raw: string | null): string {
+  const trimmed = (raw || "").trim()
+  return trimmed && isGalleryCategory(trimmed) ? trimmed : DEFAULT_GALLERY_CATEGORY
+}
+
 export async function addGalleryItem(formData: FormData) {
   if (!(await isAdminAuthenticated())) {
     return { success: false, error: "Unauthorized" }
@@ -96,6 +102,7 @@ export async function addGalleryItem(formData: FormData) {
   const title = ((formData.get("title") as string) || "").trim()
   const description = ((formData.get("description") as string) || "").trim()
   const services = parseServices(formData.get("services") as string)
+  const category = parseCategory(formData.get("category") as string)
   const itemType = ((formData.get("item_type") as string) || "before_after") as GalleryItemType
 
   if (!title) return { success: false, error: "Title is required." }
@@ -119,6 +126,7 @@ export async function addGalleryItem(formData: FormData) {
       title,
       description: description || null,
       services,
+      category,
       item_type: "single",
       before_url: upload.url,
       after_url: null,
@@ -146,6 +154,7 @@ export async function addGalleryItem(formData: FormData) {
       title,
       description: description || null,
       services,
+      category,
       item_type: "before_after",
       before_url: beforeUpload.url,
       after_url: afterUpload.url,
@@ -270,6 +279,22 @@ export async function setGalleryItemFeatured(id: string, featured: boolean) {
   }
   const supabase = createAdminClient()
   const { error } = await supabase.from("gallery_items").update({ featured }).eq("id", id)
+  if (error) {
+    return { success: false, error: friendlyError(error.message) }
+  }
+  revalidateGalleryPaths()
+  return { success: true }
+}
+
+export async function setGalleryItemCategory(id: string, category: string) {
+  if (!(await isAdminAuthenticated())) {
+    return { success: false, error: "Unauthorized" }
+  }
+  if (!isGalleryCategory(category)) {
+    return { success: false, error: "Invalid category." }
+  }
+  const supabase = createAdminClient()
+  const { error } = await supabase.from("gallery_items").update({ category }).eq("id", id)
   if (error) {
     return { success: false, error: friendlyError(error.message) }
   }

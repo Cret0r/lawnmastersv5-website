@@ -15,7 +15,7 @@ interface GalleryItemCardProps {
 // — only the surrounding grid/layout differs per page.
 export function GalleryItemCard({ itemType, beforeImage, afterImage, title, description, services }: GalleryItemCardProps) {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6" data-gallery-card={title}>
       <GalleryMedia itemType={itemType} beforeImage={beforeImage} afterImage={afterImage} alt={title} />
       <div className="px-1">
         <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-3 font-serif">{title}</h3>

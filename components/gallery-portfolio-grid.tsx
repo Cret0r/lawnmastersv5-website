@@ -1,8 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { GalleryThumbnailCard } from "@/components/gallery-thumbnail-card"
+import { useState } from "react"
 import { GalleryItemCard } from "@/components/gallery-item-card"
 import type { GalleryItemType } from "@/lib/gallery"
 
@@ -14,35 +12,14 @@ export interface PortfolioItem {
   beforeImage: string
   afterImage: string | null
   services: string[]
+  category: string
 }
 
-// Filter tabs are derived straight from real service tags (not hand-picked
-// categories) so they never drift out of sync with what's actually in the
-// database — only tags that appear on 2+ items become a tab, capped so the
-// row doesn't overflow.
-const MAX_FILTER_TABS = 6
-const MIN_TAG_FREQUENCY = 2
-
-function deriveFilterTags(items: PortfolioItem[]): string[] {
-  const counts = new Map<string, number>()
-  for (const item of items) {
-    for (const service of item.services) {
-      counts.set(service, (counts.get(service) ?? 0) + 1)
-    }
-  }
-  return [...counts.entries()]
-    .filter(([, count]) => count >= MIN_TAG_FREQUENCY)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, MAX_FILTER_TABS)
-    .map(([tag]) => tag)
-}
-
+// Every card is the full interactive slider (or enlarged single image) —
+// no click-to-expand, no modal (session 19). Filter tabs come from each
+// item's admin-assigned category, not derived service tags.
 export function GalleryPortfolioGrid({ items }: { items: PortfolioItem[] }) {
-  const [activeFilter, setActiveFilter] = useState<string | null>(null)
-  const [openItem, setOpenItem] = useState<PortfolioItem | null>(null)
-
-  const filterTags = useMemo(() => deriveFilterTags(items), [items])
-  const filtered = activeFilter ? items.filter((item) => item.services.includes(activeFilter)) : items
+  const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
   if (items.length === 0) {
     return (
@@ -52,37 +29,42 @@ export function GalleryPortfolioGrid({ items }: { items: PortfolioItem[] }) {
     )
   }
 
+  // Only categories that actually have at least one item become a tab, in a
+  // stable order (first-seen), so the row never shows an empty filter.
+  const categories = [...new Set(items.map((item) => item.category))]
+  const filtered = activeCategory ? items.filter((item) => item.category === activeCategory) : items
+
   return (
     <div>
-      {filterTags.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="Filter by service">
+      {categories.length > 1 && (
+        <div className="flex flex-wrap justify-center gap-2 mb-10" role="tablist" aria-label="Filter by category">
           <button
             type="button"
             role="tab"
-            aria-selected={activeFilter === null}
-            onClick={() => setActiveFilter(null)}
+            aria-selected={activeCategory === null}
+            onClick={() => setActiveCategory(null)}
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-              activeFilter === null
+              activeCategory === null
                 ? "bg-primary text-primary-foreground border-primary"
                 : "bg-background text-muted-foreground border-input hover:bg-secondary"
             }`}
           >
             All
           </button>
-          {filterTags.map((tag) => (
+          {categories.map((category) => (
             <button
-              key={tag}
+              key={category}
               type="button"
               role="tab"
-              aria-selected={activeFilter === tag}
-              onClick={() => setActiveFilter(tag)}
+              aria-selected={activeCategory === category}
+              onClick={() => setActiveCategory(category)}
               className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                activeFilter === tag
+                activeCategory === category
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-background text-muted-foreground border-input hover:bg-secondary"
               }`}
             >
-              {tag}
+              {category}
             </button>
           ))}
         </div>
@@ -90,39 +72,23 @@ export function GalleryPortfolioGrid({ items }: { items: PortfolioItem[] }) {
 
       {filtered.length === 0 ? (
         <p className="text-center text-muted-foreground max-w-2xl mx-auto">
-          No projects tagged &ldquo;{activeFilter}&rdquo; yet.
+          No projects in &ldquo;{activeCategory}&rdquo; yet.
         </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto" data-testid="gallery-grid">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-14 max-w-5xl mx-auto" data-testid="gallery-grid">
           {filtered.map((item) => (
-            <GalleryThumbnailCard
+            <GalleryItemCard
               key={item.id}
               itemType={item.itemType}
               beforeImage={item.beforeImage}
               afterImage={item.afterImage}
               title={item.title}
-              subtitle={item.services.slice(0, 2).join(" · ")}
-              onClick={() => setOpenItem(item)}
+              description={item.description}
+              services={item.services}
             />
           ))}
         </div>
       )}
-
-      <Dialog open={!!openItem} onOpenChange={(open) => !open && setOpenItem(null)}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto" data-testid="gallery-lightbox">
-          <DialogTitle className="sr-only">{openItem?.title}</DialogTitle>
-          {openItem && (
-            <GalleryItemCard
-              itemType={openItem.itemType}
-              beforeImage={openItem.beforeImage}
-              afterImage={openItem.afterImage}
-              title={openItem.title}
-              description={openItem.description}
-              services={openItem.services}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
