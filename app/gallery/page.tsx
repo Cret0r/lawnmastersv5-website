@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { GalleryMedia } from "@/components/gallery-media"
+import { BeforeAfterSlider } from "@/components/before-after-slider"
 import { getPublishedGalleryItems } from "@/lib/gallery"
 import Image from "next/image"
 import Link from "next/link"
@@ -119,15 +119,11 @@ export default async function ProjectsPage() {
   const uploaded = (await getPublishedGalleryItems()).map((item) => ({
     title: item.title,
     description: item.description ?? "",
-    itemType: item.item_type,
     beforeImage: item.before_url,
     afterImage: item.after_url,
     services: item.services,
   }))
-  const allTransformations = [
-    ...uploaded,
-    ...transformations.map((t) => ({ ...t, itemType: "before_after" as const })),
-  ]
+  const allTransformations = [...uploaded, ...transformations]
 
   return (
     <div className="min-h-screen bg-background">
@@ -178,11 +174,9 @@ export default async function ProjectsPage() {
           <div className="flex flex-col gap-16 sm:gap-20 max-w-5xl mx-auto">
             {allTransformations.map((project, index) => (
               <div key={index} className="flex flex-col gap-6">
-                <GalleryMedia
-                  itemType={project.itemType}
+                <BeforeAfterSlider
                   beforeImage={project.beforeImage}
                   afterImage={project.afterImage}
-                  alt={project.title}
                 />
                 <div className="px-1">
                   <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-3 font-serif">

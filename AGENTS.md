@@ -154,7 +154,7 @@ bg-primary-foreground text-primary hover:bg-primary-foreground/90
 
 - **Use Server Actions** for form submissions — not API routes. See `app/contact/actions.ts` for the pattern.
 
-- **Run `npm run cypress:run` before merging to master** — all tests must pass (59 as of session 16 — count grows). Tests cover admin auth (incl. wrong-credential and forged-cookie cases), the quick-lead flows on /contact and /quote, form validation edge cases, homepage, navigation, mobile nav, the /faq page (incl. FAQPage schema), the per-city landing pages, and the admin gallery manager (public/admin isolation always runs; the full add/edit/feature/reorder/delete flow skips cleanly instead of failing if the sandbox can't reach a live Supabase connection — see docs/GOTCHAS.md). NOTE: the suite makes exactly 2 real form submissions per run against a 3-per-15-min rate limit — new tests must not add server-side form submissions (use client-side `:invalid` checks instead), except gallery-admin.cy.ts's self-cleaning logged-in flow, which is a deliberate documented exception.
+- **Run `npm run cypress:run` before merging to master** — all 50 tests must pass. Tests cover admin auth (incl. wrong-credential and forged-cookie cases), the quick-lead flows on /contact and /quote, form validation edge cases, homepage, navigation, mobile nav, the /faq page (incl. FAQPage schema), and the per-city landing pages. NOTE: the suite makes exactly 2 real form submissions per run against a 3-per-15-min rate limit — new tests must not add server-side form submissions (use client-side `:invalid` checks instead).
 
 - **Check ARCHITECTURE.md § 4** (Content & Copy) before adding a new instance of the phone number, city name, or campaign phrase so you know all locations to keep in sync.
 

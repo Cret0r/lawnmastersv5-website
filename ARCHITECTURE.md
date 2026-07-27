@@ -27,7 +27,7 @@
 | Validation | Zod | `quoteSchema` + `contactSchema` in form actions |
 | Rate limiting | In-memory (lib/rate-limit.ts) | 3 req/IP/15 min, shared across BOTH form actions |
 | Images | `unoptimized: true` + sharp pre-generation | Hero variants via `scripts/generate-hero-images.mjs` + `<picture>` art direction |
-| E2E testing | Cypress — **59 tests** (count grows) | 11 specs; dev server must be running first |
+| E2E testing | Cypress — **50 tests** | 10 specs; dev server must be running first |
 | Linting | ESLint 9 flat config | `eslint.config.mjs` |
 
 ---
@@ -60,11 +60,10 @@ landscaping-business-website/
 │       ├── login/page.tsx        # Dark CSS-module login; inline "use server" loginAction
 │       ├── actions.ts            # Quote/message mutations — ALL auth-guarded
 │       ├── client-actions.ts     # Clients CRUD — ALL auth-guarded
-│       ├── gallery-actions.ts    # Gallery add/update/delete/feature/publish/reorder — ALL auth-guarded
+│       ├── gallery-actions.ts    # Gallery upload/delete/list — ALL auth-guarded
 │       ├── admin-tabs.tsx        # Tabs: Clients | Quotes | Messages | Gallery (CLIENT)
 │       ├── clients-tab.tsx       # Recurring-client tracker (due dates, gate codes, hazards)
-│       ├── gallery-tab.tsx       # Full gallery manager: add (before/after or single image, live
-│       │                        #   preview), edit, feature/publish toggles, reorder (CLIENT)
+│       ├── gallery-tab.tsx       # Before/after photo upload UI (CLIENT)
 │       ├── submission-actions.tsx / message-actions.tsx / sign-out-button.tsx
 │       └── (route-planner-tab.tsx was DELETED in session 7 — see docs/DECISIONS.md)
 │
@@ -73,8 +72,6 @@ landscaping-business-website/
 │   ├── announcement-bar.tsx      # Dismissable promo bar; publishes its height as a CSS var (CLIENT)
 │   ├── footer.tsx                # Footer — contact info from BUSINESS, links to city pages
 │   ├── before-after-slider.tsx   # Drag/keyboard slider, role="slider", lazy-loaded imgs (CLIENT)
-│   ├── gallery-media.tsx         # Renders a slider (before/after) or plain image card (single) —
-│   │                             #   shared by /gallery and the homepage featured section
 │   ├── floating-cta.tsx          # Mobile call/text bar (CLIENT)
 │   ├── social-buttons.tsx        # WhatsApp/FB/IG/SMS cluster (CLIENT)
 │   ├── review-card.tsx
@@ -88,8 +85,7 @@ landscaping-business-website/
 │   ├── summer-content.ts         # /summer campaign copy (summerRefresh export) — pulls from business-info
 │   ├── city-pages.ts             # Per-city landing page copy + getCityPage()
 │   ├── reviews-data.ts           # Reviews array + Google review link (3 PLACEHOLDERS — replace with real)
-│   ├── gallery.ts                # Public gallery reads: getPublishedGalleryItems() (/gallery),
-│   │                             #   getFeaturedGalleryItems() (homepage) — both fail soft
+│   ├── gallery.ts                # Public gallery reads (fails soft if migration 006 not run)
 │   ├── notify.ts                 # Resend lead-notification email (fails soft if unconfigured)
 │   ├── admin-auth.ts             # Cookie session: verify/create/destroy/check
 │   ├── rate-limit.ts             # In-memory IP limiter — used by both form actions, do not remove
@@ -111,11 +107,10 @@ landscaping-business-website/
 │   ├── 001–004 *.sql             # Original table migrations (RLS superseded by 005)
 │   ├── 005_fix_rls_scoping.sql   # SECURITY: scopes RLS to service_role (✅ run + curl-verified)
 │   ├── 006_create_gallery_items.sql  # Gallery table + storage bucket (⚠️ must run before gallery uploads)
-│   ├── 007_gallery_enhancements.sql  # featured/item_type columns (⚠️ must run — see docs/ROADMAP.md)
 │   ├── generate-hero-images.mjs  # sharp — regenerates public/hero/ variants
 │   └── development|testing|monitoring|maintenance|automation/*.sh
 │
-├── cypress/e2e/                  # 11 specs, 59 tests (count grows — see § 8)
+├── cypress/e2e/                  # 10 specs, 50 tests (see § 8)
 ├── docs/                         # ★ Knowledge base: playbook, SOPs, decisions, gotchas, growth, roadmap, tooling
 ├── .claude/commands/close-session.md  # /close-session slash command (end-of-session doc sync)
 ├── middleware.ts                 # Edge protection for /admin/* (cookie vs SESSION_TOKEN)
@@ -133,10 +128,10 @@ landscaping-business-website/
 
 | Route | Type | Notes |
 |---|---|---|
-| `/` | Server (async) | Campaign hero (responsive `<picture>`, hero-bg variants), pricing, reviews, admin-featured before/after proof section (session 16 — pulls from `gallery_items` via `getFeaturedGalleryItems()`; renders nothing if none are featured) |
+| `/` | Server | Campaign hero (responsive `<picture>`, hero-bg variants), pricing, proof, reviews, portfolio |
 | `/about` | Server | Cities rendered from `BUSINESS.cities` |
 | `/services` | Server | 7 services + `ItemList` of `Service` JSON-LD |
-| `/gallery` | Server (async) | Admin-uploaded items (Supabase) render above the hardcoded set; falls back silently. Before/after items render as a slider, single-image items as a plain card (`components/gallery-media.tsx`) |
+| `/gallery` | Server (async) | Admin-uploaded items (Supabase) render above the hardcoded set; falls back silently |
 | `/contact` | Client | Form → `contact_messages` + Resend lead email |
 | `/quote` | Client | Form → `quote_submissions` + Resend lead email |
 | `/service-policies` | Server | Policy sections |
@@ -168,7 +163,7 @@ landscaping-business-website/
 | `quote_submissions` | quote form action | /admin Quotes tab | service_role all + anon INSERT |
 | `contact_messages` | contact form action | /admin Messages tab | service_role all + anon INSERT |
 | `clients` | /admin Clients tab | /admin (due today / overdue / stats) | service_role only |
-| `gallery_items` | /admin Gallery tab (add/edit/delete/feature/publish/reorder) | /gallery public page + homepage featured section | service_role only |
+| `gallery_items` | /admin Gallery tab | /gallery public page | service_role only |
 | Storage `gallery` bucket | gallery-actions upload | public CDN URLs | public-read bucket; uploads via service key |
 
 ### Form → lead flow
@@ -233,7 +228,7 @@ Because `images.unoptimized` is on (v0 legacy + Vercel image-transform cost), ne
 
 ## 8. TESTING
 
-**59 Cypress tests, 11 specs** (count grows) — `npm run cypress:run` (dev server must already be running on :3000).
+**50 Cypress tests, 10 specs** — `npm run cypress:run` (dev server must already be running on :3000).
 
 | Spec | Tests | Covers |
 |---|---|---|
@@ -243,13 +238,12 @@ Because `images.unoptimized` is on (v0 legacy + Vercel image-transform cost), ne
 | contact.cy.ts | 5 | Quick-lead flow + 1 REAL submission |
 | faq.cy.ts | 5 | FAQ headings, FAQPage schema, nav link, CTA |
 | form-validation.cy.ts | 6 | Client-side validation on both quick-lead flows (never hits server) |
-| gallery-admin.cy.ts | 8 | Public/admin isolation (4, always run); full add/edit/feature/publish/reorder/delete flow incl. single-image items (4, skip cleanly if the dashboard can't be reached — see docs/GOTCHAS.md) |
-| homepage.cy.ts | 5 | Hero content, CTAs, refresh tiers with maintenance demoted |
+| homepage.cy.ts | 4 | Hero content + CTAs |
 | mobile-nav.cy.ts | 5 | Hamburger aria states, drawer, outside-tap close, floating CTA |
 | navigation.cy.ts | 5 | Desktop nav links |
 | quote.cy.ts | 7 | Quick-lead flow, HowTo schema + 1 REAL submission |
 
-**Hard constraint:** the suite makes exactly 2 real form submissions per run against a 3-per-IP-per-15-min rate limit. New tests must NOT add server-side submissions — assert client-side `:invalid` state instead. (gallery-admin.cy.ts's logged-in flow is a deliberate, self-cleaning exception — see docs/sops/gallery-migration.md.)
+**Hard constraint:** the suite makes exactly 2 real form submissions per run against a 3-per-IP-per-15-min rate limit. New tests must NOT add server-side submissions — assert client-side `:invalid` state instead.
 
 ---
 

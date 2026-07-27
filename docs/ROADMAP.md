@@ -10,14 +10,13 @@
 
 | Item | Why it's blocking | How |
 |---|---|---|
-| ★ **Run `scripts/007_gallery_enhancements.sql`** | Admin Gallery Feature star, single-image items, and the homepage's admin-controlled "Real Before & After Transformations" section all error/stay empty until this runs (session 16) | SQL Editor → paste ALL of the file → Run → verify queries at file bottom (docs/sops/gallery-migration.md) |
 | Run `scripts/006_create_gallery_items.sql` | Admin Gallery tab uploads fail without the table + bucket | SQL Editor → paste → run → verify queries at file bottom (docs/sops/gallery-migration.md) |
 | Set `NEXT_PUBLIC_SENTRY_DSN` in Vercel | Error tracking is silently off | sentry.io → create Next.js project → copy DSN → Vercel env vars (Prod+Preview) → redeploy |
 | ~~Set `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL`~~ ✅ **DONE 7/6/2026** | Speed-to-lead email is LIVE — keys were added to Vercel by the owner | Remaining polish: verify lawnmastersv5.com as a Resend sending domain (DNS records go in **Vercel DNS**, not Hostinger) |
 | Google Business Profile buildout | Profile is **verified & approved (7/10/2026)** ✅ — now needs photos, categories, service area, weekly posts; gates the review flywheel and LSA | docs/GROWTH.md § 1 |
 | ★ **Set the GEORGIA price sheet** | Every dollar on the site + docs is Florida-era and known-underpriced for GA lot sizes (weekly likely $150+/mo, ~$50/cut, Refresh tiers $349/$749/$1,499 proposals). Blocks the repricing pass AND the site repositioning below | Owner decides numbers; then edit the pricing locations list below in one pass |
 | **Google Search Console setup** | Nothing tells us what searches the FAQ/city pages are winning until this exists | Follow docs/sops/google-search-console.md exactly (~15 min; TXT record goes in VERCEL DNS) |
-| ~~Supply your first name~~ ✅ **DONE (session 15)** | Founder/E-E-A-T schema is live (`ownerFirstName: "Angel"` in `lib/business-info.ts`) + named-owner line on /about | — |
+| **Supply your first name** | Unblocks the founder/E-E-A-T schema (already wired, dormant) + a named-owner line on /about | One line: `ownerFirstName` in `lib/business-info.ts` — tell Claude the name and it ships |
 | Ask for a review at every GA job's walk-through | Cold start: zero GA clients — reviews come one job at a time (the old "text the First 15" plan assumed the Florida client list) | Script in docs/NOTEBOOK.md § 5 |
 
 ## 🟠 Engineering — ready to build (Claude can start immediately)
@@ -54,7 +53,7 @@
 - **Rate limiter durability** — in-memory Map resets per serverless instance/cold start. Fine at current traffic; move to Upstash/Vercel KV if abuse appears.
 - **Timing-safe credential compare** in `lib/admin-auth.ts` (`crypto.timingSafeEqual`) — low severity, cheap fix.
 - **Image optimization migration** — longer term: flip off `images.unoptimized`, remove the manual variant system. Decide against Vercel image-transform pricing.
-- ~~**`006` follow-ups:** gallery item edit/reorder UI, publish/unpublish toggle~~ ✅ **DONE (session 16):** full admin gallery manager — edit dialog (title/description/services/photo replace with live preview), feature star (drives the homepage's "Real Before & After Transformations" section, which is now 100% admin-controlled, no hardcoded fallback), publish/unpublish eye toggle, move up/down reordering, single-image item type (no before/after pair required). **Owner action required:** run `scripts/007_gallery_enhancements.sql` in Supabase (docs/sops/gallery-migration.md) — adds the `featured`/`item_type` columns this depends on. Until then, Feature/single-image actions show a "has 007 been run?" error and the homepage section stays empty (graceful, not broken).
+- **`006` follow-ups:** gallery item edit/reorder UI (sort_order exists in schema, no UI), publish/unpublish toggle (column exists).
 
 ## 🔵 Separate repo / out of scope here
 

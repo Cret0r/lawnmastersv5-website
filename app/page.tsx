@@ -4,12 +4,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { AnnouncementBar } from "@/components/announcement-bar"
-import { GalleryMedia } from "@/components/gallery-media"
+import { BeforeAfterSlider } from "@/components/before-after-slider"
 import { ReviewCard } from "@/components/review-card"
 import { springRush } from "@/lib/spring-rush-content"
 import { reviews, googleReviewLink } from "@/lib/reviews-data"
 import { BUSINESS } from "@/lib/business-info"
-import { getFeaturedGalleryItems } from "@/lib/gallery"
 import {
   Scissors,
   Flower2,
@@ -40,12 +39,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 }
 
-export default async function Home() {
-  // Admin-controlled via the Feature star in /admin's Gallery tab
-  // (scripts/007). Empty until the owner features a real Covington/Conyers
-  // photo — no hardcoded fallback, so no risk of the old Florida photos
-  // reappearing under a Georgia caption.
-  const featured = await getFeaturedGalleryItems()
+export default function Home() {
   // Transformation-first order (docs/OFFERS.md) — maintenance deliberately last.
   const services = [
     {
@@ -180,44 +174,29 @@ export default async function Home() {
       </section>
 
       {/* ════════════════ PROOF / BEFORE & AFTER ════════════════ */}
-      {/* Admin-controlled (docs/sops/gallery-migration.md) — hidden entirely
-          when nothing is featured yet, rather than showing placeholder or
-          stale content. */}
-      {featured.length > 0 && (
-        <section className="py-14 sm:py-18 bg-background">
-          <div className="container mx-auto px-4 sm:px-6">
-            <div className="text-center mb-10 sm:mb-14">
-              <span className="text-primary font-semibold text-sm uppercase tracking-wider">See The Results</span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground mt-2 mb-3 text-balance">
-                {sr.proof.headline}
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {featured.map((item) => (
-                <div key={item.id} className="flex flex-col gap-3">
-                  {item.item_type === "before_after" && (
-                    <div className="flex items-center gap-2 mb-2">
-                      <p className="text-sm font-medium text-foreground">Slide to see the difference</p>
-                      <ArrowRight className="w-4 h-4 text-primary" />
-                    </div>
-                  )}
-                  <GalleryMedia
-                    itemType={item.item_type}
-                    beforeImage={item.before_url}
-                    afterImage={item.after_url}
-                    alt={item.title}
-                  />
-                  <p className="text-sm text-muted-foreground text-center">
-                    {item.title}
-                    {item.description ? ` — ${item.description}` : ""}
-                  </p>
-                </div>
-              ))}
-            </div>
+      <section className="py-14 sm:py-18 bg-background">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-14">
+            <span className="text-primary font-semibold text-sm uppercase tracking-wider">See The Results</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground mt-2 mb-3 text-balance">
+              {sr.proof.headline}
+            </h2>
           </div>
-        </section>
-      )}
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {sr.proof.transformations.map((t, i) => (
+              <div key={i} className="flex flex-col gap-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <p className="text-sm font-medium text-foreground">Slide to see the difference</p>
+                  <ArrowRight className="w-4 h-4 text-primary" />
+                </div>
+                <BeforeAfterSlider beforeImage={t.beforeImage} afterImage={t.afterImage} />
+                <p className="text-sm text-muted-foreground text-center">{t.caption}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ════════════════ REVIEWS / SOCIAL PROOF ════════════════ */}
       <section className="py-14 sm:py-18 bg-secondary">

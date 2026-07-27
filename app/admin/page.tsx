@@ -3,7 +3,6 @@ import { isAdminAuthenticated } from "@/lib/admin-auth"
 import { redirect } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { Toaster } from "@/components/ui/sonner"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Clock, Mail, Phone, MapPin, Inbox, MessageSquareOff } from "lucide-react"
@@ -267,7 +266,6 @@ export default async function AdminPage() {
       </section>
 
       <Footer />
-      <Toaster />
     </div>
   )
 }

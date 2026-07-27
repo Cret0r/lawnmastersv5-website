@@ -45,14 +45,26 @@ export const springRush = {
     ],
   },
 
-  // — Proof section. The homepage now pulls the actual photos from
-  // admin-featured gallery items (lib/gallery.ts → getFeaturedGalleryItems),
-  // not a hardcoded list — the old hardcoded set here was removed (session
-  // 16) because its images were unlabeled/mislabeled Florida-era photos
-  // captioned as Covington/Conyers. Only the section headline is still
-  // sourced from this file.
+  // — Proof section
   proof: {
     headline: "Real Before & After Transformations",
+    transformations: [
+      {
+        beforeImage: "/real-before-backyard.jpg",
+        afterImage: "/real-after-backyard.jpg",
+        caption: "Backyard cleanup — Covington, GA",
+      },
+      {
+        beforeImage: "/real-before-sideyard.jpg",
+        afterImage: "/real-after-sideyard.jpg",
+        caption: "Side yard overgrowth cleared — Conyers, GA",
+      },
+      {
+        beforeImage: "/gallery/front-yard-before.jpg",
+        afterImage: "/gallery/front-yard-after.jpg",
+        caption: "Front yard lawn restoration — Covington, GA",
+      },
+    ],
   },
 
   // — THE FRONT END: Refresh tiers (owner-confirmed prices, 7/14/2026;
