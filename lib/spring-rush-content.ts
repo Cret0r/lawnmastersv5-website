@@ -64,6 +64,13 @@ export const springRush = {
         afterImage: "/gallery/front-yard-after.jpg",
         caption: "Front yard lawn restoration — Covington, GA",
       },
+      {
+        beforeImage:
+          "https://gflxgupnvjimftlznrqp.supabase.co/storage/v1/object/public/gallery/fa9c8a7c-4368-440d-afcd-2b14fc0f465d-before.jpg",
+        afterImage:
+          "https://gflxgupnvjimftlznrqp.supabase.co/storage/v1/object/public/gallery/fa9c8a7c-4368-440d-afcd-2b14fc0f465d-after.jpg",
+        caption: "Fence Line Cleanup & Property Refresh — Covington, GA",
+      },
     ],
   },
 
