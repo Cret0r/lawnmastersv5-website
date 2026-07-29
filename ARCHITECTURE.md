@@ -27,7 +27,7 @@
 | Validation | Zod | `quoteSchema` + `contactSchema` in form actions |
 | Rate limiting | In-memory (lib/rate-limit.ts) | 3 req/IP/15 min, shared across BOTH form actions |
 | Images | `unoptimized: true` + sharp pre-generation | Hero variants via `scripts/generate-hero-images.mjs` + `<picture>` art direction |
-| E2E testing | Cypress — **50 tests** | 10 specs; dev server must be running first |
+| E2E testing | Cypress — **64 tests** (count grows) | 11 specs; dev server must be running first |
 | Linting | ESLint 9 flat config | `eslint.config.mjs` |
 
 ---
@@ -47,7 +47,9 @@ landscaping-business-website/
 │   │
 │   ├── about/page.tsx            # /about — story, values, service area (cities from BUSINESS.cities)
 │   ├── services/page.tsx         # /services — 7 services + ItemList Service JSON-LD
-│   ├── gallery/page.tsx          # /gallery — DB-backed uploads FIRST, then hardcoded transformations
+│   ├── gallery/page.tsx          # /gallery — portfolio grid, 100% DB-driven (gallery_items is the
+│   │                             #   only source, no hardcoded fallback), inline draggable sliders,
+│   │                             #   admin-assigned category filter tabs
 │   ├── contact/                  # /contact (CLIENT) — form → contact_messages + lead email
 │   ├── quote/                    # /quote (CLIENT) — form → quote_submissions + lead email
 │   ├── service-policies/page.tsx # /service-policies
@@ -60,10 +62,16 @@ landscaping-business-website/
 │       ├── login/page.tsx        # Dark CSS-module login; inline "use server" loginAction
 │       ├── actions.ts            # Quote/message mutations — ALL auth-guarded
 │       ├── client-actions.ts     # Clients CRUD — ALL auth-guarded
-│       ├── gallery-actions.ts    # Gallery upload/delete/list — ALL auth-guarded
+│       ├── gallery-actions.ts    # Gallery add/update/delete/feature/publish/category/reorder —
+│       │                         #   ALL auth-guarded; dual independent order engines (gallery
+│       │                         #   page order vs homepage-featured order)
 │       ├── admin-tabs.tsx        # Tabs: Clients | Quotes | Messages | Gallery (CLIENT)
 │       ├── clients-tab.tsx       # Recurring-client tracker (due dates, gate codes, hazards)
-│       ├── gallery-tab.tsx       # Before/after photo upload UI (CLIENT)
+│       ├── gallery-tab.tsx       # Full gallery manager (CLIENT): add/edit any item (incl. the
+│       │                         #   12 originally-hardcoded ones, migrated into the DB — see
+│       │                         #   scripts/007), live photo preview, Feature + Publish toggles,
+│       │                         #   category dropdown per item, two independent Move up/down
+│       │                         #   controls (gallery-page order vs homepage order)
 │       ├── submission-actions.tsx / message-actions.tsx / sign-out-button.tsx
 │       └── (route-planner-tab.tsx was DELETED in session 7 — see docs/DECISIONS.md)
 │
@@ -72,6 +80,15 @@ landscaping-business-website/
 │   ├── announcement-bar.tsx      # Dismissable promo bar; publishes its height as a CSS var (CLIENT)
 │   ├── footer.tsx                # Footer — contact info from BUSINESS, links to city pages
 │   ├── before-after-slider.tsx   # Drag/keyboard slider, role="slider", lazy-loaded imgs (CLIENT)
+│   ├── gallery-media.tsx         # Renders BeforeAfterSlider or a plain image, branching on
+│   │                             #   afterImage presence (not just item_type, so it's correct
+│   │                             #   even for pre-migration rows)
+│   ├── gallery-item-card.tsx     # Full card: media + title + description + service tags —
+│   │                             #   shared verbatim by /gallery's grid AND the homepage's
+│   │                             #   featured section, so they can't visually drift apart
+│   ├── gallery-portfolio-grid.tsx # (CLIENT) /gallery's grid: 2-col desktop/1-col mobile, each
+│   │                             #   cell IS the full interactive GalleryItemCard (no click-to-
+│   │                             #   expand modal — removed session 19), category filter tabs
 │   ├── floating-cta.tsx          # Mobile call/text bar (CLIENT)
 │   ├── social-buttons.tsx        # WhatsApp/FB/IG/SMS cluster (CLIENT)
 │   ├── review-card.tsx
@@ -85,7 +102,13 @@ landscaping-business-website/
 │   ├── summer-content.ts         # /summer campaign copy (summerRefresh export) — pulls from business-info
 │   ├── city-pages.ts             # Per-city landing page copy + getCityPage()
 │   ├── reviews-data.ts           # Reviews array + Google review link (3 PLACEHOLDERS — replace with real)
-│   ├── gallery.ts                # Public gallery reads (fails soft if migration 006 not run)
+│   ├── gallery.ts                # Public gallery reads: getPublishedGalleryItems() (/gallery,
+│   │                             #   ordered by gallery_order) + getFeaturedGalleryItems()
+│   │                             #   (homepage, ordered by sort_order — independent of each
+│   │                             #   other, session 18) — both fail soft
+│   ├── gallery-categories.ts     # ★ SINGLE SOURCE OF TRUTH for the category list (Cleanups,
+│   │                             #   Mowing, Pressure Washing, Landscaping, Other) — admin
+│   │                             #   dropdown + /gallery filter tabs both read from here
 │   ├── notify.ts                 # Resend lead-notification email (fails soft if unconfigured)
 │   ├── admin-auth.ts             # Cookie session: verify/create/destroy/check
 │   ├── rate-limit.ts             # In-memory IP limiter — used by both form actions, do not remove
@@ -100,17 +123,24 @@ landscaping-business-website/
 │   ├── hero/                     # Generated responsive hero variants (mobile/tablet/desktop ×2 images)
 │   ├── hero-bg.jpg               # Homepage hero SOURCE (2.6 MB — never served directly anymore)
 │   ├── hero-landscaping-lush-garden.jpg     # /summer + city hero source
-│   ├── gallery/                  # 11 hardcoded before/after pairs
+│   ├── gallery/                  # Image files for the 12 originally-hardcoded items — now
+│   │                             #   referenced by URL from gallery_items rows (scripts/007),
+│   │                             #   not hardcoded in any .tsx file
 │   └── [misc hero/section images]
 │
 ├── scripts/                      # See SCRIPTS.md + docs/sops/ for run instructions
 │   ├── 001–004 *.sql             # Original table migrations (RLS superseded by 005)
 │   ├── 005_fix_rls_scoping.sql   # SECURITY: scopes RLS to service_role (✅ run + curl-verified)
-│   ├── 006_create_gallery_items.sql  # Gallery table + storage bucket (⚠️ must run before gallery uploads)
+│   ├── 006_create_gallery_items.sql  # Gallery table + storage bucket (✅ run)
+│   ├── 007_gallery_migration_and_features.sql # featured/item_type cols + migrates the 12
+│   │                             #   originally-hardcoded items into real DB rows (✅ run)
+│   ├── 008_gallery_independent_order.sql # gallery_order column — /gallery order independent
+│   │                             #   of homepage sort_order (✅ run)
+│   ├── 009_gallery_categories.sql # category column + keyword-guess backfill (✅ run)
 │   ├── generate-hero-images.mjs  # sharp — regenerates public/hero/ variants
 │   └── development|testing|monitoring|maintenance|automation/*.sh
 │
-├── cypress/e2e/                  # 10 specs, 50 tests (see § 8)
+├── cypress/e2e/                  # 11 specs, 64 tests (count grows — see § 8)
 ├── docs/                         # ★ Knowledge base: playbook, SOPs, decisions, gotchas, growth, roadmap, tooling
 ├── .claude/commands/close-session.md  # /close-session slash command (end-of-session doc sync)
 ├── middleware.ts                 # Edge protection for /admin/* (cookie vs SESSION_TOKEN)
@@ -128,10 +158,10 @@ landscaping-business-website/
 
 | Route | Type | Notes |
 |---|---|---|
-| `/` | Server | Campaign hero (responsive `<picture>`, hero-bg variants), pricing, proof, reviews, portfolio |
+| `/` | Server (async) | Campaign hero (responsive `<picture>`, hero-bg variants), pricing, reviews, admin-featured before/after section (`getFeaturedGalleryItems()` — renders nothing if none are featured) |
 | `/about` | Server | Cities rendered from `BUSINESS.cities` |
 | `/services` | Server | 7 services + `ItemList` of `Service` JSON-LD |
-| `/gallery` | Server (async) | Admin-uploaded items (Supabase) render above the hardcoded set; falls back silently |
+| `/gallery` | Server (async) | Portfolio grid, 100% DB-driven, no hardcoded fallback; each card is the full interactive slider inline; category filter tabs |
 | `/contact` | Client | Form → `contact_messages` + Resend lead email |
 | `/quote` | Client | Form → `quote_submissions` + Resend lead email |
 | `/service-policies` | Server | Policy sections |
@@ -163,8 +193,10 @@ landscaping-business-website/
 | `quote_submissions` | quote form action | /admin Quotes tab | service_role all + anon INSERT |
 | `contact_messages` | contact form action | /admin Messages tab | service_role all + anon INSERT |
 | `clients` | /admin Clients tab | /admin (due today / overdue / stats) | service_role only |
-| `gallery_items` | /admin Gallery tab | /gallery public page | service_role only |
+| `gallery_items` | /admin Gallery tab (add/edit/delete/feature/publish/category/reorder) | /gallery grid + homepage featured section | service_role only |
 | Storage `gallery` bucket | gallery-actions upload | public CDN URLs | public-read bucket; uploads via service key |
+
+**`gallery_items` columns** (built up across scripts/006–009): `title`, `description`, `services text[]`, `before_url`, `after_url` (nullable — null for single-image items), `published`, `item_type` ('before_after' | 'single'), `featured` (drives the homepage section), `sort_order` (homepage order among featured items, independent), `gallery_order` (/gallery page order, independent), `category` (admin-assigned, drives /gallery filter tabs — list lives in `lib/gallery-categories.ts`). `getEffectiveItemType()` in `lib/gallery.ts` infers before_after vs single from `after_url` presence rather than trusting `item_type` alone, so it's correct even for rows predating a given migration.
 
 ### Form → lead flow
 ```
@@ -228,7 +260,7 @@ Because `images.unoptimized` is on (v0 legacy + Vercel image-transform cost), ne
 
 ## 8. TESTING
 
-**50 Cypress tests, 10 specs** — `npm run cypress:run` (dev server must already be running on :3000).
+**64 Cypress tests, 11 specs** (count grows) — `npm run cypress:run` (dev server must already be running on :3000).
 
 | Spec | Tests | Covers |
 |---|---|---|
@@ -238,12 +270,13 @@ Because `images.unoptimized` is on (v0 legacy + Vercel image-transform cost), ne
 | contact.cy.ts | 5 | Quick-lead flow + 1 REAL submission |
 | faq.cy.ts | 5 | FAQ headings, FAQPage schema, nav link, CTA |
 | form-validation.cy.ts | 6 | Client-side validation on both quick-lead flows (never hits server) |
-| homepage.cy.ts | 4 | Hero content + CTAs |
+| gallery-admin.cy.ts | 13 | Public/admin isolation + grid renders inline sliders, no modal (6, always run); full add/edit/feature/publish/category/reorder flow incl. migrated items and gallery-vs-homepage order independence (7, skip cleanly if the admin dashboard can't be reached in the sandbox — see docs/GOTCHAS.md) |
+| homepage.cy.ts | 5 | Hero content, CTAs, refresh tiers with maintenance demoted |
 | mobile-nav.cy.ts | 5 | Hamburger aria states, drawer, outside-tap close, floating CTA |
 | navigation.cy.ts | 5 | Desktop nav links |
 | quote.cy.ts | 7 | Quick-lead flow, HowTo schema + 1 REAL submission |
 
-**Hard constraint:** the suite makes exactly 2 real form submissions per run against a 3-per-IP-per-15-min rate limit. New tests must NOT add server-side submissions — assert client-side `:invalid` state instead.
+**Hard constraint:** the suite makes exactly 2 real form submissions per run against a 3-per-IP-per-15-min rate limit. New tests must NOT add server-side submissions — assert client-side `:invalid` state instead. (gallery-admin.cy.ts's logged-in flow is a deliberate, self-cleaning exception that creates/deletes its own test rows — see docs/sops/gallery-migration.md.)
 
 ---
 

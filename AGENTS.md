@@ -184,8 +184,8 @@ bg-primary-foreground text-primary hover:bg-primary-foreground/90
 ### Adding a new review
 Edit `lib/reviews-data.ts` — add an object to the `reviews` array with: `id`, `rating`, `text`, `customerName` (First + Last Initial), `location` (City, GA).
 
-### Adding a new gallery image pair
-Edit `app/gallery/page.tsx` — add an entry to the `transformations` array with `title`, `description`, `beforeImage`, `afterImage` (paths relative to `/public/`), and `services` tags. Drop the image files into `/public/gallery/`.
+### Adding a new gallery item
+Not a code change (session 16) — `gallery_items` in Supabase is the single source of truth for both /gallery and the homepage's featured section, no hardcoded array exists anymore. Log into `/admin` → Gallery tab → "Add a Gallery Item": pick Before/After or Single Image, fill in title/description/services, choose a category, upload photo(s). Feature it to also show it on the homepage. See docs/sops/gallery-migration.md.
 
 ### Updating the campaign (seasonal rebrand)
 1. Edit `lib/spring-rush-content.ts` — update `announcement.text`, `hero.*`, `ctaText.href` (SMS body), `serviceArea.text`

@@ -13,6 +13,10 @@ Run these in order in the **Supabase Dashboard → SQL Editor → New Query**. T
 | 3 | `scripts/003_fix_admin_rls.sql` | Adds authenticated-user RLS policies |
 | 4 | `scripts/004_create_contact_messages.sql` | Creates `contact_messages` table |
 | 5 | `scripts/005_fix_rls_scoping.sql` | **SECURITY FIX** — scopes RLS to service_role, closes anon-key data leak |
+| 6 | `scripts/006_create_gallery_items.sql` | Creates `gallery_items` table + public `gallery` Storage bucket |
+| 7 | `scripts/007_gallery_migration_and_features.sql` | Adds `featured`/`item_type` columns, migrates the 12 originally-hardcoded gallery items into real DB rows |
+| 8 | `scripts/008_gallery_independent_order.sql` | Adds `gallery_order` — /gallery's display order, independent of the homepage's `sort_order` |
+| 9 | `scripts/009_gallery_categories.sql` | Adds `category` column + one-time keyword-guess backfill from each item's services |
 
 ---
 
@@ -75,6 +79,55 @@ Creates the `contact_messages` table that stores all `/contact` form submissions
 - Uses `drop policy if exists` throughout — safe to re-run.
 - ✅ **Run in production and verified (July 2026):** a live curl against the REST API with the anon key returned `[]` — the leak is confirmed closed.
 - Supersedes the RLS parts of `001` and `003`.
+
+---
+
+### `scripts/006_create_gallery_items.sql`
+
+Creates the `gallery_items` table (RLS: service_role only) and the public `gallery` Storage bucket. Foundation for the entire admin gallery manager.
+
+**How to run:** Paste into Supabase SQL Editor and execute, then run the verification queries at the bottom of the file.
+
+**Gotchas:**
+- `create table if not exists` / `on conflict do nothing` throughout — safe to re-run.
+- ✅ Run in production.
+
+---
+
+### `scripts/007_gallery_migration_and_features.sql`
+
+Adds `featured` and `item_type` columns, relaxes `after_url` to nullable (for single-image items), and migrates the 12 gallery items that were hardcoded in `app/gallery/page.tsx` since the original build into real, admin-editable `gallery_items` rows — fixed deterministic IDs so the insert is idempotent.
+
+**How to run:** Paste into Supabase SQL Editor and execute.
+
+**Gotchas:**
+- ✅ Run in production — the migrated items were verified live with zero visual disruption (they were seeded with the same order/featured state the site already showed).
+- Depends on `006` having been run first.
+
+---
+
+### `scripts/008_gallery_independent_order.sql`
+
+Adds `gallery_order`. Before this, `sort_order` drove BOTH the homepage's featured order and `/gallery`'s display order — this splits them so an admin can reorder one without disturbing the other. Backfills `gallery_order` from the current `sort_order` so nothing visibly changes when it runs.
+
+**How to run:** Paste into Supabase SQL Editor and execute.
+
+**Gotchas:**
+- ✅ Run in production.
+- `getPublishedGalleryItems()` (`lib/gallery.ts`) orders by `gallery_order` — if this hasn't run, that query fails and `/gallery` shows its empty state. Always run this BEFORE deploying code that depends on it.
+
+---
+
+### `scripts/009_gallery_categories.sql`
+
+Adds `category` (defaults to `'Other'`) and does a one-time best-guess backfill for existing rows via keyword matching against each item's `services` array. The category list itself lives in `lib/gallery-categories.ts`, not the database — this is plain text per row, not a Postgres enum.
+
+**How to run:** Paste into Supabase SQL Editor and execute, then spot-check the backfilled guesses from `/admin`'s Gallery tab (one dropdown per item to fix any that guessed wrong).
+
+**Gotchas:**
+- ✅ Run in production.
+- Only touches rows still at the `'Other'` default, so re-running after you've hand-assigned categories won't undo your choices.
+- Lower blast radius than 007/008 if run late: `select("*")` doesn't error over a missing column, so pushing the category-dependent code before running this just means the filter tabs don't render yet — nothing breaks.
 
 ---
 
@@ -215,4 +268,4 @@ bash scripts/automation/documentation-generator.sh
 | `npm run start` | `next start` | Serve the production build locally |
 | `npm run lint` | `eslint .` | Run ESLint across the project |
 | `npm run cypress:open` | `cypress open` | Open Cypress Test Runner UI |
-| `npm run cypress:run` | `cypress run` | Run all 26 Cypress e2e tests headlessly (required before merging to master) |
+| `npm run cypress:run` | `cypress run` | Run all Cypress e2e tests headlessly (64 as of session 19 — count grows; required before merging to master) |
